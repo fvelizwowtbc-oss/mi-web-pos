@@ -1,0 +1,426 @@
+{% extends "base.html" %}
+{% block title %}Ventas Vendedor{% endblock %}
+{% block extra_css %}
+<style>
+    .cart-item {
+        background: white;
+        border: 1px solid var(--gray-200);
+        border-radius: var(--radius);
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+        transition: var(--transition);
+        animation: slideIn 0.3s ease-out;
+    }
+    
+    .cart-summary {
+        background: var(--gray-50);
+        border: 1px solid var(--gray-200);
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+        position: sticky;
+        top: 80px;
+    }
+    
+    .cart-empty {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--gray-400);
+    }
+    
+    .cart-empty i {
+        font-size: 4rem;
+        display: block;
+        margin-bottom: 1rem;
+    }
+    
+    .product-select-item {
+        cursor: pointer;
+        transition: var(--transition);
+        border-left: 3px solid transparent;
+    }
+    
+    .product-select-item:hover {
+        background: var(--gray-50);
+        border-left-color: var(--primary);
+    }
+    
+    .product-select-item.selected {
+        background: #e0e7ff;
+        border-left-color: var(--primary);
+    }
+    
+    .quantity-control {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .quantity-control button {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1px solid var(--gray-300);
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+    
+    .quantity-control button:hover {
+        background: var(--gray-100);
+        border-color: var(--gray-400);
+    }
+    
+    .quantity-control input {
+        width: 50px;
+        text-align: center;
+        border: 1px solid var(--gray-300);
+        border-radius: var(--radius-sm);
+        padding: 0.25rem;
+    }
+    
+    .tasa-selector .btn {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.75rem;
+    }
+    
+    .tasa-selector .btn.active {
+        background: var(--primary);
+        color: white;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container-fluid px-4">
+    <div class="row mb-4 fade-in-up">
+        <div class="col-sm-6">
+            <h4 class="fw-bold mb-1">Nueva Venta</h4>
+            <p class="text-muted small mb-0">Vendedor: {{ session.user_name }}</p>
+        </div>
+        <div class="col-sm-6 text-sm-end">
+            <div class="tasa-selector btn-group">
+                <button class="btn btn-outline-primary btn-sm active" data-tasa="oficial">
+                    Oficial ({{ tasas.oficial }})
+                </button>
+                <button class="btn btn-outline-primary btn-sm" data-tasa="manual1">
+                    Manual 1 ({{ tasas.manual1 }})
+                </button>
+                <button class="btn btn-outline-primary btn-sm" data-tasa="manual2">
+                    Manual 2 ({{ tasas.manual2 }})
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row g-2 mb-3 fade-in-up" style="animation-delay: 0.1s;">
+        <div class="col-6 col-md-3">
+            <div class="stat-card p-3 text-center">
+                <div class="stat-value" style="font-size: 1.5rem;">{{ stats.total if stats else 0 }}</div>
+                <div class="stat-label">Mis Ventas</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card p-3 text-center">
+                <div class="stat-value" style="font-size: 1.5rem;">${{ "%.0f"|format(stats.ingresos if stats else 0) }}</div>
+                <div class="stat-label">Mis Ingresos</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row g-3">
+        <div class="col-lg-7">
+            <div class="card fade-in-up" style="animation-delay: 0.2s;">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-box me-2"></i> Catálogo</span>
+                    <div class="search-input" style="width: 250px;">
+                        <i class="bi bi-search"></i>
+                        <input type="text" class="form-control form-control-sm" id="searchProduct" 
+                               placeholder="Buscar producto...">
+                    </div>
+                </div>
+                <div class="card-body p-0" style="max-height: 400px; overflow-y: auto;">
+                    {% if productos %}
+                    <div class="list-group list-group-flush" id="productList">
+                        {% for producto in productos %}
+                        <div class="list-group-item product-select-item" 
+                             data-id="{{ producto.id }}"
+                             data-nombre="{{ producto.nombre }}"
+                             data-precio="{{ producto.precio_venta_usd }}"
+                             data-stock="{{ producto.stock_actual }}">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="fw-medium">{{ producto.nombre }}</div>
+                                    <small class="text-muted">{{ producto.codigo }} · {{ producto.categoria }}</small>
+                                </div>
+                                <div class="text-end">
+                                    <div class="fw-bold text-primary">${{ "%.2f"|format(producto.precio_venta_usd) }}</div>
+                                    <small class="text-muted">Stock: {{ producto.stock_actual }}</small>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="cart-empty">
+                        <i class="bi bi-inbox"></i>
+                        <h6 class="text-muted">No hay productos disponibles</h6>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            {% if ventas_recientes %}
+            <div class="card mt-3 fade-in-up" style="animation-delay: 0.4s;">
+                <div class="card-header">
+                    <i class="bi bi-clock-history me-2"></i> Mis Ventas Recientes
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-sm mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Cant.</th>
+                                    <th>Total USD</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for venta in ventas_recientes %}
+                                <tr>
+                                    <td>{{ venta.producto_nombre }}</td>
+                                    <td>{{ venta.cantidad }}</td>
+                                    <td>${{ "%.2f"|format(venta.total_usd) }}</td>
+                                    <td><small>{{ venta.creado_en[:10] }}</small></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="col-lg-5">
+            <div class="cart-summary fade-in-up" style="animation-delay: 0.3s;">
+                <h5 class="fw-bold mb-3">
+                    <i class="bi bi-cart3 me-2"></i> Carrito
+                    <span class="badge badge-primary ms-2" id="cartCount">0</span>
+                </h5>
+                
+                <div id="cartItems">
+                    <div class="cart-empty">
+                        <i class="bi bi-cart"></i>
+                        <p class="text-muted mb-0">Selecciona productos del catálogo</p>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Subtotal USD:</span>
+                    <span class="fw-bold" id="subtotalUSD">$0.00</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Subtotal VES:</span>
+                    <span class="fw-bold" id="subtotalVES">Bs. 0.00</span>
+                </div>
+                
+                <hr>
+                
+                <button class="btn btn-success w-100 btn-lg" id="btnProcesarVenta" disabled>
+                    <i class="bi bi-check-circle me-2"></i> Procesar Venta
+                </button>
+                
+                <button class="btn btn-outline-danger w-100 mt-2 btn-sm" id="btnClearCart" disabled>
+                    <i class="bi bi-trash me-1"></i> Vaciar Carrito
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    let cart = [];
+    let tasaActiva = 'oficial';
+    const tasas = {{ tasas | tojson | safe }};
+    
+    document.querySelectorAll('.tasa-selector .btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tasa-selector .btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            tasaActiva = this.dataset.tasa;
+            updateCartDisplay();
+        });
+    });
+    
+    document.getElementById('productList').addEventListener('click', function(e) {
+        const item = e.target.closest('.product-select-item');
+        if (!item) return;
+        
+        const productId = parseInt(item.dataset.id);
+        const nombre = item.dataset.nombre;
+        const precio = parseFloat(item.dataset.precio);
+        const stock = parseInt(item.dataset.stock);
+        
+        if (stock <= 0) {
+            alert('Producto sin stock disponible');
+            return;
+        }
+        
+        const existingIndex = cart.findIndex(c => c.producto_id === productId);
+        if (existingIndex >= 0) {
+            if (cart[existingIndex].cantidad >= stock) {
+                alert('Stock máximo alcanzado');
+                return;
+            }
+            cart[existingIndex].cantidad += 1;
+        } else {
+            cart.push({
+                producto_id: productId,
+                nombre: nombre,
+                precio_usd: precio,
+                cantidad: 1,
+                stock: stock
+            });
+        }
+        
+        item.classList.add('selected');
+        setTimeout(() => item.classList.remove('selected'), 300);
+        updateCartDisplay();
+    });
+    
+    document.getElementById('searchProduct').addEventListener('input', function() {
+        const query = this.value.toLowerCase();
+        document.querySelectorAll('.product-select-item').forEach(item => {
+            const nombre = item.dataset.nombre.toLowerCase();
+            item.style.display = nombre.includes(query) ? '' : 'none';
+        });
+    });
+    
+    function updateCartDisplay() {
+        const cartItems = document.getElementById('cartItems');
+        const cartCount = document.getElementById('cartCount');
+        const subtotalUSD = document.getElementById('subtotalUSD');
+        const subtotalVES = document.getElementById('subtotalVES');
+        const btnProcesar = document.getElementById('btnProcesarVenta');
+        const btnClear = document.getElementById('btnClearCart');
+        
+        cartCount.textContent = cart.reduce((sum, item) => sum + item.cantidad, 0);
+        
+        if (cart.length === 0) {
+            cartItems.innerHTML = `
+                <div class="cart-empty">
+                    <i class="bi bi-cart"></i>
+                    <p class="text-muted mb-0">Selecciona productos del catálogo</p>
+                </div>`;
+            subtotalUSD.textContent = '$0.00';
+            subtotalVES.textContent = 'Bs. 0.00';
+            btnProcesar.disabled = true;
+            btnClear.disabled = true;
+            return;
+        }
+        
+        let totalUSD = 0;
+        let totalVES = 0;
+        
+        cartItems.innerHTML = cart.map((item, index) => {
+            const subtotal = item.precio_usd * item.cantidad;
+            const subtotalVESVal = subtotal * (tasas[tasaActiva] || tasas.oficial);
+            totalUSD += subtotal;
+            totalVES += subtotalVESVal;
+            
+            return `
+                <div class="cart-item">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="flex-grow-1">
+                            <div class="fw-medium small">${item.nombre}</div>
+                            <small class="text-muted">$${item.precio_usd.toFixed(2)} c/u</small>
+                        </div>
+                        <div class="quantity-control">
+                            <button onclick="updateQuantity(${index}, -1)" ${item.cantidad <= 1 ? 'disabled' : ''}>−</button>
+                            <input type="text" value="${item.cantidad}" readonly>
+                            <button onclick="updateQuantity(${index}, 1)" ${item.cantidad >= item.stock ? 'disabled' : ''}>+</button>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+                        <small class="text-muted">Subtotal:</small>
+                        <small class="fw-medium">$${subtotal.toFixed(2)} / Bs. ${subtotalVESVal.toFixed(2)}</small>
+                    </div>
+                    <button class="btn btn-sm btn-outline-danger mt-2 w-100" onclick="removeItem(${index})">
+                        <i class="bi bi-x me-1"></i> Quitar
+                    </button>
+                </div>`;
+        }).join('');
+        
+        subtotalUSD.textContent = `$${totalUSD.toFixed(2)}`;
+        subtotalVES.textContent = `Bs. ${totalVES.toFixed(2)}`;
+        btnProcesar.disabled = false;
+        btnClear.disabled = false;
+    }
+    
+    function updateQuantity(index, change) {
+        const newQuantity = cart[index].cantidad + change;
+        if (newQuantity < 1 || newQuantity > cart[index].stock) return;
+        cart[index].cantidad = newQuantity;
+        updateCartDisplay();
+    }
+    
+    function removeItem(index) {
+        cart.splice(index, 1);
+        updateCartDisplay();
+    }
+    
+    document.getElementById('btnClearCart').addEventListener('click', function() {
+        if (confirm('¿Vaciar el carrito?')) {
+            cart = [];
+            updateCartDisplay();
+        }
+    });
+    
+    document.getElementById('btnProcesarVenta').addEventListener('click', async function() {
+        if (cart.length === 0) return;
+        
+        const ventaData = {
+            items: cart.map(item => ({
+                producto_id: item.producto_id,
+                cantidad: item.cantidad,
+                precio_usd: item.precio_usd,
+                tasa_usada: tasaActiva
+            }))
+        };
+        
+        try {
+            this.disabled = true;
+            this.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Procesando...';
+            
+            const response = await fetch('/vendedor/procesar_venta', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(ventaData)
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                cart = [];
+                updateCartDisplay();
+                alert('✅ ' + result.message);
+                location.reload();
+            } else {
+                alert('❌ ' + result.error);
+            }
+        } catch (error) {
+            alert('Error de conexión: ' + error.message);
+        } finally {
+            this.disabled = false;
+            this.innerHTML = '<i class="bi bi-check-circle me-2"></i> Procesar Venta';
+        }
+    });
+</script>
+{% endblock %}

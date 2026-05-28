@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}Usuarios{% endblock %}
+{% block content %}
+<div class="container-fluid px-4">
+    <div class="row mb-4 fade-in-up">
+        <div class="col-12">
+            <h4 class="fw-bold mb-1">
+                <i class="bi bi-people me-2"></i> Gestión de Usuarios
+            </h4>
+            <p class="text-muted small">{{ usuarios|length }} usuarios registrados</p>
+        </div>
+    </div>
+    
+    <div class="card fade-in-up">
+        <div class="card-body p-0">
+            {% if usuarios %}
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Email</th>
+                            <th>Teléfono</th>
+                            <th>Empresa</th>
+                            <th>Vendedor</th>
+                            <th>Suscripción</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for usuario in usuarios %}
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="user-avatar" style="width: 32px; height: 32px; font-size: 0.75rem;">
+                                        {{ usuario.nombre[0] | upper if usuario.nombre else 'U' }}
+                                    </div>
+                                    <span class="fw-medium">{{ usuario.nombre }}</span>
+                                </div>
+                            </td>
+                            <td><small>{{ usuario.email }}</small></td>
+                            <td><small>{{ usuario.telefono or 'N/A' }}</small></td>
+                            <td>
+                                {% if usuario.empresa_nombre %}
+                                <div>
+                                    <span class="fw-medium small">{{ usuario.empresa_nombre }}</span>
+                                    {% if usuario.empresa_rif %}
+                                    <br><small class="text-muted">{{ usuario.empresa_rif }}</small>
+                                    {% endif %}
+                                </div>
+                                {% else %}
+                                <span class="badge badge-warning">Sin configurar</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if usuario.es_vendedor %}
+                                <span class="badge badge-info">Sí</span>
+                                {% else %}
+                                <span class="badge badge-secondary">No</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if usuario.estado_suscripcion == 'activa' and usuario.fecha_fin %}
+                                <span class="badge badge-success">{{ usuario.fecha_fin }}</span>
+                                {% elif usuario.fecha_fin %}
+                                <span class="badge badge-danger">Vencida</span>
+                                {% else %}
+                                <span class="badge badge-warning">Sin suscripción</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if usuario.activo %}
+                                <span class="badge badge-success">Activo</span>
+                                {% else %}
+                                <span class="badge badge-danger">Inactivo</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    <a href="{{ url_for('admin_configurar_empresa', usuario_id=usuario.id) }}" 
+                                       class="btn btn-sm btn-outline-primary" 
+                                       title="Configurar Empresa">
+                                        <i class="bi bi-building"></i> Empresa
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <i class="bi bi-people"></i>
+                <h6 class="text-muted">No hay usuarios registrados</h6>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

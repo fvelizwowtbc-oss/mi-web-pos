@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}Configuración de Empresa{% endblock %}
+{% block content %}
+<div class="container-fluid px-4">
+    <div class="row mb-4 fade-in-up">
+        <div class="col-12">
+            <h4 class="fw-bold mb-1">
+                <i class="bi bi-building me-2"></i> Configuración de Empresa
+            </h4>
+            <p class="text-muted small">Datos que aparecerán en las facturas</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card fade-in-up">
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="row g-3">
+                            <div class="col-md-8">
+                                <label class="form-label fw-medium">Nombre de la Empresa</label>
+                                <input type="text" class="form-control" name="nombre" value="{{ config.nombre }}" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-medium">RIF</label>
+                                <input type="text" class="form-control" name="rif" value="{{ config.rif }}" placeholder="J-00000000-0">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-medium">Dirección</label>
+                                <input type="text" class="form-control" name="direccion" value="{{ config.direccion }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium">Teléfono</label>
+                                <input type="text" class="form-control" name="telefono" value="{{ config.telefono }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium">Email</label>
+                                <input type="email" class="form-control" name="email" value="{{ config.email }}">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-medium">Mensaje en Factura</label>
+                                <textarea class="form-control" name="mensaje_factura" rows="2">{{ config.mensaje_factura }}</textarea>
+                                <small class="text-muted">Ej: "¡Gracias por su compra!"</small>
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="card bg-light mb-3">
+                            <div class="card-body">
+                                <h6 class="fw-bold mb-2"><i class="bi bi-eye me-2"></i> Vista Previa de Factura</h6>
+                                <div style="background: white; padding: 15px; border: 1px dashed #ccc; font-family: 'Courier New', monospace; font-size: 11px;">
+                                    <div style="text-align: center; border-bottom: 1px dashed #000; padding-bottom: 5px; margin-bottom: 5px;">
+                                        <strong id="prevNombre">{{ config.nombre or 'Mi Empresa' }}</strong><br>
+                                        <small>RIF: <span id="prevRIF">{{ config.rif or 'J-00000000-0' }}</span></small><br>
+                                        <small><span id="prevDir">{{ config.direccion or 'Venezuela' }}</span></small><br>
+                                        <small>Tel: <span id="prevTel">{{ config.telefono or '' }}</span></small>
+                                    </div>
+                                    <div style="text-align: center; margin-top: 10px; font-size: 10px;">
+                                        <em id="prevMsj">{{ config.mensaje_factura or '¡Gracias por su compra!' }}</em>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-check-lg me-2"></i> Guardar Configuración
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card fade-in-up">
+                <div class="card-header">
+                    <i class="bi bi-info-circle me-2"></i> Información
+                </div>
+                <div class="card-body">
+                    <p class="small text-muted">
+                        Estos datos aparecerán en todas las facturas generadas por el sistema.
+                        Asegúrate de mantenerlos actualizados.
+                    </p>
+                    <ul class="small text-muted">
+                        <li>El nombre de la empresa aparece en el encabezado</li>
+                        <li>El RIF es obligatorio para facturas legales</li>
+                        <li>El mensaje aparece al pie de cada factura</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Actualizar vista previa en tiempo real
+    document.querySelectorAll('input[name], textarea[name]').forEach(input => {
+        input.addEventListener('input', function() {
+            const name = this.name;
+            const value = this.value || this.placeholder;
+            
+            switch(name) {
+                case 'nombre': document.getElementById('prevNombre').textContent = value; break;
+                case 'rif': document.getElementById('prevRIF').textContent = value; break;
+                case 'direccion': document.getElementById('prevDir').textContent = value; break;
+                case 'telefono': document.getElementById('prevTel').textContent = value; break;
+                case 'mensaje_factura': document.getElementById('prevMsj').textContent = value; break;
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Iniciar Sesión{% endblock %}
+{% block extra_css %}
+<style>
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .login-container {
+        width: 100%;
+        max-width: 440px;
+        padding: 1rem;
+    }
+    
+    .login-card {
+        background: white;
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        animation: fadeInUp 0.6s ease-out;
+    }
+    
+    .login-logo {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 2rem;
+        color: white;
+    }
+    
+    .form-floating > .form-control:focus ~ label,
+    .form-floating > .form-control:not(:placeholder-shown) ~ label {
+        color: #667eea;
+    }
+    
+    .form-floating > .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-logo">
+            <i class="bi bi-box-seam"></i>
+        </div>
+        <h3 class="text-center fw-bold mb-1">Bienvenido</h3>
+        <p class="text-center text-muted mb-4">Inicia sesión para continuar</p>
+        
+        <form method="POST">
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="email" name="email" 
+                       placeholder="nombre@ejemplo.com" required autofocus>
+                <label for="email"><i class="bi bi-envelope me-1"></i> Email</label>
+            </div>
+            
+            <div class="form-floating mb-4">
+                <input type="password" class="form-control" id="password" name="password" 
+                       placeholder="Contraseña" required>
+                <label for="password"><i class="bi bi-lock me-1"></i> Contraseña</label>
+            </div>
+            
+            <button type="submit" class="btn btn-primary w-100 btn-lg mb-3">
+                <i class="bi bi-box-arrow-in-right me-2"></i> Iniciar Sesión
+            </button>
+            
+            <p class="text-center text-muted mb-0">
+                ¿No tienes cuenta? 
+                <a href="{{ url_for('register') }}" class="text-primary fw-semibold text-decoration-none">
+                    Regístrate
+                </a>
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock %}

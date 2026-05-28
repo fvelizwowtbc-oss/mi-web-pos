@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div class="container-fluid px-4">
+    <div class="row mb-4 fade-in-up">
+        <div class="col-12">
+            <h4 class="fw-bold mb-1">Panel de Administración</h4>
+            <p class="text-muted small">Resumen del sistema</p>
+        </div>
+    </div>
+    
+    <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card fade-in-up" style="animation-delay: 0.1s;">
+                <div class="stat-icon" style="background: #e0e7ff; color: #6366f1;">
+                    <i class="bi bi-people"></i>
+                </div>
+                <div class="stat-value">{{ total_usuarios }}</div>
+                <div class="stat-label">Usuarios Totales</div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card fade-in-up" style="animation-delay: 0.2s;">
+                <div class="stat-icon" style="background: #d1fae5; color: #10b981;">
+                    <i class="bi bi-person-badge"></i>
+                </div>
+                <div class="stat-value">{{ total_vendedores }}</div>
+                <div class="stat-label">Vendedores</div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card fade-in-up" style="animation-delay: 0.3s;">
+                <div class="stat-icon" style="background: #fef3c7; color: #f59e0b;">
+                    <i class="bi bi-star"></i>
+                </div>
+                <div class="stat-value">{{ suscripciones_activas }}</div>
+                <div class="stat-label">Suscripciones Activas</div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card fade-in-up" style="animation-delay: 0.4s;">
+                <div class="stat-icon" style="background: #fee2e2; color: #ef4444;">
+                    <i class="bi bi-clock"></i>
+                </div>
+                <div class="stat-value">{{ suscripciones_por_vencer }}</div>
+                <div class="stat-label">Por Vencer (7 días)</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="card fade-in-up" style="animation-delay: 0.5s;">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-people me-2"></i> Usuarios Recientes</span>
+                    <a href="{{ url_for('admin_usuarios') }}" class="btn btn-sm btn-outline-primary">Ver Todos</a>
+                </div>
+                <div class="card-body p-0">
+                    {% if usuarios_recientes %}
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Teléfono</th>
+                                    <th>Registro</th>
+                                    <th>Suscripción</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for usuario in usuarios_recientes %}
+                                <tr>
+                                    <td class="fw-medium">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="user-avatar" style="width: 32px; height: 32px; font-size: 0.75rem;">
+                                                {{ usuario.nombre[0] | upper }}
+                                            </div>
+                                            {{ usuario.nombre }}
+                                        </div>
+                                    </td>
+                                    <td><small>{{ usuario.email }}</small></td>
+                                    <td><small>{{ usuario.telefono or 'N/A' }}</small></td>
+                                    <td><small>{{ usuario.fecha_registro[:10] if usuario.fecha_registro else 'N/A' }}</small></td>
+                                    <td>
+                                        {% if usuario.fecha_fin %}
+                                        <span class="badge badge-success">{{ usuario.fecha_fin }}</span>
+                                        {% else %}
+                                        <span class="badge badge-warning">Sin suscripción</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if usuario.activo %}
+                                        <span class="badge badge-success">Activo</span>
+                                        {% else %}
+                                        <span class="badge badge-danger">Inactivo</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="empty-state">
+                        <i class="bi bi-people"></i>
+                        <h6 class="text-muted">No hay usuarios registrados</h6>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

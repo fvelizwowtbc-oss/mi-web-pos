@@ -1,0 +1,94 @@
+2026-05-20 15:40:16,370 INFO: 192.168.31.173 - - [20/May/2026 15:40:16] "[32mGET / HTTP/1.1[0m" 302 -
+2026-05-20 15:40:17,343 INFO: 192.168.31.173 - - [20/May/2026 15:40:17] "GET /login HTTP/1.1" 200 -
+2026-05-20 15:40:18,887 INFO: 192.168.31.173 - - [20/May/2026 15:40:18] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-20 16:28:19,262 INFO: Running job "<lambda> (trigger: interval[1:00:00], next run at: 2026-05-20 17:28:19 -04)" (scheduled at 2026-05-20 16:28:19.258664-04:00)
+2026-05-20 16:28:19,283 INFO: Job "<lambda> (trigger: interval[1:00:00], next run at: 2026-05-20 17:28:19 -04)" executed successfully
+2026-05-21 15:27:26,033 INFO: Aplicacion inicializada
+2026-05-21 15:27:26,070 INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-05-21 15:27:26,073 INFO: Added job "<lambda>" to job store "default"
+2026-05-21 15:27:26,073 INFO: Scheduler started
+2026-05-21 15:27:26,104 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.179:5000
+2026-05-21 15:27:26,105 INFO: [33mPress CTRL+C to quit[0m
+2026-05-21 15:28:38,512 INFO: 127.0.0.1 - - [21/May/2026 15:28:38] "[32mGET / HTTP/1.1[0m" 302 -
+2026-05-21 15:28:38,703 INFO: 127.0.0.1 - - [21/May/2026 15:28:38] "GET /login HTTP/1.1" 200 -
+2026-05-21 15:28:39,002 INFO: 127.0.0.1 - - [21/May/2026 15:28:39] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-21 15:28:46,503 INFO: BD creada para usuario 2
+2026-05-21 15:28:46,506 INFO: 127.0.0.1 - - [21/May/2026 15:28:46] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-21 15:28:46,649 INFO: 127.0.0.1 - - [21/May/2026 15:28:46] "GET /user/dashboard HTTP/1.1" 200 -
+2026-05-21 15:28:51,174 INFO: 127.0.0.1 - - [21/May/2026 15:28:51] "GET /api/actualizar_tasa_ahora HTTP/1.1" 200 -
+2026-05-21 15:28:52,979 INFO: 127.0.0.1 - - [21/May/2026 15:28:52] "GET /user/dashboard HTTP/1.1" 200 -
+2026-05-21 15:28:58,855 INFO: 127.0.0.1 - - [21/May/2026 15:28:58] "GET /user/facturas_cobrar HTTP/1.1" 200 -
+2026-05-21 15:29:02,106 INFO: 127.0.0.1 - - [21/May/2026 15:29:02] "GET /user/facturas_cobrar?filtro=credito HTTP/1.1" 200 -
+2026-05-21 15:29:04,589 INFO: 127.0.0.1 - - [21/May/2026 15:29:04] "GET /user/ventas HTTP/1.1" 200 -
+2026-05-21 15:29:07,704 INFO: 127.0.0.1 - - [21/May/2026 15:29:07] "GET /user/inventario HTTP/1.1" 200 -
+2026-05-21 15:29:15,944 INFO: 127.0.0.1 - - [21/May/2026 15:29:15] "GET /api/obtener_subcategorias?categoria=Repuestos%20Moto HTTP/1.1" 200 -
+2026-05-21 15:29:50,584 INFO: 127.0.0.1 - - [21/May/2026 15:29:50] "[32mPOST /user/agregar_producto HTTP/1.1[0m" 302 -
+2026-05-21 15:29:50,606 INFO: 127.0.0.1 - - [21/May/2026 15:29:50] "GET /user/inventario HTTP/1.1" 200 -
+2026-05-21 15:29:50,746 INFO: 127.0.0.1 - - [21/May/2026 15:29:50] "GET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1" 200 -
+2026-05-21 15:29:52,880 INFO: 127.0.0.1 - - [21/May/2026 15:29:52] "GET /user/ventas HTTP/1.1" 200 -
+2026-05-21 15:29:52,938 INFO: 127.0.0.1 - - [21/May/2026 15:29:52] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-05-21 15:30:34,572 ERROR: Error factura cobrar: database is locked
+2026-05-21 15:30:34,579 INFO: 127.0.0.1 - - [21/May/2026 15:30:34] "POST /user/procesar_venta HTTP/1.1" 200 -
+2026-05-21 15:30:37,214 INFO: 127.0.0.1 - - [21/May/2026 15:30:37] "GET /user/ventas HTTP/1.1" 200 -
+2026-05-21 15:30:37,312 INFO: 127.0.0.1 - - [21/May/2026 15:30:37] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-05-21 15:31:38,583 INFO: 127.0.0.1 - - [21/May/2026 15:31:38] "GET /user/clientes HTTP/1.1" 200 -
+2026-05-21 15:31:50,488 INFO: 127.0.0.1 - - [21/May/2026 15:31:50] "[32mPOST /user/clientes HTTP/1.1[0m" 302 -
+2026-05-21 15:31:50,502 INFO: 127.0.0.1 - - [21/May/2026 15:31:50] "GET /user/clientes HTTP/1.1" 200 -
+2026-05-21 15:31:52,384 INFO: 127.0.0.1 - - [21/May/2026 15:31:52] "GET /user/facturas_cobrar HTTP/1.1" 200 -
+2026-05-21 15:31:53,987 INFO: 127.0.0.1 - - [21/May/2026 15:31:53] "GET /user/facturas_cobrar?filtro=credito HTTP/1.1" 200 -
+2026-05-21 15:31:55,190 INFO: 127.0.0.1 - - [21/May/2026 15:31:55] "GET /user/facturas_cobrar?filtro=contado HTTP/1.1" 200 -
+2026-05-21 15:31:56,233 INFO: 127.0.0.1 - - [21/May/2026 15:31:56] "GET /user/facturas_cobrar?filtro=pendiente HTTP/1.1" 200 -
+2026-05-21 15:31:58,216 INFO: 127.0.0.1 - - [21/May/2026 15:31:58] "GET /user/ventas HTTP/1.1" 200 -
+2026-05-21 15:31:58,262 INFO: 127.0.0.1 - - [21/May/2026 15:31:58] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-05-21 15:32:33,213 ERROR: Error factura cobrar: database is locked
+2026-05-21 15:32:33,219 INFO: 127.0.0.1 - - [21/May/2026 15:32:33] "POST /user/procesar_venta HTTP/1.1" 200 -
+2026-05-21 15:32:35,783 INFO: 127.0.0.1 - - [21/May/2026 15:32:35] "GET /user/ventas HTTP/1.1" 200 -
+2026-05-21 15:32:35,841 INFO: 127.0.0.1 - - [21/May/2026 15:32:35] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-05-21 15:32:44,326 INFO: 127.0.0.1 - - [21/May/2026 15:32:44] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-05-21 15:33:13,049 ERROR: Error factura cobrar: database is locked
+2026-05-21 15:33:13,055 INFO: 127.0.0.1 - - [21/May/2026 15:33:13] "POST /user/procesar_venta HTTP/1.1" 200 -
+2026-05-21 15:33:15,695 INFO: 127.0.0.1 - - [21/May/2026 15:33:15] "GET /user/ventas HTTP/1.1" 200 -
+2026-05-21 15:33:15,788 INFO: 127.0.0.1 - - [21/May/2026 15:33:15] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-05-21 16:03:56,068 INFO: 127.0.0.1 - - [21/May/2026 16:03:56] "GET /user/facturas HTTP/1.1" 200 -
+2026-05-21 16:03:58,689 INFO: 127.0.0.1 - - [21/May/2026 16:03:58] "GET /user/facturas_cobrar HTTP/1.1" 200 -
+2026-05-21 16:04:00,427 INFO: 127.0.0.1 - - [21/May/2026 16:04:00] "GET /user/facturas_cobrar?filtro=contado HTTP/1.1" 200 -
+2026-05-21 16:04:01,263 INFO: 127.0.0.1 - - [21/May/2026 16:04:01] "GET /user/facturas_cobrar?filtro=credito HTTP/1.1" 200 -
+2026-05-21 16:04:02,404 INFO: 127.0.0.1 - - [21/May/2026 16:04:02] "GET /user/clientes HTTP/1.1" 200 -
+2026-05-21 16:04:03,415 INFO: 127.0.0.1 - - [21/May/2026 16:04:03] "GET /user/facturas HTTP/1.1" 200 -
+2026-05-21 16:04:05,210 INFO: 127.0.0.1 - - [21/May/2026 16:04:05] "GET /ver_factura/factura_F-20260521153250-3_2.html HTTP/1.1" 200 -
+2026-05-21 16:04:12,996 INFO: 127.0.0.1 - - [21/May/2026 16:04:12] "GET /user/facturas_cobrar HTTP/1.1" 200 -
+2026-05-21 16:04:17,587 INFO: 127.0.0.1 - - [21/May/2026 16:04:17] "GET /user/facturas_cobrar?filtro=pendiente HTTP/1.1" 200 -
+2026-05-21 16:04:18,679 INFO: 127.0.0.1 - - [21/May/2026 16:04:18] "GET /user/facturas_cobrar?filtro=credito HTTP/1.1" 200 -
+2026-05-21 16:04:19,327 INFO: 127.0.0.1 - - [21/May/2026 16:04:19] "GET /user/facturas_cobrar?filtro=contado HTTP/1.1" 200 -
+2026-05-21 16:04:20,101 INFO: 127.0.0.1 - - [21/May/2026 16:04:20] "GET /user/facturas_cobrar?filtro=todas HTTP/1.1" 200 -
+2026-05-21 16:27:26,082 INFO: Running job "<lambda> (trigger: interval[1:00:00], next run at: 2026-05-21 17:27:26 -04)" (scheduled at 2026-05-21 16:27:26.070193-04:00)
+2026-05-21 16:27:26,084 INFO: Job "<lambda> (trigger: interval[1:00:00], next run at: 2026-05-21 17:27:26 -04)" executed successfully
+2026-05-21 17:27:26,078 INFO: Running job "<lambda> (trigger: interval[1:00:00], next run at: 2026-05-21 18:27:26 -04)" (scheduled at 2026-05-21 17:27:26.070193-04:00)
+2026-05-21 17:27:26,960 INFO: Job "<lambda> (trigger: interval[1:00:00], next run at: 2026-05-21 18:27:26 -04)" executed successfully
+2026-05-25 07:49:57,890 INFO: Aplicacion inicializada
+2026-05-25 07:49:57,898 INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-05-25 07:49:57,899 INFO: Added job "<lambda>" to job store "default"
+2026-05-25 07:49:57,900 INFO: Scheduler started
+2026-05-25 07:49:57,912 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.179:5000
+2026-05-25 07:49:57,913 INFO: [33mPress CTRL+C to quit[0m
+2026-05-25 07:50:06,936 INFO: 127.0.0.1 - - [25/May/2026 07:50:06] "[32mGET / HTTP/1.1[0m" 302 -
+2026-05-25 07:50:07,890 INFO: 127.0.0.1 - - [25/May/2026 07:50:07] "GET /login HTTP/1.1" 200 -
+2026-05-25 07:50:08,134 INFO: 127.0.0.1 - - [25/May/2026 07:50:08] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-25 07:50:17,483 INFO: 127.0.0.1 - - [25/May/2026 07:50:17] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-25 07:50:18,565 INFO: 127.0.0.1 - - [25/May/2026 07:50:18] "GET /user/dashboard HTTP/1.1" 200 -
+2026-05-25 07:50:24,060 INFO: 127.0.0.1 - - [25/May/2026 07:50:24] "GET /user/facturas HTTP/1.1" 200 -
+2026-05-25 07:50:25,282 INFO: 127.0.0.1 - - [25/May/2026 07:50:25] "GET /ver_factura/factura_F-20260521153250-3_2.html HTTP/1.1" 200 -
+2026-05-25 08:05:23,551 INFO: 192.168.31.237 - - [25/May/2026 08:05:23] "[32mGET / HTTP/1.1[0m" 302 -
+2026-05-25 08:05:23,579 INFO: 192.168.31.237 - - [25/May/2026 08:05:23] "GET /login HTTP/1.1" 200 -
+2026-05-25 08:05:24,410 INFO: 192.168.31.237 - - [25/May/2026 08:05:24] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-25 08:05:44,053 INFO: 192.168.31.237 - - [25/May/2026 08:05:44] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-25 08:05:44,169 INFO: 192.168.31.237 - - [25/May/2026 08:05:44] "GET /user/dashboard HTTP/1.1" 200 -
+2026-05-25 08:05:57,063 INFO: 192.168.31.237 - - [25/May/2026 08:05:57] "GET /user/facturas HTTP/1.1" 200 -
+2026-05-25 08:05:59,287 INFO: 192.168.31.237 - - [25/May/2026 08:05:59] "GET /ver_factura/factura_F-20260521153250-3_2.html HTTP/1.1" 200 -
+2026-05-25 08:06:06,063 INFO: 192.168.31.237 - - [25/May/2026 08:06:06] "[36mGET /ver_factura/factura_F-20260521153250-3_2.html HTTP/1.1[0m" 304 -

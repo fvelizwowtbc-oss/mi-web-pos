@@ -1,0 +1,71 @@
+2026-05-25 08:06:23,725 INFO: 192.168.31.237 - - [25/May/2026 08:06:23] "GET /user/dashboard HTTP/1.1" 200 -
+2026-05-25 08:06:28,987 INFO: 192.168.31.237 - - [25/May/2026 08:06:28] "GET /api/actualizar_tasa_ahora HTTP/1.1" 200 -
+2026-05-25 08:06:30,315 INFO: 192.168.31.237 - - [25/May/2026 08:06:30] "GET /user/dashboard HTTP/1.1" 200 -
+2026-05-25 08:06:34,591 INFO: 192.168.31.237 - - [25/May/2026 08:06:34] "GET /user/inventario HTTP/1.1" 200 -
+2026-05-25 08:06:34,619 INFO: 192.168.31.237 - - [25/May/2026 08:06:34] "GET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1" 200 -
+2026-05-25 08:06:45,436 INFO: 192.168.31.237 - - [25/May/2026 08:06:45] "GET /user/ventas HTTP/1.1" 200 -
+2026-05-25 08:06:45,467 INFO: 192.168.31.237 - - [25/May/2026 08:06:45] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-05-25 08:07:37,815 ERROR: Error factura cobrar: database is locked
+2026-05-25 08:07:37,823 INFO: 192.168.31.237 - - [25/May/2026 08:07:37] "POST /user/procesar_venta HTTP/1.1" 200 -
+2026-05-25 08:07:40,326 INFO: 192.168.31.237 - - [25/May/2026 08:07:40] "GET /ver_factura/factura_F-20260525080715-4_2.html HTTP/1.1" 200 -
+2026-05-25 08:07:40,565 INFO: 192.168.31.237 - - [25/May/2026 08:07:40] "GET /user/ventas HTTP/1.1" 200 -
+2026-05-25 08:07:42,714 INFO: 192.168.31.237 - - [25/May/2026 08:07:42] "[36mGET /ver_factura/factura_F-20260525080715-4_2.html HTTP/1.1[0m" 304 -
+2026-05-25 08:07:52,425 INFO: 192.168.31.237 - - [25/May/2026 08:07:52] "GET /user/facturas_cobrar HTTP/1.1" 200 -
+2026-05-25 08:07:54,037 INFO: 192.168.31.237 - - [25/May/2026 08:07:54] "GET /user/facturas_cobrar?filtro=contado HTTP/1.1" 200 -
+2026-05-25 08:07:54,387 INFO: 192.168.31.237 - - [25/May/2026 08:07:54] "GET /user/facturas_cobrar?filtro=credito HTTP/1.1" 200 -
+2026-05-25 08:07:55,518 INFO: 192.168.31.237 - - [25/May/2026 08:07:55] "GET /user/facturas_cobrar?filtro=pendiente HTTP/1.1" 200 -
+2026-05-25 08:07:56,132 INFO: 192.168.31.237 - - [25/May/2026 08:07:56] "GET /user/facturas_cobrar?filtro=todas HTTP/1.1" 200 -
+2026-05-25 08:07:58,319 INFO: 192.168.31.237 - - [25/May/2026 08:07:58] "GET /user/facturas HTTP/1.1" 200 -
+2026-05-25 08:07:59,943 INFO: 192.168.31.237 - - [25/May/2026 08:07:59] "[36mGET /ver_factura/factura_F-20260525080715-4_2.html HTTP/1.1[0m" 304 -
+2026-05-25 16:06:49,169 INFO: Aplicacion inicializada
+2026-05-25 16:06:49,183 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.179:5000
+2026-05-25 16:06:49,183 INFO: [33mPress CTRL+C to quit[0m
+2026-05-25 16:07:01,409 INFO: 127.0.0.1 - - [25/May/2026 16:07:01] "[32mGET / HTTP/1.1[0m" 302 -
+2026-05-25 16:07:01,558 INFO: 127.0.0.1 - - [25/May/2026 16:07:01] "GET /login HTTP/1.1" 200 -
+2026-05-25 16:07:14,342 INFO: 127.0.0.1 - - [25/May/2026 16:07:14] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-25 16:07:15,500 ERROR: Exception on /user/dashboard [GET]
+Traceback (most recent call last):
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\nueva\Desktop\Nueva carpeta (2)\app - copia.py", line 536, in dec
+    return f(*a,**k)
+  File "C:\Users\nueva\Desktop\Nueva carpeta (2)\app - copia.py", line 641, in user_dashboard
+    return render_template('user/dashboard.html',suscripcion=suscripcion,stats=stats,alertas_stock=alertas_stock,ventas_por_dia=ventas_por_dia,ventas_categoria=ventas_categoria,meses_anteriores=meses_anteriores,tasas=tasas,limites=limites,tasa_bcv=tasa_bcv,config_empresa=config_empresa)
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\templating.py", line 151, in render_template
+    return _render(app, template, context)
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\templating.py", line 132, in _render
+    rv = template.render(context)
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\nueva\Desktop\Nueva carpeta (2)\templates\user\dashboard.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\nueva\Desktop\Nueva carpeta (2)\templates\base.html", line 99, in top-level template code
+    <li class="nav-item"><a class="nav-link {% if request.endpoint=='ver_facturas_cobrar' %}active{% endif %}" href="{{ url_for('ver_facturas_cobrar') }}"><i class="bi bi-receipt me-1"></i> Facturas Cobrar</a></li>
+    ^^^^^
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1697, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1686, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+        endpoint,
+    ...<3 lines>...
+        force_external=_external,
+    )
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\routing\map.py", line 950, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'ver_facturas_cobrar'. Did you mean 'ver_factura' instead?
+2026-05-25 16:07:15,593 ERROR: Error 500: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2026-05-25 16:07:15,615 INFO: 127.0.0.1 - - [25/May/2026 16:07:15] "[35m[1mGET /user/dashboard HTTP/1.1[0m" 500 -

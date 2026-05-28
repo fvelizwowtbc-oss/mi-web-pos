@@ -1,0 +1,494 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block extra_css %}
+<style>
+    .tasa-bcv-card {
+        background: linear-gradient(135deg, #1e3a5f, #0f2440);
+        color: white;
+        border-radius: var(--radius-lg);
+        padding: 1.25rem;
+        text-align: center;
+    }
+    .tasa-bcv-card .tasa-valor {
+        font-size: 2.5rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+    .tasa-bcv-card .tasa-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        opacity: 0.8;
+    }
+    .tasa-bcv-card .tasa-fuente {
+        font-size: 0.65rem;
+        opacity: 0.6;
+    }
+    .chart-container {
+        position: relative;
+        height: 200px;
+        width: 100%;
+    }
+    .bar-chart-dia {
+        display: flex;
+        align-items: flex-end;
+        gap: 4px;
+        height: 150px;
+        padding-top: 20px;
+    }
+    .bar-dia {
+        flex: 1;
+        background: linear-gradient(180deg, #6366f1, #4f46e5);
+        border-radius: 4px 4px 0 0;
+        min-height: 4px;
+        position: relative;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    .bar-dia:hover {
+        filter: brightness(1.2);
+        transform: scaleY(1.05);
+    }
+    .bar-dia .bar-value {
+        position: absolute;
+        top: -18px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.65rem;
+        font-weight: 600;
+        color: #6366f1;
+        white-space: nowrap;
+    }
+    .bar-dia .bar-label {
+        position: absolute;
+        bottom: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.6rem;
+        color: #94a3b8;
+        white-space: nowrap;
+    }
+    .tasa-config-btn {
+        transition: all 0.2s ease;
+    }
+    .tasa-config-btn:hover {
+        transform: scale(1.05);
+    }
+    .mes-anterior-card {
+        border-left: 3px solid #6366f1;
+        transition: all 0.2s ease;
+    }
+    .mes-anterior-card:hover {
+        background: #f8fafc;
+    }
+    .suscripcion-card {
+        border-radius: var(--radius-lg);
+        padding: 1.25rem;
+        transition: all 0.3s ease;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container-fluid px-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h4 class="fw-bold mb-0 fade-in-up">
+                <i class="bi bi-speedometer2 me-2"></i> Dashboard
+            </h4>
+            <p class="text-muted small fade-in-up">Bienvenido, {{ session.get('user_name', 'Usuario') }}</p>
+        </div>
+    </div>
+    
+    <!-- Tasa BCV y Configuración de Tasas -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="tasa-bcv-card fade-in-up">
+                <div class="tasa-label">BCV USD/VES</div>
+                <div class="tasa-valor">
+                    {% if tasa_bcv %}
+                        {{ "%.2f"|format(tasa_bcv|float) }}
+                    {% else %}
+                        36.00
+                    {% endif %}
+                </div>
+                <div class="tasa-fuente mt-1">
+                    Actualizado: {{ now.strftime('%d/%m/%Y %H:%M') if now else 'N/A' }}
+                </div>
+                <button class="btn btn-sm btn-outline-light mt-2" onclick="forzarActualizacionTasa()">
+                    <i class="bi bi-arrow-repeat me-1"></i> Actualizar
+                </button>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card fade-in-up h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="fw-bold mb-0">Configuración de Tasas</h6>
+                        <button class="btn btn-sm btn-outline-primary tasa-config-btn" data-bs-toggle="modal" data-bs-target="#tasasModal">
+                            <i class="bi bi-gear me-1"></i> Configurar
+                        </button>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-4">
+                            <div class="text-center p-2 rounded" style="background: #e0e7ff;">
+                                <small class="text-muted d-block">Tasa Oficial</small>
+                                <strong class="text-primary">
+                                    {% if tasas and tasas.oficial %}
+                                        {{ "%.2f"|format(tasas.oficial|float) }}
+                                    {% else %}
+                                        36.00
+                                    {% endif %}
+                                </strong>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-center p-2 rounded" style="background: #fef3c7;">
+                                <small class="text-muted d-block">Manual 1</small>
+                                <strong class="text-warning">
+                                    {% if tasas and tasas.manual1 %}
+                                        {{ "%.2f"|format(tasas.manual1|float) }}
+                                    {% else %}
+                                        38.00
+                                    {% endif %}
+                                </strong>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-center p-2 rounded" style="background: #d1fae5;">
+                                <small class="text-muted d-block">Manual 2</small>
+                                <strong class="text-success">
+                                    {% if tasas and tasas.manual2 %}
+                                        {{ "%.2f"|format(tasas.manual2|float) }}
+                                    {% else %}
+                                        40.00
+                                    {% endif %}
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-center">
+                        <small class="text-muted">Tasa activa: </small>
+                        <span class="badge badge-primary">
+                            {{ tasas.activa|upper if tasas and tasas.activa else 'OFICIAL' }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Estado de Suscripción -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="fade-in-up">
+                {% if suscripcion and suscripcion.estado == 'activa' %}
+                <div class="suscripcion-card" style="background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border: 2px solid #0ea5e9;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="fw-bold mb-1">
+                                <i class="bi bi-star-fill text-warning me-2"></i>
+                                Plan {{ suscripcion.plan|upper if suscripcion.plan else 'Premium' }}
+                            </h6>
+                            <small class="text-muted">
+                                {% if suscripcion.fecha_fin %}
+                                    Vence: {{ suscripcion.fecha_fin }} | {{ suscripcion.dias if suscripcion.dias else 'N/A' }} días
+                                {% else %}
+                                    Suscripción activa
+                                {% endif %}
+                            </small>
+                        </div>
+                        <span class="badge badge-success">Activo</span>
+                    </div>
+                </div>
+                {% else %}
+                <div class="suscripcion-card" style="background: #fafafa; border: 2px solid #e2e8f0;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="fw-bold mb-1">
+                                <i class="bi bi-star text-muted me-2"></i> Plan Gratuito
+                            </h6>
+                            <small class="text-muted">
+                                Límite: {{ limites.limite_productos if limites else 30 }} productos | 
+                                Ventas: {{ 'No permitidas' if not limites or limites.limite_ventas <= 0 else 'Permitidas' }}
+                            </small>
+                        </div>
+                        <span class="badge badge-warning">Free</span>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Stats Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card fade-in-up">
+                <div class="stat-icon" style="background: #e0e7ff; color: #6366f1;"><i class="bi bi-box"></i></div>
+                <div class="stat-value">{{ stats.total_productos if stats and stats.total_productos else 0 }}</div>
+                <div class="stat-label">Productos</div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card fade-in-up">
+                <div class="stat-icon" style="background: #fee2e2; color: #ef4444;"><i class="bi bi-exclamation-triangle"></i></div>
+                <div class="stat-value">{{ stats.productos_bajo_stock if stats and stats.productos_bajo_stock else 0 }}</div>
+                <div class="stat-label">Stock Bajo</div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card fade-in-up">
+                <div class="stat-icon" style="background: #d1fae5; color: #10b981;"><i class="bi bi-cart-check"></i></div>
+                <div class="stat-value">{{ stats.ventas_mes if stats and stats.ventas_mes else 0 }}</div>
+                <div class="stat-label">Ventas del Mes</div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card fade-in-up">
+                <div class="stat-icon" style="background: #fef3c7; color: #f59e0b;"><i class="bi bi-currency-dollar"></i></div>
+                <div class="stat-value">
+                    {% if stats and stats.ingresos_mes_usd %}
+                        ${{ "%.0f"|format(stats.ingresos_mes_usd|float) }}
+                    {% else %}
+                        $0
+                    {% endif %}
+                </div>
+                <div class="stat-label">Ingresos Mes (USD)</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Gráfico de Ventas por Día y Meses Anteriores -->
+    <div class="row g-3 mb-4">
+        <div class="col-lg-8">
+            <div class="card fade-in-up">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-graph-up me-2"></i> Ventas por Día - {{ now.strftime('%B %Y') if now else 'Mes Actual' }}</span>
+                    <small class="text-muted">Se reinicia cada mes</small>
+                </div>
+                <div class="card-body">
+                    {% if ventas_por_dia and ventas_por_dia|length > 0 %}
+                    <div class="bar-chart-dia">
+                        {% set max_val = ventas_por_dia|map(attribute='total')|max|float %}
+                        {% for dia in ventas_por_dia %}
+                        {% set altura = (dia.total / max_val * 100) if max_val and max_val > 0 else 5 %}
+                        <div class="bar-dia" style="height: {{ altura }}%" 
+                             title="{{ dia.dia }}: ${{ '%.2f'|format(dia.total|float) if dia.total else '0.00' }}">
+                            <div class="bar-value">${{ "%.0f"|format(dia.total|float) if dia.total else '0' }}</div>
+                            <div class="bar-label">{{ dia.dia[8:10] if dia.dia and dia.dia|length >= 10 else '?' }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4 text-muted">
+                        <i class="bi bi-bar-chart fs-3"></i>
+                        <p class="mt-2">No hay ventas este mes</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card fade-in-up">
+                <div class="card-header">
+                    <i class="bi bi-calendar-month me-2"></i> Meses Anteriores
+                </div>
+                <div class="card-body p-0">
+                    {% if meses_anteriores and meses_anteriores|length > 0 %}
+                    <div class="list-group list-group-flush">
+                        {% for mes in meses_anteriores %}
+                        <div class="list-group-item mes-anterior-card">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>{{ mes.mes if mes.mes else 'N/A' }}</strong>
+                                    <small class="text-muted d-block">{{ mes.cantidad if mes.cantidad else 0 }} ventas</small>
+                                </div>
+                                <div class="text-end">
+                                    <div class="fw-bold">${{ "%.2f"|format(mes.total_usd|float) if mes.total_usd else '0.00' }}</div>
+                                    <small class="text-muted">Bs. {{ "%.2f"|format(mes.total_oficial|float) if mes.total_oficial else '0.00' }}</small>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-3 text-muted">
+                        <p class="mb-0">Sin datos de meses anteriores</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Alertas y Categorías -->
+    <div class="row g-3">
+        <div class="col-lg-6">
+            <div class="card fade-in-up">
+                <div class="card-header d-flex justify-content-between">
+                    <span><i class="bi bi-exclamation-triangle text-warning me-2"></i> Alertas de Stock</span>
+                    <a href="{{ url_for('user_inventario') }}" class="btn btn-sm btn-outline-primary">Ver Todo</a>
+                </div>
+                <div class="card-body p-0">
+                    {% if alertas_stock and alertas_stock|length > 0 %}
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead><tr><th>Producto</th><th>Código</th><th>Stock</th><th>Mín</th></tr></thead>
+                            <tbody>
+                                {% for a in alertas_stock %}
+                                <tr>
+                                    <td class="fw-medium">{{ a.nombre if a.nombre else 'N/A' }}</td>
+                                    <td><span class="badge badge-info">{{ a.codigo if a.codigo else 'N/A' }}</span></td>
+                                    <td><span class="badge badge-danger">{{ a.stock_actual if a.stock_actual else 0 }}</span></td>
+                                    <td>{{ a.stock_minimo if a.stock_minimo else 0 }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-3">
+                        <i class="bi bi-check-circle text-success fs-3"></i>
+                        <p class="text-muted mt-2">Sin alertas</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card fade-in-up">
+                <div class="card-header"><i class="bi bi-pie-chart me-2"></i> Ventas por Categoría</div>
+                <div class="card-body">
+                    {% if ventas_categoria and ventas_categoria|length > 0 %}
+                    <div class="table-responsive">
+                        <table class="table table-sm mb-0">
+                            <thead><tr><th>Categoría</th><th class="text-center">Cant</th><th class="text-end">Total</th></tr></thead>
+                            <tbody>
+                                {% for vc in ventas_categoria %}
+                                <tr>
+                                    <td>{{ vc.categoria if vc.categoria else 'Sin categoría' }}</td>
+                                    <td class="text-center">{{ vc.cantidad if vc.cantidad else 0 }}</td>
+                                    <td class="text-end fw-medium">
+                                        {% if vc.total %}
+                                            ${{ "%.2f"|format(vc.total|float) }}
+                                        {% else %}
+                                            $0.00
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-3">
+                        <i class="bi bi-bar-chart fs-3"></i>
+                        <p class="text-muted mt-2">Sin ventas</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Configurar Tasas -->
+<div class="modal fade" id="tasasModal" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold"><i class="bi bi-gear me-2"></i> Configurar Tasas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label small fw-medium">Tasa Manual 1</label>
+                    <input type="number" class="form-control" id="tasaManual1" 
+                           value="{{ tasas.manual1 if tasas else '38.00' }}" step="0.01" min="1">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-medium">Tasa Manual 2</label>
+                    <input type="number" class="form-control" id="tasaManual2" 
+                           value="{{ tasas.manual2 if tasas else '40.00' }}" step="0.01" min="1">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-medium">Tasa Activa</label>
+                    <select class="form-select" id="tasaActivaSelect">
+                        <option value="oficial" {% if tasas and tasas.activa == 'oficial' %}selected{% endif %}>
+                            Oficial ({{ "%.2f"|format(tasas.oficial|float) if tasas and tasas.oficial else '36.00' }})
+                        </option>
+                        <option value="manual1" {% if tasas and tasas.activa == 'manual1' %}selected{% endif %}>
+                            Manual 1 ({{ "%.2f"|format(tasas.manual1|float) if tasas and tasas.manual1 else '38.00' }})
+                        </option>
+                        <option value="manual2" {% if tasas and tasas.activa == 'manual2' %}selected{% endif %}>
+                            Manual 2 ({{ "%.2f"|format(tasas.manual2|float) if tasas and tasas.manual2 else '40.00' }})
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="guardarTasas()">
+                    <i class="bi bi-check-lg me-1"></i> Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    async function forzarActualizacionTasa() {
+        const btn = event.target.closest('button');
+        if (!btn) return;
+        const orig = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+        
+        try {
+            const r = await fetch('/api/actualizar_tasa_ahora');
+            const d = await r.json();
+            if (d.success) {
+                alert('✅ ' + d.message);
+                location.reload();
+            } else {
+                alert('❌ ' + (d.error || 'Error al actualizar'));
+            }
+        } catch(e) {
+            alert('❌ Error de conexión');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = orig;
+        }
+    }
+    
+    async function guardarTasas() {
+        const m1 = document.getElementById('tasaManual1').value;
+        const m2 = document.getElementById('tasaManual2').value;
+        const activa = document.getElementById('tasaActivaSelect').value;
+        
+        try {
+            const r = await fetch('/user/configurar_tasas', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    tasa_manual1: parseFloat(m1) || 38.00,
+                    tasa_manual2: parseFloat(m2) || 40.00,
+                    tasa_activa: activa
+                })
+            });
+            const d = await r.json();
+            if (d.success) {
+                alert('✅ Tasas configuradas correctamente');
+                location.reload();
+            } else {
+                alert('❌ ' + (d.error || 'Error al guardar'));
+            }
+        } catch(e) {
+            alert('❌ Error de conexión');
+        }
+    }
+</script>
+{% endblock %}

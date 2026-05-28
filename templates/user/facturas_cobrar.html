@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+{% block title %}Facturas por Cobrar{% endblock %}
+{% block extra_css %}
+<style>
+    .factura-card {
+        background: white;
+        border: 1px solid var(--gray-200);
+        border-radius: var(--radius-lg);
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+        transition: all 0.2s;
+    }
+    .factura-card:hover { box-shadow: var(--shadow-md); }
+    .factura-card.pendiente { border-left: 4px solid #f59e0b; }
+    .factura-card.pagado { border-left: 4px solid #10b981; opacity: 0.85; }
+    .factura-card.contado { border-left: 4px solid #6366f1; }
+    .abono-item {
+        background: var(--gray-50);
+        border-radius: var(--radius);
+        padding: 0.75rem;
+        margin-top: 0.5rem;
+        font-size: 0.8rem;
+    }
+    .filter-btn.active { background: var(--primary); color: white; }
+    .progress-abono {
+        height: 6px;
+        border-radius: 3px;
+        background: var(--gray-200);
+        margin-top: 5px;
+    }
+    .progress-abono .bar {
+        height: 100%;
+        border-radius: 3px;
+        background: #10b981;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container-fluid px-4">
+    <div class="row mb-4 fade-in-up">
+        <div class="col-sm-6">
+            <h4 class="fw-bold mb-1"><i class="bi bi-receipt me-2"></i> Facturas</h4>
+            <p class="text-muted small">{{ facturas|length }} factura(s)</p>
+        </div>
+        <div class="col-sm-6 text-sm-end">
+            <div class="btn-group">
+                <a href="?filtro=todas" class="btn btn-sm filter-btn {% if filtro=='todas' %}active{% endif %}">Todas</a>
+                <a href="?filtro=contado" class="btn btn-sm filter-btn {% if filtro=='contado' %}active{% endif %}">Contado</a>
+                <a href="?filtro=credito" class="btn btn-sm filter-btn {% if filtro=='credito' %}active{% endif %}">Crédito</a>
+                <a href="?filtro=pendiente" class="btn btn-sm filter-btn {% if filtro=='pendiente' %}active{% endif %}">Pendientes</a>
+            </div>
+        </div>
+    </div>
+
+    {% if facturas %}
+        {% for factura in facturas %}
+        <div class="factura-card fade-in-up {{ factura.estado }} {{ factura.tipo_venta }}">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                <div>
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <h6 class="fw-bold mb-0">{{ factura.nro_factura or 'N/A' }}</h6>
+                        {% if factura.tipo_venta == 'contado' %}
+                        <span class="badge badge-info">Contado</span>
+                        {% else %}
+                        <span class="badge badge-warning">Crédito</span>
+                        {% endif %}
+                        {% if factura.estado == 'pagado' %}
+                        <span class="badge badge-success">Pagado</span>
+                        {% else %}
+                        <span class="badge badge-danger">Pendiente</span>
+                        {% endif %}
+                    </div>
+                    <small class="text-muted">
+                        Cliente: <strong>{{ factura.cliente_nombre }}</strong> | 
+                        Fecha: {{ factura.fecha_creacion[:10] if factura.fecha_creacion else 'N/A' }}
+                    </small>
+                </div>
+                <div class="text-end">
+                    <div>Total: <strong>${{ "%.2f"|format(factura.total_usd|float) }}</strong></div>
+                    <div>Saldo: <strong class="text-danger">${{ "%.2f"|format(factura.saldo_usd|float) }}</strong></div>
+                    {% if factura.tipo_venta == 'credito' %}
+                    <div class="progress-abono">
+                        {% set pagado = factura.total_usd - factura.saldo_usd %}
+                        {% set pct = (pagado / factura.total_usd * 100) if factura.total_usd > 0 else 0 %}
+                        <div class="bar" style="width: {{ pct }}%"></div>
+                    </div>
+                    <small class="text-muted">{{ "%.0f"|format(pct) }}% pagado</small>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Abonos -->
+            {% if factura.abonos %}
+            <div class="mt-2">
+                <small class="text-muted fw-medium">Abonos ({{ factura.abonos|length }}):</small>
+                {% for abono in factura.abonos[:3] %}
+                <div class="abono-item d-flex justify-content-between">
+                    <span>${{ "%.2f"|format(abono.monto_usd|float) }} - {{ abono.metodo_pago }}</span>
+                    <small class="text-muted">{{ abono.creado_en[:10] if abono.creado_en else '' }}</small>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Acciones -->
+            {% if factura.tipo_venta == 'credito' and factura.estado == 'pendiente' %}
+            <div class="d-flex gap-2 mt-3">
+                <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#abonoModal{{ factura.id }}">
+                    <i class="bi bi-cash me-1"></i> Abonar
+                </button>
+                <button class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#precioModal{{ factura.id }}">
+                    <i class="bi bi-pencil me-1"></i> Modificar Precio
+                </button>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Modal Abonar -->
+        {% if factura.tipo_venta == 'credito' and factura.estado == 'pendiente' %}
+        <div class="modal fade" id="abonoModal{{ factura.id }}" tabindex="-1">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Abonar a Factura</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form method="POST" action="{{ url_for('abonar_factura', factura_id=factura.id) }}">
+                        <div class="modal-body">
+                            <p class="small">Saldo pendiente: <strong>${{ "%.2f"|format(factura.saldo_usd|float) }}</strong></p>
+                            <div class="mb-3">
+                                <label class="form-label">Monto USD</label>
+                                <input type="number" class="form-control" name="monto_usd" step="0.01" min="0.01" max="{{ factura.saldo_usd }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Monto VES</label>
+                                <input type="number" class="form-control" name="monto_ves" step="0.01" min="0">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Tasa usada</label>
+                                <input type="number" class="form-control" name="tasa_usada" value="36" step="0.01">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Método de Pago</label>
+                                <select class="form-select" name="metodo_pago">
+                                    <option value="efectivo">Efectivo</option>
+                                    <option value="transferencia">Transferencia</option>
+                                    <option value="pago_movil">Pago Móvil</option>
+                                    <option value="divisa">Divisa</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Notas</label>
+                                <input type="text" class="form-control" name="notas">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success"><i class="bi bi-check-lg me-1"></i> Registrar Abono</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Modificar Precio -->
+        <div class="modal fade" id="precioModal{{ factura.id }}" tabindex="-1">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modificar Precio</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form method="POST" action="{{ url_for('actualizar_precio_factura', factura_id=factura.id) }}">
+                        <div class="modal-body">
+                            <p class="small">Precio actual: <strong>${{ "%.2f"|format(factura.total_usd|float) }}</strong></p>
+                            <div class="mb-3">
+                                <label class="form-label">Nuevo Total USD</label>
+                                <input type="number" class="form-control" name="nuevo_total_usd" step="0.01" value="{{ factura.total_usd }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Nuevo Total VES</label>
+                                <input type="number" class="form-control" name="nuevo_total_ves" step="0.01" value="{{ factura.total_ves }}">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-warning"><i class="bi bi-pencil me-1"></i> Actualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    {% else %}
+    <div class="empty-state fade-in">
+        <i class="bi bi-receipt"></i>
+        <h5>No hay facturas</h5>
+        <p class="text-muted">Realiza una venta para generar facturas</p>
+        <a href="{{ url_for('user_ventas') }}" class="btn btn-primary"><i class="bi bi-cart me-1"></i> Ir a Ventas</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

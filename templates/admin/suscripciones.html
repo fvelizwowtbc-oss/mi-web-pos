@@ -1,0 +1,453 @@
+{% extends "base.html" %}
+{% block title %}Gestión de Suscripciones{% endblock %}
+{% block extra_css %}
+<style>
+    .plan-card {
+        border: 2px solid var(--gray-200);
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+        text-align: center;
+        transition: var(--transition);
+        cursor: pointer;
+        height: 100%;
+    }
+    
+    .plan-card:hover {
+        border-color: var(--primary);
+        box-shadow: var(--shadow-lg);
+        transform: translateY(-4px);
+    }
+    
+    .plan-card.selected {
+        border-color: var(--primary);
+        background: #e0e7ff;
+    }
+    
+    .plan-card.recommended {
+        border-color: var(--success);
+        position: relative;
+    }
+    
+    .plan-card.recommended::before {
+        content: 'RECOMENDADO';
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--success);
+        color: white;
+        padding: 0.25rem 1rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+    
+    .plan-price {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary);
+    }
+    
+    .plan-price small {
+        font-size: 1rem;
+        color: var(--gray-500);
+    }
+    
+    .plan-features {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+    }
+    
+    .plan-features li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--gray-100);
+        font-size: 0.875rem;
+    }
+    
+    .plan-features li i {
+        color: var(--success);
+        margin-right: 0.5rem;
+    }
+    
+    .suscripcion-activa {
+        background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+        border: 2px solid var(--success);
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+    }
+    
+    .suscripcion-vencida {
+        background: linear-gradient(135deg, #fef2f2, #fee2e2);
+        border: 2px solid var(--danger);
+    }
+    
+    .badge-plan {
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.8125rem;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container-fluid px-4">
+    <div class="row mb-4 fade-in-up">
+        <div class="col-sm-6">
+            <h4 class="fw-bold mb-1">
+                <i class="bi bi-star me-2"></i> Gestión de Suscripciones
+            </h4>
+            <p class="text-muted small mb-0">Administra las suscripciones de los usuarios</p>
+        </div>
+        <div class="col-sm-6 text-sm-end">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevaSuscripcionModal">
+                <i class="bi bi-plus-lg me-1"></i> Nueva Suscripción
+            </button>
+        </div>
+    </div>
+    
+    <!-- Suscripciones Activas -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card fade-in-up">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-check-circle text-success me-2"></i> Suscripciones Activas</span>
+                    <span class="badge badge-success">{{ suscripciones|selectattr('estado', 'equalto', 'activa')|list|length }} activas</span>
+                </div>
+                <div class="card-body p-0">
+                    {% set activas = suscripciones|selectattr('estado', 'equalto', 'activa')|list %}
+                    {% if activas %}
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Plan</th>
+                                    <th>Días</th>
+                                    <th>Inicio</th>
+                                    <th>Vencimiento</th>
+                                    <th>Monto</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for sub in activas %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="user-avatar" style="width: 32px; height: 32px; font-size: 0.75rem;">
+                                                {{ sub.usuario_nombre[0]|upper if sub.usuario_nombre else 'U' }}
+                                            </div>
+                                            <div>
+                                                <div class="fw-medium small">{{ sub.usuario_nombre }}</div>
+                                                <small class="text-muted">{{ sub.usuario_email }}</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge-plan badge-info">{{ sub.plan|upper }}</span>
+                                    </td>
+                                    <td>{{ sub.dias }}</td>
+                                    <td><small>{{ sub.fecha_inicio }}</small></td>
+                                    <td>
+                                        <small>
+                                            {% set fecha_fin = sub.fecha_fin|string %}
+                                            {% if fecha_fin < now.strftime('%Y-%m-%d') %}
+                                            <span class="text-danger fw-bold">{{ sub.fecha_fin }}</span>
+                                            {% else %}
+                                            {{ sub.fecha_fin }}
+                                            {% endif %}
+                                        </small>
+                                    </td>
+                                    <td>${{ "%.2f"|format(sub.monto) }}</td>
+                                    <td>
+                                        {% if sub.estado == 'activa' %}
+                                        <span class="badge badge-success">Activa</span>
+                                        {% else %}
+                                        <span class="badge badge-danger">{{ sub.estado }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="d-flex gap-1">
+                                            <button class="btn btn-sm btn-outline-primary" 
+                                                    onclick="extenderSuscripcion({{ sub.id }})" 
+                                                    title="Extender">
+                                                <i class="bi bi-calendar-plus"></i>
+                                            </button>
+                                            <form method="POST" action="{{ url_for('cancelar_suscripcion', suscripcion_id=sub.id) }}" 
+                                                  onsubmit="return confirm('¿Cancelar esta suscripción?')" class="d-inline">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Cancelar">
+                                                    <i class="bi bi-x-circle"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="empty-state">
+                        <i class="bi bi-star"></i>
+                        <h6 class="text-muted">No hay suscripciones activas</h6>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Historial de Suscripciones -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card fade-in-up" style="animation-delay: 0.2s;">
+                <div class="card-header">
+                    <i class="bi bi-clock-history me-2"></i> Historial de Suscripciones
+                </div>
+                <div class="card-body p-0">
+                    {% if suscripciones %}
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Plan</th>
+                                    <th>Inicio</th>
+                                    <th>Fin</th>
+                                    <th>Estado</th>
+                                    <th>Creado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for sub in suscripciones %}
+                                <tr>
+                                    <td class="small">{{ sub.usuario_nombre }}</td>
+                                    <td><span class="badge badge-secondary">{{ sub.plan }}</span></td>
+                                    <td><small>{{ sub.fecha_inicio }}</small></td>
+                                    <td><small>{{ sub.fecha_fin }}</small></td>
+                                    <td>
+                                        {% if sub.estado == 'activa' %}
+                                        <span class="badge badge-success">Activa</span>
+                                        {% elif sub.estado == 'cancelada' %}
+                                        <span class="badge badge-danger">Cancelada</span>
+                                        {% else %}
+                                        <span class="badge badge-warning">{{ sub.estado }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td><small>{{ sub.creado_en[:10] if sub.creado_en else 'N/A' }}</small></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="empty-state">
+                        <i class="bi bi-clock-history"></i>
+                        <h6 class="text-muted">No hay historial de suscripciones</h6>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Nueva Suscripción -->
+<div class="modal fade" id="nuevaSuscripcionModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">
+                    <i class="bi bi-plus-circle me-2"></i> Nueva Suscripción
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST" action="{{ url_for('crear_suscripcion') }}">
+                <div class="modal-body">
+                    <!-- Selección de Usuario -->
+                    <div class="mb-4">
+                        <label class="form-label fw-medium">Usuario</label>
+                        <select class="form-select" name="usuario_id" required>
+                            <option value="">Seleccionar usuario...</option>
+                            {% for usuario in usuarios_sin_suscripcion %}
+                            <option value="{{ usuario.id }}">{{ usuario.nombre }} ({{ usuario.email }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <!-- Planes disponibles -->
+                    <label class="form-label fw-medium mb-3">Seleccionar Plan</label>
+                    <div class="row g-3 mb-3" id="planesContainer">
+                        <!-- Plan 30 días -->
+                        <div class="col-md-4">
+                            <div class="plan-card" data-plan="basico" data-dias="30" data-precio="10" onclick="seleccionarPlan(this)">
+                                <h6 class="fw-bold">BÁSICO</h6>
+                                <div class="plan-price">30<span class="fs-6">días</span></div>
+                                <small class="text-muted">$10.00</small>
+                                <ul class="plan-features">
+                                    <li><i class="bi bi-check"></i> 100 productos</li>
+                                    <li><i class="bi bi-check"></i> 50 ventas/mes</li>
+                                    <li><i class="bi bi-check"></i> Soporte básico</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Plan 60 días -->
+                        <div class="col-md-4">
+                            <div class="plan-card recommended" data-plan="profesional" data-dias="60" data-precio="18" onclick="seleccionarPlan(this)">
+                                <h6 class="fw-bold">PROFESIONAL</h6>
+                                <div class="plan-price">60<span class="fs-6">días</span></div>
+                                <small class="text-muted">$18.00</small>
+                                <ul class="plan-features">
+                                    <li><i class="bi bi-check"></i> 500 productos</li>
+                                    <li><i class="bi bi-check"></i> 200 ventas/mes</li>
+                                    <li><i class="bi bi-check"></i> Soporte prioritario</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Plan 90 días -->
+                        <div class="col-md-4">
+                            <div class="plan-card" data-plan="empresarial" data-dias="90" data-precio="25" onclick="seleccionarPlan(this)">
+                                <h6 class="fw-bold">EMPRESARIAL</h6>
+                                <div class="plan-price">90<span class="fs-6">días</span></div>
+                                <small class="text-muted">$25.00</small>
+                                <ul class="plan-features">
+                                    <li><i class="bi bi-check"></i> 2000 productos</li>
+                                    <li><i class="bi bi-check"></i> 1000 ventas/mes</li>
+                                    <li><i class="bi bi-check"></i> Soporte 24/7</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Plan 120 días -->
+                        <div class="col-md-4">
+                            <div class="plan-card" data-plan="ilimitado" data-dias="120" data-precio="30" onclick="seleccionarPlan(this)">
+                                <h6 class="fw-bold">PREMIUM</h6>
+                                <div class="plan-price">120<span class="fs-6">días</span></div>
+                                <small class="text-muted">$30.00</small>
+                                <ul class="plan-features">
+                                    <li><i class="bi bi-check"></i> Productos ilimitados</li>
+                                    <li><i class="bi bi-check"></i> Ventas ilimitadas</li>
+                                    <li><i class="bi bi-check"></i> Soporte VIP</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Plan 180 días -->
+                        <div class="col-md-4">
+                            <div class="plan-card" data-plan="ilimitado" data-dias="180" data-precio="45" onclick="seleccionarPlan(this)">
+                                <h6 class="fw-bold">ULTRA</h6>
+                                <div class="plan-price">180<span class="fs-6">días</span></div>
+                                <small class="text-muted">$45.00</small>
+                                <ul class="plan-features">
+                                    <li><i class="bi bi-check"></i> Productos ilimitados</li>
+                                    <li><i class="bi bi-check"></i> Ventas ilimitadas</li>
+                                    <li><i class="bi bi-check"></i> API incluida</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Plan 365 días -->
+                        <div class="col-md-4">
+                            <div class="plan-card" data-plan="ilimitado" data-dias="365" data-precio="80" onclick="seleccionarPlan(this)">
+                                <h6 class="fw-bold">ANUAL</h6>
+                                <div class="plan-price">1<span class="fs-6"> año</span></div>
+                                <small class="text-muted">$80.00</small>
+                                <ul class="plan-features">
+                                    <li><i class="bi bi-check"></i> Todo ilimitado</li>
+                                    <li><i class="bi bi-check"></i> Mejor valor</li>
+                                    <li><i class="bi bi-check"></i> Ahorra 65%</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <input type="hidden" name="plan" id="planSeleccionado" value="">
+                    <input type="hidden" name="dias" id="diasSeleccionados" value="30">
+                    <input type="hidden" name="monto" id="montoSeleccionado" value="0">
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Notas</label>
+                        <textarea class="form-control" name="notas" rows="2" placeholder="Opcional..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-check-circle me-1"></i> Crear Suscripción
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Extender Suscripción -->
+<div class="modal fade" id="extenderModal" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Extender Suscripción</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="extenderForm" method="POST">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Días adicionales</label>
+                        <select class="form-select" name="dias_extra">
+                            <option value="30">30 días</option>
+                            <option value="60">60 días</option>
+                            <option value="90">90 días</option>
+                            <option value="120">120 días</option>
+                            <option value="180">180 días</option>
+                            <option value="365">1 año</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-calendar-plus me-1"></i> Extender
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function seleccionarPlan(element) {
+        // Remover selección de todos
+        document.querySelectorAll('.plan-card').forEach(card => {
+            card.classList.remove('selected');
+        });
+        
+        // Seleccionar este
+        element.classList.add('selected');
+        
+        // Guardar valores
+        document.getElementById('planSeleccionado').value = element.dataset.plan;
+        document.getElementById('diasSeleccionados').value = element.dataset.dias;
+        document.getElementById('montoSeleccionado').value = element.dataset.precio;
+    }
+    
+    function extenderSuscripcion(id) {
+        document.getElementById('extenderForm').action = '/admin/extender_suscripcion/' + id;
+        new bootstrap.Modal(document.getElementById('extenderModal')).show();
+    }
+    
+    // Seleccionar plan por defecto
+    document.addEventListener('DOMContentLoaded', function() {
+        const recomendado = document.querySelector('.plan-card.recommended');
+        if (recomendado) {
+            seleccionarPlan(recomendado);
+        }
+    });
+</script>
+{% endblock %}

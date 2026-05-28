@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+{% block title %}Reportes{% endblock %}
+{% block extra_css %}
+<style>
+    .report-card {
+        background: white;
+        border: 1px solid var(--gray-200);
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        transition: var(--transition);
+    }
+    
+    .report-card:hover {
+        box-shadow: var(--shadow-md);
+    }
+    
+    .chart-placeholder {
+        background: linear-gradient(135deg, var(--gray-50), var(--gray-100));
+        border-radius: var(--radius);
+        min-height: 250px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gray-400);
+    }
+    
+    .bar-chart {
+        display: flex;
+        align-items: flex-end;
+        gap: 1rem;
+        height: 200px;
+        padding: 1rem 0;
+    }
+    
+    .bar {
+        flex: 1;
+        background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+        border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+        min-height: 4px;
+        transition: var(--transition);
+        position: relative;
+        cursor: pointer;
+    }
+    
+    .bar:hover {
+        filter: brightness(1.1);
+        transform: scaleY(1.05);
+    }
+    
+    .bar-label {
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.625rem;
+        color: var(--gray-500);
+        white-space: nowrap;
+    }
+    
+    .bar-value {
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--primary);
+    }
+    
+    .progress-stat {
+        margin-bottom: 1rem;
+    }
+    
+    .progress-stat .label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8125rem;
+        margin-bottom: 0.25rem;
+    }
+    
+    .progress {
+        height: 8px;
+        border-radius: 4px;
+        background: var(--gray-100);
+    }
+    
+    .progress-bar {
+        border-radius: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        transition: width 0.6s ease;
+    }
+    
+    .table-report th {
+        font-size: 0.7rem;
+    }
+    
+    .table-report td {
+        font-size: 0.8125rem;
+    }
+    
+    .export-btn {
+        transition: var(--transition);
+    }
+    
+    .export-btn:hover {
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container-fluid px-4">
+    <div class="row mb-4 fade-in-up">
+        <div class="col-sm-6">
+            <h4 class="fw-bold mb-1">Reportes</h4>
+            <p class="text-muted small mb-0">Análisis de ventas y productos</p>
+        </div>
+        <div class="col-sm-6 text-sm-end">
+            <button class="btn btn-outline-primary btn-sm export-btn me-1" onclick="window.print()">
+                <i class="bi bi-printer me-1"></i> Imprimir
+            </button>
+            <button class="btn btn-outline-success btn-sm export-btn">
+                <i class="bi bi-download me-1"></i> Exportar CSV
+            </button>
+        </div>
+    </div>
+    
+    <!-- Stats Overview -->
+    <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card fade-in-up" style="animation-delay: 0.1s;">
+                <div class="stat-icon" style="background: #e0e7ff; color: #6366f1;">
+                    <i class="bi bi-box"></i>
+                </div>
+                <div class="stat-value">{{ stats.total_productos if stats else 0 }}</div>
+                <div class="stat-label">Productos Totales</div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card fade-in-up" style="animation-delay: 0.2s;">
+                <div class="stat-icon" style="background: #d1fae5; color: #10b981;">
+                    <i class="bi bi-cart-check"></i>
+                </div>
+                <div class="stat-value">{{ stats.total_ventas if stats else 0 }}</div>
+                <div class="stat-label">Ventas Totales</div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card fade-in-up" style="animation-delay: 0.3s;">
+                <div class="stat-icon" style="background: #fef3c7; color: #f59e0b;">
+                    <i class="bi bi-currency-dollar"></i>
+                </div>
+                <div class="stat-value">${{ "%.0f"|format(stats.ingresos_totales if stats else 0) }}</div>
+                <div class="stat-label">Ingresos Totales</div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="stat-card fade-in-up" style="animation-delay: 0.4s;">
+                <div class="stat-icon" style="background: #fee2e2; color: #ef4444;">
+                    <i class="bi bi-graph-up"></i>
+                </div>
+                <div class="stat-value">{{ stats.stock_total if stats else 0 }}</div>
+                <div class="stat-label">Unidades en Stock</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row g-3">
+        <!-- Ventas por Mes -->
+        <div class="col-lg-8">
+            <div class="report-card fade-in-up" style="animation-delay: 0.5s;">
+                <h5 class="fw-bold mb-3">
+                    <i class="bi bi-bar-chart me-2"></i> Ventas por Mes
+                </h5>
+                {% if ventas_por_mes %}
+                <div class="bar-chart">
+                    {% set max_val = ventas_por_mes | map(attribute='total_usd') | max | float %}
+                    {% for mes in ventas_por_mes %}
+                    <div class="bar" style="height: {{ (mes.total_usd / max_val * 100) if max_val > 0 else 0 }}%"
+                         title="{{ mes.mes }}: ${{ '%.2f'|format(mes.total_usd) }}">
+                        <div class="bar-value">${{ "%.0f"|format(mes.total_usd) }}</div>
+                        <div class="bar-label">{{ mes.mes[5:7] }}/{{ mes.mes[2:4] }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="table-responsive mt-4">
+                    <table class="table table-sm table-report">
+                        <thead>
+                            <tr>
+                                <th>Mes</th>
+                                <th>Cantidad Ventas</th>
+                                <th>Total USD</th>
+                                <th>Total VES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for mes in ventas_por_mes %}
+                            <tr>
+                                <td class="fw-medium">{{ mes.mes }}</td>
+                                <td>{{ mes.cantidad }}</td>
+                                <td>${{ "%.2f"|format(mes.total_usd) }}</td>
+                                <td>Bs. {{ "%.2f"|format(mes.total_oficial) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="chart-placeholder">
+                    <div class="text-center">
+                        <i class="bi bi-bar-chart" style="font-size: 3rem;"></i>
+                        <p class="mt-2">No hay datos de ventas</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Top Productos -->
+        <div class="col-lg-4">
+            <div class="report-card fade-in-up" style="animation-delay: 0.6s;">
+                <h5 class="fw-bold mb-3">
+                    <i class="bi bi-trophy me-2"></i> Top Productos
+                </h5>
+                {% if top_productos %}
+                    {% for producto in top_productos %}
+                    <div class="progress-stat">
+                        <div class="label">
+                            <span class="fw-medium small">{{ producto.nombre }}</span>
+                            <span class="text-muted small">{{ producto.total_vendido }} uds</span>
+                        </div>
+                        <div class="progress">
+                            {% set max_vendido = top_productos[0].total_vendido | float %}
+                            <div class="progress-bar" style="width: {{ (producto.total_vendido / max_vendido * 100) if max_vendido > 0 else 0 }}%"></div>
+                        </div>
+                        <small class="text-muted">${{ "%.2f"|format(producto.ingresos) }}</small>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                <div class="chart-placeholder" style="min-height: 200px;">
+                    <div class="text-center">
+                        <i class="bi bi-trophy" style="font-size: 2.5rem;"></i>
+                        <p class="mt-2 small">No hay ventas registradas</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Ventas por Categoría -->
+            <div class="report-card mt-3 fade-in-up" style="animation-delay: 0.7s;">
+                <h5 class="fw-bold mb-3">
+                    <i class="bi bi-pie-chart me-2"></i> Por Categoría
+                </h5>
+                {% if ventas_categoria %}
+                <div class="table-responsive">
+                    <table class="table table-sm table-report mb-0">
+                        <thead>
+                            <tr>
+                                <th>Categoría</th>
+                                <th>Ventas</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for vc in ventas_categoria %}
+                            <tr>
+                                <td>{{ vc.categoria }}</td>
+                                <td>{{ vc.cantidad }}</td>
+                                <td>${{ "%.2f"|format(vc.total_usd) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="chart-placeholder" style="min-height: 150px;">
+                    <div class="text-center">
+                        <i class="bi bi-pie-chart" style="font-size: 2rem;"></i>
+                        <p class="mt-2 small">Sin datos</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

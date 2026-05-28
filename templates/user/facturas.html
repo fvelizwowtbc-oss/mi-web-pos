@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% block title %}Facturas{% endblock %}
+{% block extra_css %}
+<style>
+    .factura-card {
+        background: white;
+        border: 1px solid var(--gray-200);
+        border-radius: var(--radius-lg);
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+        transition: all 0.2s;
+    }
+    .factura-card:hover { box-shadow: var(--shadow-md); }
+    .factura-card.pendiente { border-left: 4px solid #f59e0b; }
+    .factura-card.pagado { border-left: 4px solid #10b981; opacity: 0.9; }
+    .factura-card.credito { border-left: 4px solid #f59e0b; }
+    .factura-card.contado { border-left: 4px solid #6366f1; }
+    .factura-card.generada { border-left: 4px solid #94a3b8; }
+    .abono-item {
+        background: var(--gray-50);
+        border-radius: var(--radius);
+        padding: 0.75rem;
+        margin-top: 0.5rem;
+        font-size: 0.8rem;
+    }
+    .filter-btn { padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.8rem; }
+    .filter-btn.active { background: var(--primary); color: white; }
+    .progress-abono { height: 6px; border-radius: 3px; background: var(--gray-200); margin-top: 5px; }
+    .progress-abono .bar { height: 100%; border-radius: 3px; background: #10b981; }
+    .factura-nro { font-family: 'Courier New', monospace; font-weight: 700; font-size: 1rem; color: var(--gray-900); }
+    .cliente-info { font-size: 0.85rem; }
+    .badge-tipo { font-size: 0.7rem; padding: 0.2rem 0.6rem; }
+    .buscador { max-width: 300px; }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container-fluid px-4">
+    <div class="row mb-4 fade-in-up">
+        <div class="col-sm-6">
+            <h4 class="fw-bold mb-1"><i class="bi bi-receipt me-2"></i> Facturas</h4>
+            <p class="text-muted small">{{ facturas|length }} factura(s)</p>
+        </div>
+        <div class="col-sm-6 text-sm-end">
+            <div class="buscador ms-auto mb-2">
+                <form method="GET" class="search-input">
+                    <i class="bi bi-search"></i>
+                    <input type="text" class="form-control form-control-sm" name="buscar" value="{{ buscar }}" placeholder="Buscar factura o cliente...">
+                    {% if filtro != 'todas' %}<input type="hidden" name="filtro" value="{{ filtro }}">{% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="mb-4 fade-in-up">
+        <div class="d-flex gap-2 flex-wrap">
+            <a href="?filtro=todas&buscar={{ buscar }}" class="btn btn-sm filter-btn {% if filtro=='todas' %}active{% endif %}">Todas</a>
+            <a href="?filtro=contado&buscar={{ buscar }}" class="btn btn-sm filter-btn {% if filtro=='contado' %}active{% endif %}">Contado</a>
+            <a href="?filtro=credito&buscar={{ buscar }}" class="btn btn-sm filter-btn {% if filtro=='credito' %}active{% endif %}">Crédito</a>
+            <a href="?filtro=pendiente&buscar={{ buscar }}" class="btn btn-sm filter-btn {% if filtro=='pendiente' %}active{% endif %}">Pendientes</a>
+            <a href="?filtro=pagado&buscar={{ buscar }}" class="btn btn-sm filter-btn {% if filtro=='pagado' %}active{% endif %}">Pagadas</a>
+        </div>
+    </div>
+
+    {% if facturas %}
+        {% for factura in facturas %}
+        <div class="factura-card fade-in-up {{ factura.estado }} {{ factura.tipo_venta }}">
+            <div class="row align-items-start">
+                <div class="col-md-7">
+                    <div class="d-flex align-items-center gap-3 mb-2">
+                        <span class="factura-nro">{{ factura.nro_factura }}</span>
+                        {% if factura.tipo_venta == 'contado' %}
+                        <span class="badge badge-info badge-tipo">Contado</span>
+                        {% elif factura.tipo_venta == 'credito' %}
+                        <span class="badge badge-warning badge-tipo">Crédito</span>
+                        {% endif %}
+                        {% if factura.estado == 'pagado' %}
+                        <span class="badge badge-success badge-tipo">Pagado</span>
+                        {% elif factura.estado == 'pendiente' %}
+                        <span class="badge badge-danger badge-tipo">Pendiente</span>
+                        {% else %}
+                        <span class="badge badge-secondary badge-tipo">Generada</span>
+                        {% endif %}
+                    </div>
+                    <div class="cliente-info">
+                        <strong>Cliente:</strong> {{ factura.cliente }}<br>
+                        <strong>Fecha:</strong> {{ factura.fecha }}
+                    </div>
+                </div>
+                <div class="col-md-5 text-md-end">
+                    {% if factura.total_usd > 0 %}
+                    <div><strong>Total:</strong> ${{ "%.2f"|format(factura.total_usd|float) }}</div>
+                    {% if factura.tipo_venta == 'credito' %}
+                    <div><strong>Saldo:</strong> <span class="text-danger">${{ "%.2f"|format(factura.saldo_usd|float) }}</span></div>
+                    {% set pagado = factura.total_usd - factura.saldo_usd %}
+                    {% set pct = (pagado / factura.total_usd * 100) if factura.total_usd > 0 else 0 %}
+                    <div class="progress-abono"><div class="bar" style="width:{{ pct }}%"></div></div>
+                    <small class="text-muted">{{ "%.0f"|format(pct) }}% pagado</small>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Abonos -->
+            {% if factura.abonos and factura.abonos|length > 0 %}
+            <div class="mt-2">
+                <small class="text-muted fw-medium">Abonos ({{ factura.abonos|length }}):</small>
+                {% for abono in factura.abonos[:5] %}
+                <div class="abono-item d-flex justify-content-between">
+                    <span>${{ "%.2f"|format(abono.monto_usd|float) }} - {{ abono.metodo_pago }}</span>
+                    <small class="text-muted">{{ abono.creado_en[:10] if abono.creado_en else '' }}</small>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Acciones -->
+            <div class="d-flex gap-2 mt-3">
+                {% if factura.url %}
+                <a href="{{ factura.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-eye me-1"></i> Ver
+                </a>
+                {% endif %}
+                {% if factura.tipo_venta == 'credito' and factura.estado == 'pendiente' %}
+                <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#abonoModal{{ factura.id }}">
+                    <i class="bi bi-cash me-1"></i> Abonar
+                </button>
+                <button class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#precioModal{{ factura.id }}">
+                    <i class="bi bi-pencil me-1"></i> Modificar Precio
+                </button>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Modal Abonar -->
+        {% if factura.tipo_venta == 'credito' and factura.estado == 'pendiente' %}
+        <div class="modal fade" id="abonoModal{{ factura.id }}" tabindex="-1">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header"><h5 class="modal-title">Abonar - {{ factura.nro_factura }}</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                    <form method="POST" action="{{ url_for('abonar_factura', factura_id=factura.id) }}">
+                        <div class="modal-body">
+                            <p class="small">Cliente: <strong>{{ factura.cliente }}</strong></p>
+                            <p class="small">Saldo pendiente: <strong>${{ "%.2f"|format(factura.saldo_usd|float) }}</strong></p>
+                            <div class="mb-3"><label class="form-label">Monto USD a abonar</label><input type="number" class="form-control" name="monto_usd" step="0.01" min="0.01" max="{{ factura.saldo_usd }}" required></div>
+                            <div class="mb-3"><label class="form-label">Monto VES</label><input type="number" class="form-control" name="monto_ves" step="0.01" min="0"></div>
+                            <div class="mb-3"><label class="form-label">Tasa usada</label><input type="number" class="form-control" name="tasa_usada" value="36" step="0.01"></div>
+                            <div class="mb-3"><label class="form-label">Método de Pago</label><select class="form-select" name="metodo_pago"><option value="efectivo">Efectivo</option><option value="transferencia">Transferencia</option><option value="pago_movil">Pago Móvil</option><option value="divisa">Divisa</option></select></div>
+                            <div class="mb-3"><label class="form-label">Notas</label><input type="text" class="form-control" name="notas"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success"><i class="bi bi-check-lg me-1"></i> Registrar Abono</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Modificar Precio -->
+        <div class="modal fade" id="precioModal{{ factura.id }}" tabindex="-1">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header"><h5 class="modal-title">Modificar Precio</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                    <form method="POST" action="{{ url_for('actualizar_precio_factura', factura_id=factura.id) }}">
+                        <div class="modal-body">
+                            <p class="small">Precio actual: <strong>${{ "%.2f"|format(factura.total_usd|float) }}</strong></p>
+                            <div class="mb-3"><label class="form-label">Nuevo Total USD</label><input type="number" class="form-control" name="nuevo_total_usd" step="0.01" value="{{ factura.total_usd }}" required></div>
+                            <div class="mb-3"><label class="form-label">Nuevo Total VES</label><input type="number" class="form-control" name="nuevo_total_ves" step="0.01" value="{{ factura.total_ves }}"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-warning"><i class="bi bi-pencil me-1"></i> Actualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    {% else %}
+    <div class="empty-state fade-in">
+        <i class="bi bi-receipt"></i>
+        <h5>No hay facturas</h5>
+        <p class="text-muted">Realiza una venta para generar facturas</p>
+        <a href="{{ url_for('user_ventas') }}" class="btn btn-primary"><i class="bi bi-cart me-1"></i> Ir a Ventas</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

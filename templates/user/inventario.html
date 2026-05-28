@@ -1,0 +1,494 @@
+{% extends "base.html" %}
+{% block title %}Inventario{% endblock %}
+{% block extra_css %}
+<style>
+    .product-card {
+        background: white;
+        border: 1px solid var(--gray-200);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        transition: var(--transition);
+        height: 100%;
+    }
+    .product-card:hover {
+        box-shadow: var(--shadow-lg);
+        transform: translateY(-4px);
+    }
+    .product-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        background: var(--gray-100);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gray-400);
+        font-size: 3rem;
+    }
+    .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .product-info {
+        padding: 1.25rem;
+    }
+    .product-category {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--primary);
+        font-weight: 600;
+    }
+    .product-name {
+        font-weight: 600;
+        font-size: 1rem;
+        margin: 0.25rem 0;
+        color: var(--gray-900);
+    }
+    .product-code {
+        font-size: 0.75rem;
+        color: var(--gray-500);
+    }
+    .product-prices {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+        flex-wrap: wrap;
+    }
+    .price-tag {
+        background: var(--gray-50);
+        border: 1px solid var(--gray-200);
+        border-radius: var(--radius-sm);
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+    .price-tag.usd {
+        background: #e0e7ff;
+        color: #3730a3;
+        border-color: #c7d2fe;
+    }
+    .stock-badge {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+    }
+    .filter-bar {
+        background: white;
+        border: 1px solid var(--gray-200);
+        border-radius: var(--radius-lg);
+        padding: 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+    .btn-action {
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius);
+        transition: var(--transition);
+    }
+    .btn-action:hover {
+        transform: scale(1.1);
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container-fluid px-4">
+    <!-- Header -->
+    <div class="row mb-4 fade-in-up">
+        <div class="col-sm-6">
+            <h4 class="fw-bold mb-1">Inventario</h4>
+            <p class="text-muted small mb-0">{{ stats.total if stats else 0 }} productos</p>
+        </div>
+        <div class="col-sm-6 text-sm-end">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                <i class="bi bi-plus-lg me-1"></i> Nuevo Producto
+            </button>
+        </div>
+    </div>
+    
+    <!-- Stats Mini -->
+    <div class="row g-2 mb-3 fade-in-up" style="animation-delay: 0.1s;">
+        <div class="col-6 col-md-3">
+            <div class="stat-card p-3 text-center">
+                <div class="stat-value" style="font-size: 1.5rem;">{{ stats.get('total', 0) if stats else 0 }}</div>
+                <div class="stat-label">Productos</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card p-3 text-center">
+                <div class="stat-value" style="font-size: 1.5rem;">{{ stats.get('stock_total', 0) if stats else 0 }}</div>
+                <div class="stat-label">En Stock</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card p-3 text-center">
+                <div class="stat-value" style="font-size: 1.5rem;">
+                    {% set valor = stats.get('valor_total', 0) if stats else 0 %}
+                    ${{ "%.0f"|format(valor|float) }}
+                </div>
+                <div class="stat-label">Valor Total</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card p-3 text-center">
+                <div class="stat-value" style="font-size: 1.5rem;">{{ tasas.get('oficial', 36) if tasas else 36 }}</div>
+                <div class="stat-label">Tasa BCV</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Filtros -->
+    <div class="filter-bar fade-in-up" style="animation-delay: 0.2s;">
+        <form method="GET" class="row g-2 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label small mb-1">Buscar</label>
+                <div class="search-input">
+                    <i class="bi bi-search"></i>
+                    <input type="text" class="form-control" name="search" placeholder="Nombre, código o referencia..." value="{{ search }}">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label small mb-1">Categoría</label>
+                <select class="form-select" name="categoria" id="filterCategoria" onchange="this.form.submit()">
+                    <option value="">Todas</option>
+                    {% for cat in categorias_predefinidas %}
+                    <option value="{{ cat }}" {% if categoria == cat %}selected{% endif %}>{{ cat }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label small mb-1">Subcategoría</label>
+                <select class="form-select" name="subcategoria" id="filterSubcategoria">
+                    <option value="">Todas</option>
+                    {% for sub in subcategorias_db %}
+                    <option value="{{ sub.subcategoria }}" {% if subcategoria == sub.subcategoria %}selected{% endif %}>{{ sub.subcategoria }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2 d-flex gap-2">
+                <button type="submit" class="btn btn-primary flex-grow-1"><i class="bi bi-funnel me-1"></i> Filtrar</button>
+                {% if search or categoria %}
+                <a href="{{ url_for('user_inventario') }}" class="btn btn-outline-secondary"><i class="bi bi-x-lg"></i></a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+    
+    <!-- Productos Grid -->
+    <div class="row g-3" id="productosGrid">
+        {% if productos %}
+            {% for producto in productos %}
+            <div class="col-sm-6 col-lg-4 col-xl-3 fade-in-up" style="animation-delay: {{ loop.index0 * 0.05 }}s;">
+                <div class="product-card position-relative">
+                    <div class="product-image">
+                        {% if producto.imagen_url %}
+                        <img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}">
+                        {% else %}
+                        <i class="bi bi-box"></i>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="stock-badge">
+                        {% if producto.stock_actual <= 0 %}
+                        <span class="badge badge-danger">Agotado</span>
+                        {% elif producto.stock_actual <= producto.stock_minimo %}
+                        <span class="badge badge-warning">Stock Bajo</span>
+                        {% else %}
+                        <span class="badge badge-success">{{ producto.stock_actual }} uds</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="product-info">
+                        <div class="product-category">{{ producto.categoria }}</div>
+                        <div class="product-name">{{ producto.nombre }}</div>
+                        <div class="product-code">{{ producto.codigo }}</div>
+                        
+                        {% if producto.marca %}
+                        <div class="mt-1"><span class="badge badge-info">{{ producto.marca }}</span></div>
+                        {% endif %}
+                        
+                        {% if producto.medida_unidad and producto.medida_unidad != 'Unidad' %}
+                        <div class="mt-1">
+                            <span class="badge badge-primary" style="font-size: 0.65rem;">
+                                {{ producto.medida_cantidad }} {{ producto.medida_unidad }}
+                            </span>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="product-prices">
+                            <span class="price-tag usd">${{ "%.2f"|format(producto.precios.usd|float) }}</span>
+                            <span class="price-tag">Bs. {{ "%.2f"|format(producto.precios.oficial|float) }}</span>
+                        </div>
+                        
+                        <div class="d-flex gap-2 mt-3">
+                            <button class="btn btn-sm btn-outline-primary flex-grow-1" onclick="editarProducto({{ producto | tojson | safe }})">
+                                <i class="bi bi-pencil me-1"></i> Editar
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary btn-action" data-bs-toggle="modal" data-bs-target="#stockModal{{ producto.id }}" title="Ajustar Stock">
+                                <i class="bi bi-arrow-left-right"></i>
+                            </button>
+                            <form method="POST" action="{{ url_for('eliminar_producto', producto_id=producto.id) }}" class="d-inline" onsubmit="return confirm('¿Eliminar este producto?')">
+                                <button type="submit" class="btn btn-sm btn-outline-danger btn-action" title="Eliminar"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="empty-state fade-in">
+                    <i class="bi bi-inbox"></i>
+                    <h5>No se encontraron productos</h5>
+                    <p class="text-muted">Agrega tu primer producto o ajusta los filtros</p>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                        <i class="bi bi-plus-lg me-1"></i> Nuevo Producto
+                    </button>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Modal Agregar/Editar Producto -->
+<div class="modal fade" id="addProductModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="modalTitle">
+                    <i class="bi bi-plus-circle me-2"></i> Nuevo Producto
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST" action="{{ url_for('agregar_producto') }}" enctype="multipart/form-data" id="productForm">
+                <div class="modal-body">
+                    <input type="hidden" name="producto_id" id="productoId">
+                    
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Nombre *</label>
+                            <input type="text" class="form-control" name="nombre" id="prodNombre" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Código *</label>
+                            <input type="text" class="form-control" name="codigo" id="prodCodigo" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Referencia</label>
+                            <input type="text" class="form-control" name="referencia" id="prodReferencia">
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label">Categoría *</label>
+                            <select class="form-select" name="categoria" id="prodCategoria" required onchange="loadSubcategorias(this.value)">
+                                <option value="">Seleccionar...</option>
+                                {% for cat in categorias_predefinidas %}
+                                <option value="{{ cat }}">{{ cat }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Subcategoría</label>
+                            <select class="form-select" name="subcategoria" id="prodSubcategoria">
+                                <option value="">Seleccionar...</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <label class="form-label">Marca</label>
+                            <select class="form-select" name="marca" id="prodMarca">
+                                <option value="">Seleccionar...</option>
+                                {% for marca in marcas_moto %}
+                                <option value="{{ marca }}">{{ marca }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Modelo</label>
+                            <input type="text" class="form-control" name="modelo" id="prodModelo">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Color</label>
+                            <input type="text" class="form-control" name="color" id="prodColor">
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <label class="form-label">Precio Costo USD</label>
+                            <input type="number" class="form-control" name="precio_costo_usd" id="prodCosto" step="0.01" min="0" value="0">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Precio Venta USD *</label>
+                            <input type="number" class="form-control" name="precio_venta_usd" id="prodVenta" step="0.01" min="0" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Stock Actual</label>
+                            <input type="number" class="form-control" name="stock_actual" id="prodStock" min="0" value="0">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Stock Mínimo</label>
+                            <input type="number" class="form-control" name="stock_minimo" id="prodStockMin" min="0" value="5">
+                        </div>
+                        
+                        <!-- CAMPOS DE MEDIDA -->
+                        <div class="col-md-3">
+                            <label class="form-label">Unidad de Medida</label>
+                            <select class="form-select" name="medida_unidad" id="prodMedidaUnidad">
+                                <option value="Unidad">Unidad</option>
+                                <option value="Metro">Metro (m)</option>
+                                <option value="Centímetro">Centímetro (cm)</option>
+                                <option value="Kilogramo">Kilogramo (kg)</option>
+                                <option value="Gramo">Gramo (g)</option>
+                                <option value="Litro">Litro (L)</option>
+                                <option value="Mililitro">Mililitro (ml)</option>
+                                <option value="Galón">Galón</option>
+                                <option value="Caja">Caja</option>
+                                <option value="Paquete">Paquete</option>
+                                <option value="Par">Par</option>
+                                <option value="Docena">Docena</option>
+                                <option value="Rollo">Rollo</option>
+                                <option value="Lámina">Lámina</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Cantidad por Unidad</label>
+                            <input type="number" class="form-control" name="medida_cantidad" id="prodMedidaCantidad" value="1" step="0.01" min="0.01">
+                            <small class="text-muted">Ej: 0.5 = 1/2 metro</small>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label">Ubicación</label>
+                            <input type="text" class="form-control" name="ubicacion" id="prodUbicacion">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Fecha Expiración</label>
+                            <input type="date" class="form-control" name="fecha_expiracion" id="prodExpiracion">
+                        </div>
+                        
+                        <div class="col-12">
+                            <label class="form-label">Descripción</label>
+                            <textarea class="form-control" name="descripcion" id="prodDescripcion" rows="2"></textarea>
+                        </div>
+                        
+                        <div class="col-12">
+                            <label class="form-label">Imagen del Producto</label>
+                            <input type="file" class="form-control" name="imagen_producto" accept="image/*">
+                            <small class="text-muted">Formatos: JPG, PNG, GIF, WebP</small>
+                        </div>
+                        
+                        <div class="col-12">
+                            <label class="form-label">Observaciones</label>
+                            <textarea class="form-control" name="observaciones" id="prodObservaciones" rows="1"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i> Guardar Producto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modales de Stock -->
+{% for producto in productos %}
+<div class="modal fade" id="stockModal{{ producto.id }}" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title">Ajustar Stock</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+            <form method="POST" action="{{ url_for('ajustar_stock', producto_id=producto.id) }}">
+                <div class="modal-body">
+                    <p class="fw-medium">{{ producto.nombre }}</p>
+                    <p class="text-muted small">Stock actual: <strong>{{ producto.stock_actual }}</strong></p>
+                    <div class="mb-3">
+                        <label class="form-label">Tipo de Ajuste</label>
+                        <select class="form-select" name="tipo_ajuste" required>
+                            <option value="entrada">Entrada (+)</option>
+                            <option value="salida">Salida (-)</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Cantidad</label>
+                        <input type="number" class="form-control" name="cantidad" min="1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Motivo</label>
+                        <input type="text" class="form-control" name="motivo" placeholder="Opcional">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-arrow-left-right me-1"></i> Ajustar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function loadSubcategorias(categoria) {
+        if (!categoria) {
+            document.getElementById('prodSubcategoria').innerHTML = '<option value="">Seleccionar...</option>';
+            return;
+        }
+        fetch(`/api/obtener_subcategorias?categoria=${encodeURIComponent(categoria)}`)
+            .then(r => r.json())
+            .then(data => {
+                const select = document.getElementById('prodSubcategoria');
+                select.innerHTML = '<option value="">Seleccionar...</option>';
+                if (data.success && data.subcategorias) {
+                    data.subcategorias.forEach(sub => {
+                        select.innerHTML += `<option value="${sub}">${sub}</option>`;
+                    });
+                }
+            })
+            .catch(err => console.error('Error:', err));
+    }
+    
+    function editarProducto(producto) {
+        document.getElementById('modalTitle').innerHTML = '<i class="bi bi-pencil me-2"></i> Editar Producto';
+        document.getElementById('productForm').action = `/user/editar_producto/${producto.id}`;
+        document.getElementById('productoId').value = producto.id;
+        document.getElementById('prodNombre').value = producto.nombre || '';
+        document.getElementById('prodCodigo').value = producto.codigo || '';
+        document.getElementById('prodReferencia').value = producto.referencia || '';
+        document.getElementById('prodCategoria').value = producto.categoria || '';
+        if (producto.categoria) loadSubcategorias(producto.categoria);
+        setTimeout(() => { document.getElementById('prodSubcategoria').value = producto.subcategoria || ''; }, 500);
+        document.getElementById('prodMarca').value = producto.marca || '';
+        document.getElementById('prodModelo').value = producto.modelo || '';
+        document.getElementById('prodColor').value = producto.color || '';
+        document.getElementById('prodCosto').value = producto.precio_costo_usd || 0;
+        document.getElementById('prodVenta').value = producto.precio_venta_usd || 0;
+        document.getElementById('prodStock').value = producto.stock_actual || 0;
+        document.getElementById('prodStockMin').value = producto.stock_minimo || 5;
+        document.getElementById('prodMedidaUnidad').value = producto.medida_unidad || 'Unidad';
+        document.getElementById('prodMedidaCantidad').value = producto.medida_cantidad || 1;
+        document.getElementById('prodUbicacion').value = producto.ubicacion || '';
+        document.getElementById('prodExpiracion').value = producto.fecha_expiracion || '';
+        document.getElementById('prodDescripcion').value = producto.descripcion || '';
+        document.getElementById('prodObservaciones').value = producto.observaciones || '';
+        new bootstrap.Modal(document.getElementById('addProductModal')).show();
+    }
+    
+    document.getElementById('addProductModal').addEventListener('show.bs.modal', function(e) {
+        if (e.relatedTarget && e.relatedTarget.getAttribute('data-bs-target')) {
+            document.getElementById('modalTitle').innerHTML = '<i class="bi bi-plus-circle me-2"></i> Nuevo Producto';
+            document.getElementById('productForm').action = "{{ url_for('agregar_producto') }}";
+            document.getElementById('productForm').reset();
+            document.getElementById('prodSubcategoria').innerHTML = '<option value="">Seleccionar...</option>';
+            document.getElementById('prodMedidaUnidad').value = 'Unidad';
+            document.getElementById('prodMedidaCantidad').value = '1';
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,595 @@
+{% extends "base.html" %}
+
+{% block title %}Reportes{% endblock %}
+
+{% block content %}
+<div class="reportes-container">
+    <h1><i class="fas fa-chart-bar"></i> Reportes</h1>
+    
+    <!-- Filtros de reportes -->
+    <div class="filtros-reporte card">
+        <div class="card-header">
+            <h3><i class="fas fa-filter"></i> Filtros del Reporte</h3>
+        </div>
+        <div class="card-body">
+            <form id="formFiltrosReporte" onsubmit="return generarReporte('ventas', 'formFiltrosReporte')">
+                <div class="filtros-grid">
+                    <div class="form-group">
+                        <label for="tipoReporte"><i class="fas fa-chart-line"></i> Tipo de Reporte</label>
+                        <select id="tipoReporte" name="tipo_reporte" class="form-control" required>
+                            <option value="ventas">Reporte de Ventas</option>
+                            <option value="inventario">Reporte de Inventario</option>
+                            <option value="productos">Productos Más Vendidos</option>
+                            <option value="clientes">Clientes</option>
+                            <option value="utilidades">Utilidades</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fechaDesde"><i class="fas fa-calendar-alt"></i> Fecha Desde</label>
+                        <input type="date" id="fechaDesde" name="fecha_desde" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fechaHasta"><i class="fas fa-calendar-alt"></i> Fecha Hasta</label>
+                        <input type="date" id="fechaHasta" name="fecha_hasta" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="formatoReporte"><i class="fas fa-file-export"></i> Formato</label>
+                        <select id="formatoReporte" name="formato" class="form-control">
+                            <option value="html">HTML (Vista Web)</option>
+                            <option value="pdf">PDF</option>
+                            <option value="excel">Excel</option>
+                            <option value="csv">CSV</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-actions mt-3">
+                    <button type="button" onclick="limpiarFiltros()" class="btn btn-secondary">
+                        <i class="fas fa-broom"></i> Limpiar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-play"></i> Generar Reporte
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Reportes predefinidos -->
+    <div class="reportes-grid">
+        <div class="reporte-card">
+            <div class="reporte-header">
+                <i class="fas fa-shopping-cart"></i>
+                <h4>Ventas Diarias</h4>
+            </div>
+            <div class="reporte-body">
+                <p>Reporte detallado de ventas por día, incluyendo productos, cantidades y montos.</p>
+                <p class="text-muted"><small>Última actualización: Hoy 10:30 AM</small></p>
+            </div>
+            <div class="reporte-footer">
+                <button onclick="generarReporteRapido('ventas_diarias')" class="btn btn-sm btn-primary">
+                    <i class="fas fa-eye"></i> Ver
+                </button>
+                <button onclick="descargarReporte('ventas_diarias', 'pdf')" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-download"></i> PDF
+                </button>
+            </div>
+        </div>
+        
+        <div class="reporte-card">
+            <div class="reporte-header">
+                <i class="fas fa-boxes"></i>
+                <h4>Inventario</h4>
+            </div>
+            <div class="reporte-body">
+                <p>Estado actual del inventario, productos con stock bajo y rotación de productos.</p>
+                <p class="text-muted"><small>Última actualización: Hoy 9:15 AM</small></p>
+            </div>
+            <div class="reporte-footer">
+                <button onclick="generarReporteRapido('inventario')" class="btn btn-sm btn-primary">
+                    <i class="fas fa-eye"></i> Ver
+                </button>
+                <button onclick="descargarReporte('inventario', 'excel')" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-download"></i> Excel
+                </button>
+            </div>
+        </div>
+        
+        <div class="reporte-card">
+            <div class="reporte-header">
+                <i class="fas fa-chart-line"></i>
+                <h4>Top Productos</h4>
+            </div>
+            <div class="reporte-body">
+                <p>Productos más vendidos del mes con análisis de tendencias y comparativa.</p>
+                <p class="text-muted"><small>Última actualización: Ayer 5:45 PM</small></p>
+            </div>
+            <div class="reporte-footer">
+                <button onclick="generarReporteRapido('top_productos')" class="btn btn-sm btn-primary">
+                    <i class="fas fa-eye"></i> Ver
+                </button>
+                <button onclick="descargarReporte('top_productos', 'pdf')" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-download"></i> PDF
+                </button>
+            </div>
+        </div>
+        
+        <div class="reporte-card">
+            <div class="reporte-header">
+                <i class="fas fa-users"></i>
+                <h4>Clientes</h4>
+            </div>
+            <div class="reporte-body">
+                <p>Análisis de clientes, frecuencia de compras y valor de clientes recurrentes.</p>
+                <p class="text-muted"><small>Última actualización: 2 días atrás</small></p>
+            </div>
+            <div class="reporte-footer">
+                <button onclick="generarReporteRapido('clientes')" class="btn btn-sm btn-primary">
+                    <i class="fas fa-eye"></i> Ver
+                </button>
+                <button onclick="descargarReporte('clientes', 'excel')" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-download"></i> Excel
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Gráficos y estadísticas -->
+    <div class="chart-container">
+        <h4><i class="fas fa-chart-pie"></i> Estadísticas Rápidas</h4>
+        <div class="stats-grid compact">
+            <div class="stat-card">
+                <div class="stat-icon bg-primary">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>${{ "%.2f"|format(estadisticas.ventas_hoy|float) }}</h3>
+                    <p>Ventas Hoy</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon bg-success">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>{{ estadisticas.transacciones_hoy|int }}</h3>
+                    <p>Transacciones Hoy</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon bg-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>{{ estadisticas.stock_bajo|int }}</h3>
+                    <p>Productos Bajo Stock</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon bg-info">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>{{ "%.1f"|format(estadisticas.crecimiento|float) }}%</h3>
+                    <p>Crecimiento del Mes</p>
+                    <div class="stat-trend {{ 'positive' if (estadisticas.crecimiento|float) > 0 else 'negative' }}">
+                        <i class="fas fa-arrow-{{ 'up' if (estadisticas.crecimiento|float) > 0 else 'down' }}"></i>
+                        {{ "%.1f"|format(estadisticas.crecimiento|float) }}%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tabla de reportes recientes -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3><i class="fas fa-history"></i> Reportes Recientes</h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Tipo</th>
+                            <th>Período</th>
+                            <th>Formato</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if reportes_recientes %}
+                            {% for reporte in reportes_recientes %}
+                            <tr>
+                                <td>{{ reporte.fecha if reporte.fecha else 'N/A' }}</td>
+                                <td>
+                                    <span class="badge {{ 
+                                        'badge-primary' if reporte.tipo == 'ventas' else
+                                        'badge-success' if reporte.tipo == 'inventario' else
+                                        'badge-warning' if reporte.tipo == 'productos' else
+                                        'badge-info'
+                                    }}">
+                                        {{ reporte.tipo|title if reporte.tipo else 'N/A' }}
+                                    </span>
+                                </td>
+                                <td>{{ reporte.periodo if reporte.periodo else 'N/A' }}</td>
+                                <td>{{ reporte.formato|upper if reporte.formato else 'N/A' }}</td>
+                                <td>
+                                    <button onclick="verReporte('{{ reporte.id|default('') }}')" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button onclick="descargarReporteExistente('{{ reporte.id|default('') }}')" class="btn btn-sm btn-outline-success">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">
+                                    No hay reportes recientes
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para vista previa de reporte -->
+<div id="modalVistaPrevia" class="modal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-file-alt"></i> Vista Previa del Reporte</h3>
+                <button type="button" class="btn-close" onclick="cerrarVistaPrevia()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="contenidoVistaPrevia">
+                    <!-- El contenido del reporte se cargará aquí -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="imprimirReporte()" class="btn btn-secondary">
+                    <i class="fas fa-print"></i> Imprimir
+                </button>
+                <button onclick="descargarVistaPrevia()" class="btn btn-primary">
+                    <i class="fas fa-download"></i> Descargar
+                </button>
+                <button onclick="cerrarVistaPrevia()" class="btn btn-outline-secondary">
+                    <i class="fas fa-times"></i> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts adicionales para funcionalidad de reportes -->
+<script>
+// Función para mostrar alertas (debe estar definida en base.html)
+function showAlert(message, type) {
+    console.log(`${type}: ${message}`);
+    // Implementar según el sistema de alertas que uses
+    alert(message);
+}
+
+// Función para mostrar loading
+function showLoading(button) {
+    if (button) {
+        button.disabled = true;
+        button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando...';
+    }
+}
+
+// Función para ocultar loading
+function hideLoading(button) {
+    if (button) {
+        button.disabled = false;
+        button.innerHTML = '<i class="fas fa-play"></i> Generar Reporte';
+    }
+}
+
+// Configurar fechas por defecto
+document.addEventListener('DOMContentLoaded', function() {
+    const hoy = new Date();
+    const primerDiaMes = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+    
+    // Formatear fechas como YYYY-MM-DD
+    function formatDate(date) {
+        return date.toISOString().split('T')[0];
+    }
+    
+    // Establecer fechas por defecto si no tienen valor
+    const fechaDesde = document.getElementById('fechaDesde');
+    const fechaHasta = document.getElementById('fechaHasta');
+    
+    if (fechaDesde && !fechaDesde.value) {
+        fechaDesde.value = formatDate(primerDiaMes);
+    }
+    
+    if (fechaHasta && !fechaHasta.value) {
+        fechaHasta.value = formatDate(hoy);
+    }
+});
+
+function limpiarFiltros() {
+    const form = document.getElementById('formFiltrosReporte');
+    if (form) {
+        form.reset();
+        
+        // Restaurar fechas por defecto
+        const hoy = new Date();
+        const primerDiaMes = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+        
+        function formatDate(date) {
+            return date.toISOString().split('T')[0];
+        }
+        
+        document.getElementById('fechaDesde').value = formatDate(primerDiaMes);
+        document.getElementById('fechaHasta').value = formatDate(hoy);
+        
+        showAlert('Filtros limpiados', 'info');
+    }
+}
+
+function generarReporte(tipo, formId) {
+    const form = document.getElementById(formId);
+    if (!form) {
+        showAlert('Formulario no encontrado', 'danger');
+        return false;
+    }
+    
+    const submitBtn = form.querySelector('button[type="submit"]');
+    showLoading(submitBtn);
+    
+    // Simular procesamiento del reporte
+    setTimeout(function() {
+        hideLoading(submitBtn);
+        
+        // Mostrar vista previa simulada
+        const tipoReporte = document.getElementById('tipoReporte').value;
+        const fechaDesde = document.getElementById('fechaDesde').value;
+        const fechaHasta = document.getElementById('fechaHasta').value;
+        
+        const contenido = `
+            <div class="reporte-vista-previa">
+                <h4 class="text-center mb-4">Reporte de ${tipoReporte.toUpperCase()}</h4>
+                <p class="text-center text-muted mb-4">
+                    Período: ${fechaDesde} al ${fechaHasta}
+                </p>
+                
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Descripción</th>
+                                <th>Cantidad</th>
+                                <th>Monto (USD)</th>
+                                <th>Monto (Bs.)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>001</td>
+                                <td>Producto de Ejemplo 1</td>
+                                <td>10</td>
+                                <td>$100.00</td>
+                                <td>Bs. 3,600.00</td>
+                            </tr>
+                            <tr>
+                                <td>002</td>
+                                <td>Producto de Ejemplo 2</td>
+                                <td>5</td>
+                                <td>$250.00</td>
+                                <td>Bs. 9,000.00</td>
+                            </tr>
+                            <tr>
+                                <td>003</td>
+                                <td>Producto de Ejemplo 3</td>
+                                <td>8</td>
+                                <td>$180.00</td>
+                                <td>Bs. 6,480.00</td>
+                            </tr>
+                            <tr class="table-active">
+                                <td colspan="2"><strong>TOTAL</strong></td>
+                                <td><strong>23</strong></td>
+                                <td><strong>$530.00</strong></td>
+                                <td><strong>Bs. 19,080.00</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="mt-4">
+                    <h5>Resumen Ejecutivo:</h5>
+                    <ul>
+                        <li>Total de ventas en el período: $530.00 USD</li>
+                        <li>Cantidad de transacciones: 3</li>
+                        <li>Producto más vendido: Producto de Ejemplo 1</li>
+                        <li>Promedio por venta: $176.67 USD</li>
+                    </ul>
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('contenidoVistaPrevia').innerHTML = contenido;
+        document.getElementById('modalVistaPrevia').style.display = 'flex';
+        
+        showAlert('Reporte generado exitosamente', 'success');
+    }, 2000);
+    
+    return false;
+}
+
+function generarReporteRapido(tipo) {
+    showAlert('Generando reporte rápido: ' + tipo, 'info');
+    
+    // Simular generación de reporte
+    setTimeout(function() {
+        const contenido = `
+            <div class="reporte-vista-previa">
+                <h4 class="text-center mb-4">Reporte Rápido: ${tipo.toUpperCase().replace('_', ' ')}</h4>
+                <p class="text-center text-muted mb-4">
+                    Generado: ${new Date().toLocaleDateString()}
+                </p>
+                
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    Este es un ejemplo de vista previa del reporte. En una implementación real, 
+                    se cargarían los datos desde el servidor.
+                </div>
+                
+                <div class="text-center mt-4">
+                    <i class="fas fa-chart-bar fa-4x text-primary mb-3"></i>
+                    <p>Los datos del reporte se cargarían aquí según el tipo seleccionado.</p>
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('contenidoVistaPrevia').innerHTML = contenido;
+        document.getElementById('modalVistaPrevia').style.display = 'flex';
+    }, 1000);
+}
+
+function cerrarVistaPrevia() {
+    document.getElementById('modalVistaPrevia').style.display = 'none';
+}
+
+function descargarVistaPrevia() {
+    const tipo = document.getElementById('tipoReporte').value;
+    const formato = document.getElementById('formatoReporte').value;
+    descargarReporte(tipo, formato);
+}
+
+function descargarReporte(tipo, formato) {
+    showAlert(`Descargando reporte ${tipo} en formato ${formato}`, 'info');
+    // Aquí iría la lógica real de descarga
+}
+
+function verReporte(idReporte) {
+    showAlert('Cargando reporte ID: ' + idReporte, 'info');
+    generarReporteRapido('existente');
+}
+
+function descargarReporteExistente(idReporte) {
+    showAlert('Descargando reporte ID: ' + idReporte, 'info');
+    descargarReporte('existente', 'pdf');
+}
+
+function imprimirReporte() {
+    window.print();
+}
+
+// Cerrar modal al hacer clic fuera
+window.onclick = function(event) {
+    const modal = document.getElementById('modalVistaPrevia');
+    if (event.target == modal) {
+        cerrarVistaPrevia();
+    }
+}
+
+// Cerrar modal con tecla ESC
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        cerrarVistaPrevia();
+    }
+});
+</script>
+
+<style>
+.reporte-vista-previa {
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.reporte-vista-previa h4 {
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+.reporte-vista-previa table {
+    margin-top: 20px;
+}
+
+.reporte-vista-previa table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.reporte-vista-previa .table-active {
+    background-color: #e3f2fd;
+}
+
+.stats-grid.compact {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: white;
+    font-size: 24px;
+}
+
+.bg-primary { background-color: #3498db; }
+.bg-success { background-color: #2ecc71; }
+.bg-warning { background-color: #f39c12; }
+.bg-info { background-color: #3498db; }
+
+.stat-info h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.stat-info p {
+    margin: 5px 0 0;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.stat-trend {
+    font-size: 0.8rem;
+    margin-top: 3px;
+}
+
+.stat-trend.positive {
+    color: #27ae60;
+}
+
+.stat-trend.negative {
+    color: #e74c3c;
+}
+</style>
+{% endblock %}

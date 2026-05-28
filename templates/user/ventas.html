@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% block title %}Ventas{% endblock %}
+{% block extra_css %}
+<style>
+    .cart-item { background: white; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 1rem; margin-bottom: 0.75rem; transition: var(--transition); animation: slideIn 0.3s ease-out; }
+    .cart-item:hover { box-shadow: var(--shadow-sm); }
+    .cart-summary { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 1.5rem; position: sticky; top: 80px; }
+    .cart-empty { text-align: center; padding: 3rem 1rem; color: var(--gray-400); }
+    .cart-empty i { font-size: 4rem; display: block; margin-bottom: 1rem; }
+    .product-select-item { cursor: pointer; transition: var(--transition); border-left: 3px solid transparent; display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1rem; }
+    .product-select-item:hover { background: var(--gray-50); border-left-color: var(--primary); }
+    .product-select-item.selected { background: #e0e7ff; border-left-color: var(--primary); animation: pulse 0.3s ease; }
+    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(0.98)} }
+    .product-thumb { width: 56px; height: 56px; border-radius: var(--radius); object-fit: cover; background: var(--gray-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
+    .product-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .product-thumb .placeholder-icon { font-size: 1.5rem; color: var(--gray-400); }
+    .product-info-flex { flex: 1; min-width: 0; }
+    .product-info-flex .name { font-weight: 500; font-size: 0.875rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .product-info-flex .meta { font-size: 0.75rem; color: var(--gray-500); }
+    .product-price-tag { text-align: right; flex-shrink: 0; }
+    .product-price-tag .price { font-weight: 700; color: var(--primary); font-size: 0.9375rem; }
+    .product-price-tag .stock { font-size: 0.7rem; color: var(--gray-500); }
+    .quantity-control { display: flex; align-items: center; gap: 0.25rem; }
+    .quantity-control button { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--gray-300); background: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); font-size: 1rem; color: var(--gray-700); flex-shrink: 0; }
+    .quantity-control button:hover { background: var(--gray-100); border-color: var(--gray-400); }
+    .quantity-control button:disabled { opacity: 0.3; cursor: not-allowed; }
+    .quantity-control input { width: 55px; text-align: center; border: 1px solid var(--gray-300); border-radius: var(--radius); padding: 0.35rem 0.25rem; font-weight: 500; font-size: 0.875rem; -moz-appearance: textfield; }
+    .quantity-control input::-webkit-outer-spin-button, .quantity-control input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .tasa-selector { display: flex; gap: 0.25rem; }
+    .tasa-selector .btn { padding: 0.25rem 0.5rem; font-size: 0.65rem; border-radius: 4px; }
+    .tasa-selector .btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .tasa-item-selector { display: flex; gap: 3px; align-items: center; }
+    .tasa-item-selector .btn { padding: 2px 6px; font-size: 0.6rem; border-radius: 3px; line-height: 1.2; }
+    .tasa-item-selector .btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .tasa-item-selector .tasa-label { font-size: 0.6rem; color: var(--gray-500); margin-right: 2px; }
+    .badge-stock { font-size: 0.65rem; padding: 0.15rem 0.4rem; border-radius: 10px; }
+    .badge-stock.low { background: #fee2e2; color: #991b1b; }
+    .badge-stock.ok { background: #d1fae5; color: #065f46; }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container-fluid px-4">
+    <div class="row mb-4 fade-in-up">
+        <div class="col-sm-6"><h4 class="fw-bold mb-1"><i class="bi bi-cart3 me-2"></i> Nueva Venta</h4><p class="text-muted small">Selecciona productos del inventario</p></div>
+        <div class="col-sm-6 text-sm-end">
+            <div class="tasa-selector btn-group" id="tasaGlobalSelector">
+                <button class="btn btn-outline-primary btn-sm active" data-tasa="oficial">Oficial ({{ "%.0f"|format(tasas.oficial|float) if tasas else '36' }})</button>
+                <button class="btn btn-outline-primary btn-sm" data-tasa="manual1">M1 ({{ "%.0f"|format(tasas.manual1|float) if tasas else '38' }})</button>
+                <button class="btn btn-outline-primary btn-sm" data-tasa="manual2">M2 ({{ "%.0f"|format(tasas.manual2|float) if tasas else '40' }})</button>
+            </div>
+        </div>
+    </div>
+    <div class="row g-2 mb-3 fade-in-up" style="animation-delay:0.1s">
+        <div class="col-6 col-md-3"><div class="stat-card p-3 text-center"><div class="stat-value" style="font-size:1.25rem">{{ stats_mes.ventas_mes if stats_mes else 0 }}</div><div class="stat-label">Ventas del Mes</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card p-3 text-center"><div class="stat-value" style="font-size:1.25rem">${{ "%.0f"|format(stats_mes.ingresos_mes_usd|float) if stats_mes and stats_mes.ingresos_mes_usd else '0' }}</div><div class="stat-label">Ingresos Mes</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card p-3 text-center"><div class="stat-value" style="font-size:1.25rem">{{ stats.total_ventas if stats else 0 }}</div><div class="stat-label">Total Ventas</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card p-3 text-center"><div class="stat-value" style="font-size:1.25rem">${{ "%.0f"|format(stats.ingresos_usd|float) if stats and stats.ingresos_usd else '0' }}</div><div class="stat-label">Ingresos Totales</div></div></div>
+    </div>
+    <div class="row g-3">
+        <div class="col-lg-7">
+            <div class="card fade-in-up" style="animation-delay:0.2s">
+                <div class="card-header d-flex justify-content-between"><span><i class="bi bi-box me-2"></i> Catálogo</span><span class="badge badge-info">{{ productos|length }} disponibles</span></div>
+                <div class="card-header border-top"><div class="search-input"><i class="bi bi-search"></i><input type="text" class="form-control form-control-sm" id="searchProduct" placeholder="Buscar producto..."></div></div>
+                <div class="card-body p-0" style="max-height:500px;overflow-y:auto" id="productList">
+                    {% if productos %}
+                        {% for producto in productos %}
+                        <div class="product-select-item list-group-item" data-id="{{ producto.id }}" data-nombre="{{ producto.nombre }}" data-codigo="{{ producto.codigo }}" data-precio="{{ producto.precio_venta_usd }}" data-stock="{{ producto.stock_actual }}" data-categoria="{{ producto.categoria }}" data-imagen="{{ producto.imagen_url or '' }}">
+                            <div class="product-thumb">{% if producto.imagen_url %}<img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}" onerror="this.style.display='none';this.parentElement.querySelector('.placeholder-icon').style.display='flex'"><i class="bi bi-box placeholder-icon" style="display:none"></i>{% else %}<i class="bi bi-box placeholder-icon"></i>{% endif %}</div>
+                            <div class="product-info-flex"><div class="name">{{ producto.nombre }}</div><div class="meta">{{ producto.codigo }}{% if producto.categoria %} · <span class="badge badge-secondary" style="font-size:0.6rem">{{ producto.categoria }}</span>{% endif %}{% if producto.marca %} · {{ producto.marca }}{% endif %}{% if producto.medida_unidad and producto.medida_unidad!='Unidad' %} · {{ producto.medida_cantidad }} {{ producto.medida_unidad }}{% endif %}</div></div>
+                            <div class="product-price-tag"><div class="price">${{ "%.2f"|format(producto.precio_venta_usd|float) }}</div><div class="stock">{% if producto.stock_actual<=3 %}<span class="badge-stock low">Quedan {{ producto.stock_actual }}</span>{% else %}<span class="badge-stock ok">{{ producto.stock_actual }} uds</span>{% endif %}</div></div>
+                        </div>
+                        {% endfor %}
+                    {% else %}<div class="cart-empty"><i class="bi bi-inbox"></i><h6 class="text-muted">No hay productos</h6></div>{% endif %}
+                </div>
+            </div>
+            <div class="card mt-3 fade-in-up" style="animation-delay:0.4s"><div class="card-header"><i class="bi bi-clock-history me-2"></i> Ventas Recientes</div><div class="card-body p-0">{% if ventas_recientes %}<div class="table-responsive"><table class="table table-sm mb-0"><thead><tr><th>Producto</th><th class="text-center">Cant</th><th class="text-end">Total USD</th><th class="text-end">Fecha</th></tr></thead><tbody>{% for v in ventas_recientes %}<tr><td class="small">{{ v.producto_nombre }}</td><td class="text-center">{{ v.cantidad }}</td><td class="text-end fw-medium">${{ "%.2f"|format(v.total_usd|float) }}</td><td class="text-end"><small>{{ v.creado_en[:10] if v.creado_en else '' }}</small></td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="cart-empty"><i class="bi bi-receipt"></i><h6 class="text-muted">Sin ventas</h6></div>{% endif %}</div></div>
+        </div>
+        <div class="col-lg-5">
+            <div class="cart-summary fade-in-up" style="animation-delay:0.3s">
+                <h5 class="fw-bold mb-3 d-flex justify-content-between"><span><i class="bi bi-cart3 me-2"></i>Carrito</span><span class="badge bg-primary rounded-pill" id="cartCount">0</span></h5>
+                <div id="cartItems"><div class="cart-empty"><i class="bi bi-cart"></i><p class="text-muted mb-0">Selecciona productos</p></div></div>
+                <hr>
+                <div class="d-flex justify-content-between mb-2"><span class="text-muted">Subtotal USD:</span><span class="fw-bold" id="subtotalUSD">$0.00</span></div>
+                <div class="d-flex justify-content-between mb-2"><span class="text-muted">Subtotal VES:</span><span class="fw-bold" id="subtotalVES">Bs. 0.00</span></div>
+                <hr>
+                <div class="mb-3"><label class="form-label small fw-medium">Tipo de Venta</label><select class="form-select form-select-sm" id="tipoVenta"><option value="contado">Contado</option><option value="credito">Crédito</option></select></div>
+                <div class="mb-3"><label class="form-label small fw-medium">Cliente</label><select class="form-select form-select-sm" id="clienteSelect"><option value="">Consumidor Final</option>{% for c in clientes %}<option value="{{ c.id }}" data-nombre="{{ c.nombre }}">{{ c.nombre }}</option>{% endfor %}</select><small class="text-muted"><a href="{{ url_for('gestionar_clientes') }}" target="_blank">Gestionar clientes</a></small></div>
+                <div class="mb-3"><label class="form-label small fw-medium">Vendedor</label><select class="form-select form-select-sm" id="vendedorSelect"><option value="">Sin vendedor</option>{% for v in vendedores %}<option value="{{ v.id }}">{{ v.nombre }}</option>{% endfor %}</select></div>
+                <div class="mb-3"><label class="form-label small fw-medium">Método de Pago</label><select class="form-select form-select-sm" id="metodoPago"><option value="efectivo">Efectivo</option><option value="transferencia">Transferencia</option><option value="pago_movil">Pago Móvil</option><option value="divisa">Divisa</option><option value="otro">Otro</option></select></div>
+                <div class="mb-3"><label class="form-label small fw-medium">Observaciones</label><textarea class="form-control form-control-sm" id="observaciones" rows="2" placeholder="Notas..."></textarea></div>
+                <button class="btn btn-success w-100 btn-lg" id="btnProcesarVenta" disabled><i class="bi bi-check-circle me-2"></i>Procesar Venta</button>
+                <button class="btn btn-outline-danger w-100 mt-2 btn-sm" id="btnClearCart" disabled><i class="bi bi-trash me-1"></i>Vaciar Carrito</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+    let cart = []; let tasaGlobal = 'oficial';
+    const tasas = {{ tasas | tojson | safe }};
+    document.querySelectorAll('#tasaGlobalSelector .btn').forEach(btn => { btn.addEventListener('click', function(){ document.querySelectorAll('#tasaGlobalSelector .btn').forEach(b=>b.classList.remove('active')); this.classList.add('active'); tasaGlobal=this.dataset.tasa; updateCartDisplay(); }); });
+    document.getElementById('productList').addEventListener('click', function(e){
+        const item = e.target.closest('.product-select-item'); if(!item) return;
+        const pid=parseInt(item.dataset.id), nombre=item.dataset.nombre, precio=parseFloat(item.dataset.precio), stock=parseInt(item.dataset.stock), imagen=item.dataset.imagen||'', categoria=item.dataset.categoria||'';
+        if(stock<=0){ showToast('Sin stock','danger'); return; }
+        const ei=cart.findIndex(c=>c.producto_id===pid);
+        if(ei>=0){ if(cart[ei].cantidad>=stock){ showToast('Stock maximo','warning'); return; } cart[ei].cantidad+=1; }
+        else { cart.push({producto_id:pid,nombre:nombre,precio_usd:precio,cantidad:1,stock:stock,imagen:imagen,categoria:categoria,tasa_usada:tasaGlobal}); }
+        item.classList.add('selected'); setTimeout(()=>item.classList.remove('selected'),300); updateCartDisplay();
+    });
+    document.getElementById('searchProduct').addEventListener('input', function(){
+        const q=this.value.toLowerCase();
+        document.querySelectorAll('.product-select-item').forEach(item=>{ const n=(item.dataset.nombre||'').toLowerCase(), c=(item.dataset.codigo||'').toLowerCase(), cat=(item.dataset.categoria||'').toLowerCase(); item.style.display=(n.includes(q)||c.includes(q)||cat.includes(q))?'flex':'none'; });
+    });
+    function updateCartDisplay(){
+        const ci=document.getElementById('cartItems'), cc=document.getElementById('cartCount'), su=document.getElementById('subtotalUSD'), sv=document.getElementById('subtotalVES'), bp=document.getElementById('btnProcesarVenta'), bc=document.getElementById('btnClearCart');
+        cc.textContent=cart.reduce((s,i)=>s+i.cantidad,0);
+        if(cart.length===0){ ci.innerHTML='<div class="cart-empty"><i class="bi bi-cart"></i><p class="text-muted mb-0">Selecciona productos</p></div>'; su.textContent='$0.00'; sv.textContent='Bs.0.00'; bp.disabled=true; bc.disabled=true; return; }
+        let tu=0, tv=0; const tn={'oficial':'Oficial','manual1':'Manual 1','manual2':'Manual 2'};
+        ci.innerHTML=cart.map((item,idx)=>{ const sub=item.precio_usd*item.cantidad, tvr=sub*(tasas[item.tasa_usada]||tasas.oficial||36); tu+=sub; tv+=tvr;
+            return `<div class="cart-item"><div class="d-flex gap-3"><div class="cart-item-image d-flex align-items-center justify-content-center" style="width:48px;height:48px;border-radius:8px;background:var(--gray-100);flex-shrink:0">${item.imagen?`<img src="${item.imagen}" style="width:100%;height:100%;object-fit:cover;border-radius:8px">`:'<i class="bi bi-box" style="color:var(--gray-400)"></i>'}</div><div class="flex-grow-1 min-w-0"><div class="fw-medium small text-truncate">${item.nombre}</div><small class="text-muted">$${item.precio_usd.toFixed(2)} c/u</small><div class="d-flex justify-content-between align-items-center mt-2 flex-wrap gap-2"><div class="quantity-control"><button onclick="updateQuantity(${idx},-1)" ${item.cantidad<=1?'disabled':''}>−</button><input type="number" value="${item.cantidad}" min="1" max="${item.stock}" onchange="setQuantity(${idx},this.value)" onkeydown="if(event.key==='Enter'){this.blur();return false}"><button onclick="updateQuantity(${idx},1)" ${item.cantidad>=item.stock?'disabled':''}>+</button></div><div class="tasa-item-selector"><span class="tasa-label">Tasa:</span><button class="btn btn-outline-primary btn-sm ${item.tasa_usada==='oficial'?'active':''}" onclick="cambiarTasaItem(${idx},'oficial')">O</button><button class="btn btn-outline-primary btn-sm ${item.tasa_usada==='manual1'?'active':''}" onclick="cambiarTasaItem(${idx},'manual1')">M1</button><button class="btn btn-outline-primary btn-sm ${item.tasa_usada==='manual2'?'active':''}" onclick="cambiarTasaItem(${idx},'manual2')">M2</button></div></div><div class="d-flex justify-content-between mt-2"><small class="text-muted">Subtotal (${tn[item.tasa_usada]||'Oficial'}):</small><small class="fw-medium">$${sub.toFixed(2)} / Bs.${tvr.toFixed(2)}</small></div><button class="btn btn-sm btn-outline-danger mt-2 w-100" onclick="removeItem(${idx})"><i class="bi bi-x me-1"></i>Quitar</button></div></div></div>`;
+        }).join('');
+        su.textContent=`$${tu.toFixed(2)}`; sv.textContent=`Bs.${tv.toFixed(2)}`; bp.disabled=false; bc.disabled=false;
+    }
+    function updateQuantity(idx,ch){ const nq=cart[idx].cantidad+ch; if(nq<1||nq>cart[idx].stock)return; cart[idx].cantidad=nq; updateCartDisplay(); }
+    function setQuantity(idx,val){ const nq=parseInt(val); if(isNaN(nq)||nq<1)cart[idx].cantidad=1; else if(nq>cart[idx].stock)cart[idx].cantidad=cart[idx].stock; else cart[idx].cantidad=nq; updateCartDisplay(); }
+    function cambiarTasaItem(idx,tasa){ cart[idx].tasa_usada=tasa; updateCartDisplay(); }
+    function removeItem(idx){ cart.splice(idx,1); updateCartDisplay(); }
+    document.getElementById('btnClearCart').addEventListener('click',function(){ if(confirm('¿Vaciar carrito?')){ cart=[]; updateCartDisplay(); showToast('Carrito vaciado','info'); } });
+    document.getElementById('btnProcesarVenta').addEventListener('click',async function(){
+        if(cart.length===0)return;
+        const ventaData={items:cart.map(item=>({producto_id:item.producto_id,cantidad:item.cantidad,precio_usd:item.precio_usd,tasa_usada:item.tasa_usada})),vendedor_id:document.getElementById('vendedorSelect').value||null,metodo_pago:document.getElementById('metodoPago').value,observaciones:document.getElementById('observaciones').value,tipo_venta:document.getElementById('tipoVenta').value,cliente_id:document.getElementById('clienteSelect').value||null,cliente_nombre:document.getElementById('clienteSelect').selectedOptions[0]?.dataset?.nombre||'Consumidor Final'};
+        try {
+            this.disabled=true; this.innerHTML='<span class="spinner-border spinner-border-sm me-1"></span>Procesando...';
+            const r=await fetch('/user/procesar_venta',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(ventaData)});
+            const d=await r.json();
+            if(d.success){ cart=[]; updateCartDisplay(); document.getElementById('observaciones').value=''; showToast('✅ Venta procesada. <a href="'+d.factura_url+'" target="_blank">Ver Factura</a>','success'); setTimeout(()=>location.reload(),2500); }
+            else { showToast('❌ '+d.error,'danger'); }
+        } catch(e){ showToast('❌ Error de conexion','danger'); }
+        finally { this.disabled=false; this.innerHTML='<i class="bi bi-check-circle me-2"></i>Procesar Venta'; }
+    });
+    function showToast(msg,type){
+        const c=document.querySelector('.toast-container'); if(!c)return;
+        const t=document.createElement('div'); t.className=`toast align-items-center text-bg-${type} border-0 show fade-in`; t.setAttribute('role','alert');
+        t.innerHTML=`<div class="d-flex"><div class="toast-body">${msg}</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button></div>`;
+        c.appendChild(t); setTimeout(()=>{t.classList.add('fade-out');setTimeout(()=>t.remove(),300)},4000);
+    }
+</script>
+{% endblock %}

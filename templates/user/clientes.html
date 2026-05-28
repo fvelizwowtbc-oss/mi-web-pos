@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block title %}Clientes{% endblock %}
+{% block extra_css %}
+<style>
+    .cliente-card {
+        background: white;
+        border: 1px solid var(--gray-200);
+        border-radius: var(--radius-lg);
+        padding: 1.25rem;
+        margin-bottom: 0.75rem;
+        transition: all 0.2s ease;
+    }
+    .cliente-card:hover {
+        box-shadow: var(--shadow-md);
+        border-color: var(--primary);
+    }
+    .cliente-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 1.25rem;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container-fluid px-4">
+    <div class="row mb-4 fade-in-up">
+        <div class="col-sm-6">
+            <h4 class="fw-bold mb-1"><i class="bi bi-people me-2"></i> Clientes</h4>
+            <p class="text-muted small">{{ clientes|length }} cliente(s)</p>
+        </div>
+        <div class="col-sm-6 text-sm-end">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addClienteModal">
+                <i class="bi bi-plus-lg me-1"></i> Nuevo Cliente
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        {% if clientes %}
+            {% for cliente in clientes %}
+            <div class="col-md-6 col-lg-4 fade-in-up" style="animation-delay: {{ loop.index0 * 0.05 }}s;">
+                <div class="cliente-card">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="cliente-avatar">{{ cliente.nombre[0]|upper }}</div>
+                        <div>
+                            <h6 class="fw-bold mb-0">{{ cliente.nombre }}</h6>
+                            {% if cliente.documento %}<small class="text-muted">{{ cliente.documento }}</small>{% endif %}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row g-2 small">
+                        {% if cliente.telefono %}
+                        <div class="col-6"><i class="bi bi-telephone me-1 text-primary"></i> {{ cliente.telefono }}</div>
+                        {% endif %}
+                        {% if cliente.email %}
+                        <div class="col-6"><i class="bi bi-envelope me-1 text-primary"></i> {{ cliente.email }}</div>
+                        {% endif %}
+                        {% if cliente.direccion %}
+                        <div class="col-12"><i class="bi bi-geo-alt me-1 text-primary"></i> {{ cliente.direccion }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="empty-state fade-in">
+                    <i class="bi bi-people"></i>
+                    <h5>No hay clientes registrados</h5>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addClienteModal">
+                        <i class="bi bi-plus-lg me-1"></i> Agregar Cliente
+                    </button>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Modal Agregar Cliente -->
+<div class="modal fade" id="addClienteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold"><i class="bi bi-person-plus me-2"></i> Nuevo Cliente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-medium">Nombre *</label>
+                        <input type="text" class="form-control" name="nombre" required>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-md-6">
+                            <label class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" name="telefono">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Documento (RIF/CI)</label>
+                            <input type="text" class="form-control" name="documento">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Dirección</label>
+                        <textarea class="form-control" name="direccion" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i> Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
