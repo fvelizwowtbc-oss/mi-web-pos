@@ -1,53 +1,110 @@
-2026-05-17 13:46:41,363 INFO: Running job "<lambda> (trigger: interval[1:00:00], next run at: 2026-05-17 14:46:41 -04)" (scheduled at 2026-05-17 13:46:41.355966-04:00) [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\executors\base.py:129]
-2026-05-17 13:46:42,192 INFO: [OK] Tasa BCV obtenida: 517.9619 [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app.py:1007]
-2026-05-17 13:46:42,194 INFO: Job "<lambda> (trigger: interval[1:00:00], next run at: 2026-05-17 14:46:41 -04)" executed successfully [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\executors\base.py:156]
-2026-05-17 13:50:36,259 INFO: 127.0.0.1 - - [17/May/2026 13:50:36] "[32mGET /user/dashboard HTTP/1.1[0m" 302 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 13:50:36,270 INFO: 127.0.0.1 - - [17/May/2026 13:50:36] "GET /login HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 14:46:41,363 INFO: Running job "<lambda> (trigger: interval[1:00:00], next run at: 2026-05-17 15:46:41 -04)" (scheduled at 2026-05-17 14:46:41.355966-04:00) [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\executors\base.py:129]
-2026-05-17 14:46:41,373 INFO: Job "<lambda> (trigger: interval[1:00:00], next run at: 2026-05-17 15:46:41 -04)" executed successfully [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\executors\base.py:156]
-2026-05-17 15:46:41,361 INFO: Running job "<lambda> (trigger: interval[1:00:00], next run at: 2026-05-17 16:46:41 -04)" (scheduled at 2026-05-17 15:46:41.355966-04:00) [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\executors\base.py:129]
-2026-05-17 15:46:42,183 INFO: [OK] Tasa BCV obtenida: 517.9619 [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app.py:1007]
-2026-05-17 15:46:42,186 INFO: Job "<lambda> (trigger: interval[1:00:00], next run at: 2026-05-17 16:46:41 -04)" executed successfully [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\executors\base.py:156]
-2026-05-17 16:23:13,613 INFO: Base de datos principal inicializada correctamente [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app.py:330]
-2026-05-17 16:23:13,614 INFO: Aplicacion inicializada correctamente [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app.py:2543]
-2026-05-17 16:23:13,628 INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\schedulers\base.py:507]
-2026-05-17 16:23:13,630 INFO: Added job "<lambda>" to job store "default" [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\schedulers\base.py:1090]
-2026-05-17 16:23:13,630 INFO: Scheduler started [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\schedulers\base.py:214]
-2026-05-17 16:23:13,643 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2026-05-26 09:20:00,595 INFO: 127.0.0.1 - - [26/May/2026 09:20:00] "GET /user/facturas?filtro=pagado&buscar= HTTP/1.1" 200 -
+2026-05-26 09:20:03,972 INFO: 127.0.0.1 - - [26/May/2026 09:20:03] "[36mGET /ver_factura/factura_F-20260525080715-4_2.html HTTP/1.1[0m" 304 -
+2026-05-26 09:21:13,523 INFO: 127.0.0.1 - - [26/May/2026 09:21:13] "GET /user/facturas?filtro=credito&buscar= HTTP/1.1" 200 -
+2026-05-26 09:21:15,511 INFO: 127.0.0.1 - - [26/May/2026 09:21:15] "GET /user/facturas?filtro=todas&buscar= HTTP/1.1" 200 -
+2026-05-26 09:21:16,869 INFO: 127.0.0.1 - - [26/May/2026 09:21:16] "GET /user/inventario HTTP/1.1" 200 -
+2026-05-26 09:21:16,927 INFO: 127.0.0.1 - - [26/May/2026 09:21:16] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-05-26 09:21:19,030 INFO: 127.0.0.1 - - [26/May/2026 09:21:19] "GET /user/dashboard HTTP/1.1" 200 -
+2026-05-26 12:51:20,004 INFO: 127.0.0.1 - - [26/May/2026 12:51:20] "[32mGET /user/dashboard HTTP/1.1[0m" 302 -
+2026-05-26 12:51:20,016 INFO: 127.0.0.1 - - [26/May/2026 12:51:20] "GET /login HTTP/1.1" 200 -
+2026-05-26 12:51:40,119 INFO: 127.0.0.1 - - [26/May/2026 12:51:40] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-05-26 12:51:40,994 INFO: 127.0.0.1 - - [26/May/2026 12:51:40] "GET /user/dashboard HTTP/1.1" 200 -
+2026-05-26 12:51:44,070 INFO: 127.0.0.1 - - [26/May/2026 12:51:44] "GET /api/actualizar_tasa_ahora HTTP/1.1" 200 -
+2026-05-26 12:51:46,112 INFO: 127.0.0.1 - - [26/May/2026 12:51:46] "GET /user/dashboard HTTP/1.1" 200 -
+2026-05-26 12:51:50,810 INFO: 127.0.0.1 - - [26/May/2026 12:51:50] "GET /user/facturas HTTP/1.1" 200 -
+2026-05-26 12:51:55,724 INFO: 127.0.0.1 - - [26/May/2026 12:51:55] "GET /user/inventario HTTP/1.1" 200 -
+2026-05-26 12:51:55,773 INFO: 127.0.0.1 - - [26/May/2026 12:51:55] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-05-26 12:52:00,804 INFO: 127.0.0.1 - - [26/May/2026 12:52:00] "[32mPOST /user/ajustar_stock/1 HTTP/1.1[0m" 302 -
+2026-05-26 12:52:00,821 INFO: 127.0.0.1 - - [26/May/2026 12:52:00] "GET /user/inventario HTTP/1.1" 200 -
+2026-05-26 12:52:00,876 INFO: 127.0.0.1 - - [26/May/2026 12:52:00] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-05-26 12:52:04,522 INFO: 127.0.0.1 - - [26/May/2026 12:52:04] "GET /user/clientes HTTP/1.1" 200 -
+2026-05-26 12:52:32,456 INFO: 127.0.0.1 - - [26/May/2026 12:52:32] "[32mPOST /user/clientes HTTP/1.1[0m" 302 -
+2026-05-26 12:52:32,472 INFO: 127.0.0.1 - - [26/May/2026 12:52:32] "GET /user/clientes HTTP/1.1" 200 -
+2026-05-26 12:52:35,714 INFO: 127.0.0.1 - - [26/May/2026 12:52:35] "GET /user/inventario HTTP/1.1" 200 -
+2026-05-26 12:52:35,758 INFO: 127.0.0.1 - - [26/May/2026 12:52:35] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-05-26 12:52:37,163 INFO: 127.0.0.1 - - [26/May/2026 12:52:37] "GET /user/ventas HTTP/1.1" 200 -
+2026-05-26 12:52:37,212 INFO: 127.0.0.1 - - [26/May/2026 12:52:37] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-05-26 12:53:16,832 INFO: 127.0.0.1 - - [26/May/2026 12:53:16] "POST /user/procesar_venta HTTP/1.1" 200 -
+2026-05-26 12:53:18,744 INFO: 127.0.0.1 - - [26/May/2026 12:53:18] "GET /ver_factura/factura_F-20260526125254-5_2.html HTTP/1.1" 200 -
+2026-05-26 12:53:19,979 INFO: 127.0.0.1 - - [26/May/2026 12:53:19] "GET /user/ventas HTTP/1.1" 200 -
+2026-05-26 12:53:20,012 INFO: 127.0.0.1 - - [26/May/2026 12:53:20] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-05-26 12:53:30,661 INFO: 127.0.0.1 - - [26/May/2026 12:53:30] "GET /user/facturas HTTP/1.1" 200 -
+2026-05-26 12:53:36,710 INFO: 127.0.0.1 - - [26/May/2026 12:53:36] "GET /user/facturas?filtro=credito&buscar= HTTP/1.1" 200 -
+2026-05-26 12:53:37,943 INFO: 127.0.0.1 - - [26/May/2026 12:53:37] "GET /user/facturas?filtro=credito&buscar= HTTP/1.1" 200 -
+2026-05-26 12:53:38,927 INFO: 127.0.0.1 - - [26/May/2026 12:53:38] "GET /user/ventas HTTP/1.1" 200 -
+2026-05-26 12:53:38,976 INFO: 127.0.0.1 - - [26/May/2026 12:53:38] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-02 11:50:59,062 INFO: Aplicacion inicializada
+2026-06-02 11:50:59,089 INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-02 11:50:59,093 INFO: Added job "<lambda>" to job store "default"
+2026-06-02 11:50:59,094 INFO: Scheduler started
+2026-06-02 11:50:59,110 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:5000
- * Running on http://192.168.31.179:5000 [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:23:13,644 INFO: [33mPress CTRL+C to quit[0m [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:44:20,737 INFO: Base de datos principal inicializada correctamente [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app.py:330]
-2026-05-17 16:44:20,738 INFO: Aplicacion inicializada correctamente [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app.py:2543]
-2026-05-17 16:44:20,753 INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\schedulers\base.py:507]
-2026-05-17 16:44:20,755 INFO: Added job "<lambda>" to job store "default" [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\schedulers\base.py:1090]
-2026-05-17 16:44:20,755 INFO: Scheduler started [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\schedulers\base.py:214]
-2026-05-17 16:44:20,769 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://192.168.31.179:5000
+2026-06-02 11:50:59,111 INFO: [33mPress CTRL+C to quit[0m
+2026-06-02 11:51:06,964 INFO: 127.0.0.1 - - [02/Jun/2026 11:51:06] "[32mGET / HTTP/1.1[0m" 302 -
+2026-06-02 11:51:07,186 INFO: 127.0.0.1 - - [02/Jun/2026 11:51:07] "GET /login HTTP/1.1" 200 -
+2026-06-02 11:51:08,076 INFO: 127.0.0.1 - - [02/Jun/2026 11:51:08] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-06-02 12:02:38,462 INFO: Scheduler has been shut down
+2026-06-02 12:02:43,247 INFO: Aplicacion inicializada
+2026-06-02 12:02:43,255 INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-02 12:02:43,257 INFO: Added job "<lambda>" to job store "default"
+2026-06-02 12:02:43,257 INFO: Scheduler started
+2026-06-02 12:02:43,268 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:5000
- * Running on http://192.168.31.179:5000 [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:44:20,769 INFO: [33mPress CTRL+C to quit[0m [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:44:33,548 INFO: 127.0.0.1 - - [17/May/2026 16:44:33] "[32mGET / HTTP/1.1[0m" 302 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:44:33,654 INFO: 127.0.0.1 - - [17/May/2026 16:44:33] "GET /login HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:44:45,226 INFO: 127.0.0.1 - - [17/May/2026 16:44:45] "[32mPOST /login HTTP/1.1[0m" 302 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:44:45,327 INFO: 127.0.0.1 - - [17/May/2026 16:44:45] "GET /user/dashboard HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:44:54,549 INFO: 127.0.0.1 - - [17/May/2026 16:44:54] "GET /user/inventario HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:44:54,639 INFO: 127.0.0.1 - - [17/May/2026 16:44:54] "[36mGET /uploads/2/user_2_prod_1_20260516_212031_5252b177.jpg HTTP/1.1[0m" 304 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:44:58,617 INFO: 127.0.0.1 - - [17/May/2026 16:44:58] "GET /user/ventas HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:44:58,660 INFO: 127.0.0.1 - - [17/May/2026 16:44:58] "[36mGET /uploads/2/user_2_prod_1_20260516_212031_5252b177.jpg HTTP/1.1[0m" 304 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:45:20,859 INFO: [OK] Factura generada: factura_F-20260517164520-2_2.html [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app.py:929]
-2026-05-17 16:45:20,867 INFO: [OK] Venta procesada. Factura: F-20260517164520-2 [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app.py:1837]
-2026-05-17 16:45:20,868 INFO: 127.0.0.1 - - [17/May/2026 16:45:20] "POST /user/procesar_venta HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:45:23,407 INFO: 127.0.0.1 - - [17/May/2026 16:45:23] "GET /user/ventas HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:45:23,449 INFO: 127.0.0.1 - - [17/May/2026 16:45:23] "[36mGET /uploads/2/user_2_prod_1_20260516_212031_5252b177.jpg HTTP/1.1[0m" 304 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:45:24,921 INFO: 127.0.0.1 - - [17/May/2026 16:45:24] "GET /user/facturas HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:45:27,129 INFO: 127.0.0.1 - - [17/May/2026 16:45:27] "GET /ver_factura/factura_F-20260517164520-2_2.html HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:45:44,397 INFO: 127.0.0.1 - - [17/May/2026 16:45:44] "GET /user/ventas HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:45:44,448 INFO: 127.0.0.1 - - [17/May/2026 16:45:44] "[36mGET /uploads/2/user_2_prod_1_20260516_212031_5252b177.jpg HTTP/1.1[0m" 304 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:45:51,207 INFO: 127.0.0.1 - - [17/May/2026 16:45:51] "GET /user/dashboard HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:45:56,762 INFO: 127.0.0.1 - - [17/May/2026 16:45:56] "GET /user/inventario HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 16:45:56,810 INFO: 127.0.0.1 - - [17/May/2026 16:45:56] "[36mGET /uploads/2/user_2_prod_1_20260516_212031_5252b177.jpg HTTP/1.1[0m" 304 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 17:44:20,762 INFO: Running job "<lambda> (trigger: interval[1:00:00], next run at: 2026-05-17 18:44:20 -04)" (scheduled at 2026-05-17 17:44:20.753566-04:00) [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\executors\base.py:129]
-2026-05-17 17:44:21,690 INFO: [OK] Tasa BCV obtenida: 517.9619 [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app.py:1007]
-2026-05-17 17:44:21,693 INFO: Job "<lambda> (trigger: interval[1:00:00], next run at: 2026-05-17 18:44:20 -04)" executed successfully [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\executors\base.py:156]
+ * Running on http://192.168.31.179:5000
+2026-06-02 12:02:43,268 INFO: [33mPress CTRL+C to quit[0m
+2026-06-02 12:02:47,058 INFO: 127.0.0.1 - - [02/Jun/2026 12:02:47] "GET /login HTTP/1.1" 200 -
+2026-06-02 12:02:53,751 INFO: 127.0.0.1 - - [02/Jun/2026 12:02:53] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-06-02 12:03:10,253 INFO: 127.0.0.1 - - [02/Jun/2026 12:03:10] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-02 12:03:23,138 ERROR: Exception on /user/facturas [GET]
+Traceback (most recent call last):
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\nueva\Desktop\Nueva carpeta (2)\app2.py", line 553, in dec
+    return f(*a,**k)
+  File "C:\Users\nueva\Desktop\Nueva carpeta (2)\app2.py", line 924, in listar_facturas
+    return render_template('user/facturas.html',facturas=facturas[:50])
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\templating.py", line 151, in render_template
+    return _render(app, template, context)
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\templating.py", line 132, in _render
+    rv = template.render(context)
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\nueva\Desktop\Nueva carpeta (2)\templates\user\facturas.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\nueva\Desktop\Nueva carpeta (2)\templates\base.html", line 130, in top-level template code
+    <main class="py-4 fade-in">{% block content %}{% endblock %}</main>
+    ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nueva\Desktop\Nueva carpeta (2)\templates\user\facturas.html", line 91, in block 'content'
+    {% if factura.total_usd > 0 %}
+    ^^^^^
+jinja2.exceptions.UndefinedError: 'dict object' has no attribute 'total_usd'
+2026-06-02 12:03:23,224 ERROR: Error 500: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2026-06-02 12:03:23,235 INFO: 127.0.0.1 - - [02/Jun/2026 12:03:23] "[35m[1mGET /user/facturas HTTP/1.1[0m" 500 -
+2026-06-02 12:03:24,767 INFO: 127.0.0.1 - - [02/Jun/2026 12:03:24] "[32mGET / HTTP/1.1[0m" 302 -
+2026-06-02 12:03:29,531 INFO: 127.0.0.1 - - [02/Jun/2026 12:03:29] "GET /api/actualizar_tasa_ahora HTTP/1.1" 200 -
+2026-06-02 12:03:40,892 INFO: 127.0.0.1 - - [02/Jun/2026 12:03:40] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-02 12:04:42,039 INFO: Scheduler has been shut down
+2026-06-02 12:04:46,194 INFO: Aplicacion inicializada
+2026-06-02 12:04:46,200 INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-06-02 12:04:46,202 INFO: Added job "<lambda>" to job store "default"
+2026-06-02 12:04:46,202 INFO: Scheduler started
+2026-06-02 12:04:46,215 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.179:5000
+2026-06-02 12:04:46,216 INFO: [33mPress CTRL+C to quit[0m
+2026-06-02 12:04:48,697 INFO: 127.0.0.1 - - [02/Jun/2026 12:04:48] "[32mGET /user/dashboard HTTP/1.1[0m" 302 -
+2026-06-02 12:04:48,742 INFO: 127.0.0.1 - - [02/Jun/2026 12:04:48] "GET /login HTTP/1.1" 200 -

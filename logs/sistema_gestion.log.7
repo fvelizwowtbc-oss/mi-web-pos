@@ -1,58 +1,91 @@
-2026-05-17 18:44:20,767 INFO: Running job "<lambda> (trigger: interval[1:00:00], next run at: 2026-05-17 19:44:20 -04)" (scheduled at 2026-05-17 18:44:20.753566-04:00) [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\executors\base.py:129]
-2026-05-17 18:44:20,804 INFO: Job "<lambda> (trigger: interval[1:00:00], next run at: 2026-05-17 19:44:20 -04)" executed successfully [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\executors\base.py:156]
-2026-05-17 19:21:07,029 INFO: Base de datos principal inicializada correctamente [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app - copia.py:320]
-2026-05-17 19:21:07,030 INFO: Aplicacion inicializada [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app - copia.py:1276]
-2026-05-17 19:21:07,036 INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\schedulers\base.py:507]
-2026-05-17 19:21:07,038 INFO: Added job "<lambda>" to job store "default" [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\schedulers\base.py:1090]
-2026-05-17 19:21:07,038 INFO: Scheduler started [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\schedulers\base.py:214]
-2026-05-17 19:21:07,049 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2026-06-02 12:04:56,087 INFO: 127.0.0.1 - - [02/Jun/2026 12:04:56] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-06-02 12:04:56,208 INFO: 127.0.0.1 - - [02/Jun/2026 12:04:56] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-02 12:05:01,988 INFO: 127.0.0.1 - - [02/Jun/2026 12:05:01] "GET /user/facturas HTTP/1.1" 200 -
+2026-06-02 12:05:04,336 INFO: 127.0.0.1 - - [02/Jun/2026 12:05:04] "GET /ver_factura/factura_F-20260526125254-5_2.html HTTP/1.1" 200 -
+2026-06-02 12:05:26,491 INFO: 127.0.0.1 - - [02/Jun/2026 12:05:26] "GET /ver_factura/factura_F-20260516212041-1_2.html HTTP/1.1" 200 -
+2026-06-02 12:05:31,308 INFO: 127.0.0.1 - - [02/Jun/2026 12:05:31] "GET /user/ventas HTTP/1.1" 200 -
+2026-06-02 12:05:31,357 INFO: 127.0.0.1 - - [02/Jun/2026 12:05:31] "GET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1" 200 -
+2026-06-02 12:06:04,403 ERROR: Error factura cobrar: database is locked
+2026-06-02 12:06:04,409 INFO: 127.0.0.1 - - [02/Jun/2026 12:06:04] "POST /user/procesar_venta HTTP/1.1" 200 -
+2026-06-02 12:06:06,958 INFO: 127.0.0.1 - - [02/Jun/2026 12:06:06] "GET /user/ventas HTTP/1.1" 200 -
+2026-06-02 12:06:07,003 INFO: 127.0.0.1 - - [02/Jun/2026 12:06:07] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-02 12:06:09,250 INFO: 127.0.0.1 - - [02/Jun/2026 12:06:09] "GET /user/clientes HTTP/1.1" 200 -
+2026-06-02 12:06:10,275 INFO: 127.0.0.1 - - [02/Jun/2026 12:06:10] "GET /user/facturas HTTP/1.1" 200 -
+2026-06-02 12:06:12,176 INFO: 127.0.0.1 - - [02/Jun/2026 12:06:12] "GET /ver_factura/factura_F-20260602120542-6_2.html HTTP/1.1" 200 -
+2026-06-02 12:06:32,889 INFO: 127.0.0.1 - - [02/Jun/2026 12:06:32] "GET /user/clientes HTTP/1.1" 200 -
+2026-06-02 12:06:49,163 INFO: 127.0.0.1 - - [02/Jun/2026 12:06:49] "[32mPOST /user/clientes HTTP/1.1[0m" 302 -
+2026-06-02 12:06:49,182 INFO: 127.0.0.1 - - [02/Jun/2026 12:06:49] "GET /user/clientes HTTP/1.1" 200 -
+2026-06-02 12:06:54,232 INFO: 127.0.0.1 - - [02/Jun/2026 12:06:54] "GET /user/ventas HTTP/1.1" 200 -
+2026-06-02 12:06:54,286 INFO: 127.0.0.1 - - [02/Jun/2026 12:06:54] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-02 12:07:34,243 ERROR: Error factura cobrar: database is locked
+2026-06-02 12:07:34,250 INFO: 127.0.0.1 - - [02/Jun/2026 12:07:34] "POST /user/procesar_venta HTTP/1.1" 200 -
+2026-06-02 12:07:37,526 INFO: 127.0.0.1 - - [02/Jun/2026 12:07:37] "GET /user/ventas HTTP/1.1" 200 -
+2026-06-02 12:07:37,564 INFO: 127.0.0.1 - - [02/Jun/2026 12:07:37] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-02 12:08:01,998 INFO: 127.0.0.1 - - [02/Jun/2026 12:08:01] "GET /user/facturas HTTP/1.1" 200 -
+2026-06-02 12:08:03,447 INFO: 127.0.0.1 - - [02/Jun/2026 12:08:03] "GET /ver_factura/factura_F-20260602120712-7_2.html HTTP/1.1" 200 -
+2026-06-02 12:08:10,954 INFO: 127.0.0.1 - - [02/Jun/2026 12:08:10] "GET /user/reportes HTTP/1.1" 200 -
+2026-06-02 12:08:16,868 INFO: 127.0.0.1 - - [02/Jun/2026 12:08:16] "GET /user/reportes HTTP/1.1" 200 -
+2026-06-02 13:04:46,205 INFO: Running job "<lambda> (trigger: interval[1:00:00], next run at: 2026-06-02 14:04:46 -04)" (scheduled at 2026-06-02 13:04:46.199870-04:00)
+2026-06-02 13:05:02,706 INFO: Job "<lambda> (trigger: interval[1:00:00], next run at: 2026-06-02 14:04:46 -04)" executed successfully
+2026-06-02 14:04:46,208 INFO: Running job "<lambda> (trigger: interval[1:00:00], next run at: 2026-06-02 15:04:46 -04)" (scheduled at 2026-06-02 14:04:46.199870-04:00)
+2026-06-02 14:04:46,225 INFO: Job "<lambda> (trigger: interval[1:00:00], next run at: 2026-06-02 15:04:46 -04)" executed successfully
+2026-06-02 15:04:46,202 INFO: Running job "<lambda> (trigger: interval[1:00:00], next run at: 2026-06-02 16:04:46 -04)" (scheduled at 2026-06-02 15:04:46.199870-04:00)
+2026-06-02 15:05:02,355 INFO: Job "<lambda> (trigger: interval[1:00:00], next run at: 2026-06-02 16:04:46 -04)" executed successfully
+2026-06-02 16:04:46,214 INFO: Running job "<lambda> (trigger: interval[1:00:00], next run at: 2026-06-02 17:04:46 -04)" (scheduled at 2026-06-02 16:04:46.199870-04:00)
+2026-06-02 16:04:46,233 INFO: Job "<lambda> (trigger: interval[1:00:00], next run at: 2026-06-02 17:04:46 -04)" executed successfully
+2026-06-03 11:37:32,378 INFO: Aplicacion inicializada
+2026-06-03 11:37:32,392 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:5000
- * Running on http://192.168.31.179:5000 [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 19:21:07,049 INFO: [33mPress CTRL+C to quit[0m [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 19:23:39,882 INFO: Base de datos principal inicializada correctamente [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app - copia.py:320]
-2026-05-17 19:23:39,883 INFO: Aplicacion inicializada [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app - copia.py:1276]
-2026-05-17 19:23:39,889 INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\schedulers\base.py:507]
-2026-05-17 19:23:39,891 INFO: Added job "<lambda>" to job store "default" [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\schedulers\base.py:1090]
-2026-05-17 19:23:39,891 INFO: Scheduler started [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\schedulers\base.py:214]
-2026-05-17 19:23:39,901 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://192.168.31.179:5000
+2026-06-03 11:37:32,392 INFO: [33mPress CTRL+C to quit[0m
+2026-06-03 11:37:39,989 INFO: 127.0.0.1 - - [03/Jun/2026 11:37:39] "[32mGET / HTTP/1.1[0m" 302 -
+2026-06-03 11:37:40,101 INFO: 127.0.0.1 - - [03/Jun/2026 11:37:40] "GET /login HTTP/1.1" 200 -
+2026-06-03 11:37:40,394 INFO: 127.0.0.1 - - [03/Jun/2026 11:37:40] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-06-03 11:37:46,891 INFO: 127.0.0.1 - - [03/Jun/2026 11:37:46] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-06-03 11:37:48,254 INFO: 127.0.0.1 - - [03/Jun/2026 11:37:48] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-03 11:40:22,008 INFO: 127.0.0.1 - - [03/Jun/2026 11:40:22] "GET /api/actualizar_tasa_ahora HTTP/1.1" 200 -
+2026-06-03 11:40:23,920 INFO: 127.0.0.1 - - [03/Jun/2026 11:40:23] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-03 11:40:28,689 INFO: 127.0.0.1 - - [03/Jun/2026 11:40:28] "GET /user/ventas HTTP/1.1" 200 -
+2026-06-03 11:40:28,880 INFO: 127.0.0.1 - - [03/Jun/2026 11:40:28] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-03 11:41:06,749 ERROR: Error factura cobrar: database is locked
+2026-06-03 11:41:06,755 INFO: 127.0.0.1 - - [03/Jun/2026 11:41:06] "POST /user/procesar_venta HTTP/1.1" 200 -
+2026-06-03 11:41:09,308 INFO: 127.0.0.1 - - [03/Jun/2026 11:41:09] "GET /user/ventas HTTP/1.1" 200 -
+2026-06-03 11:41:09,388 INFO: 127.0.0.1 - - [03/Jun/2026 11:41:09] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-03 11:41:13,611 INFO: 127.0.0.1 - - [03/Jun/2026 11:41:13] "GET /user/facturas HTTP/1.1" 200 -
+2026-06-03 11:41:16,622 INFO: 127.0.0.1 - - [03/Jun/2026 11:41:16] "GET /user/facturas?filtro=credito&buscar= HTTP/1.1" 200 -
+2026-06-03 11:41:18,252 INFO: 127.0.0.1 - - [03/Jun/2026 11:41:18] "GET /ver_factura/factura_F-20260603114101-8_2.html HTTP/1.1" 200 -
+2026-06-03 11:41:29,747 INFO: 127.0.0.1 - - [03/Jun/2026 11:41:29] "GET /user/facturas?filtro=contado&buscar= HTTP/1.1" 200 -
+2026-06-03 11:41:30,905 INFO: 127.0.0.1 - - [03/Jun/2026 11:41:30] "GET /user/facturas?filtro=pendiente&buscar= HTTP/1.1" 200 -
+2026-06-03 11:41:39,091 INFO: 127.0.0.1 - - [03/Jun/2026 11:41:39] "[36mGET /ver_factura/factura_F-20260603114101-8_2.html HTTP/1.1[0m" 304 -
+2026-06-03 11:41:48,699 INFO: 127.0.0.1 - - [03/Jun/2026 11:41:48] "GET /user/facturas?filtro=pagado&buscar= HTTP/1.1" 200 -
+2026-06-03 11:41:50,159 INFO: 127.0.0.1 - - [03/Jun/2026 11:41:50] "GET /user/facturas?filtro=todas&buscar= HTTP/1.1" 200 -
+2026-06-04 08:28:05,432 INFO: Aplicacion inicializada
+2026-06-04 08:28:05,445 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:5000
- * Running on http://192.168.31.179:5000 [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 19:23:39,902 INFO: [33mPress CTRL+C to quit[0m [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 19:23:45,120 INFO: 127.0.0.1 - - [17/May/2026 19:23:45] "[32mGET / HTTP/1.1[0m" 302 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 19:23:45,178 INFO: 127.0.0.1 - - [17/May/2026 19:23:45] "GET /login HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 19:23:53,329 INFO: 127.0.0.1 - - [17/May/2026 19:23:53] "[32mPOST /login HTTP/1.1[0m" 302 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 19:23:54,291 INFO: [OK] Tasa BCV: 517.9619 [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app - copia.py:670]
-2026-05-17 19:23:54,354 INFO: 127.0.0.1 - - [17/May/2026 19:23:54] "GET /user/dashboard HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 19:23:58,874 INFO: 127.0.0.1 - - [17/May/2026 19:23:58] "GET /user/inventario HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 19:23:59,014 INFO: 127.0.0.1 - - [17/May/2026 19:23:59] "[36mGET /uploads/2/user_2_prod_1_20260516_212031_5252b177.jpg HTTP/1.1[0m" 304 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 19:24:21,389 INFO: 127.0.0.1 - - [17/May/2026 19:24:21] "GET /user/ventas HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 19:24:21,429 INFO: 127.0.0.1 - - [17/May/2026 19:24:21] "[36mGET /uploads/2/user_2_prod_1_20260516_212031_5252b177.jpg HTTP/1.1[0m" 304 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 19:24:29,000 INFO: 127.0.0.1 - - [17/May/2026 19:24:29] "GET /user/facturas HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-17 19:24:31,078 INFO: 127.0.0.1 - - [17/May/2026 19:24:31] "[36mGET /ver_factura/factura_F-20260517164520-2_2.html HTTP/1.1[0m" 304 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-18 17:48:53,886 INFO: Base de datos principal inicializada correctamente [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app - copia.py:320]
-2026-05-18 17:48:53,887 INFO: Aplicacion inicializada [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app - copia.py:1276]
-2026-05-18 17:48:53,905 INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\schedulers\base.py:507]
-2026-05-18 17:48:53,907 INFO: Added job "<lambda>" to job store "default" [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\schedulers\base.py:1090]
-2026-05-18 17:48:53,907 INFO: Scheduler started [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\schedulers\base.py:214]
-2026-05-18 17:48:53,923 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://192.168.31.179:5000 [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-18 17:48:53,927 INFO: [33mPress CTRL+C to quit[0m [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-18 17:48:56,637 INFO: 127.0.0.1 - - [18/May/2026 17:48:56] "[32mGET / HTTP/1.1[0m" 302 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-18 17:48:56,804 INFO: 127.0.0.1 - - [18/May/2026 17:48:56] "GET /login HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-18 17:48:57,088 INFO: 127.0.0.1 - - [18/May/2026 17:48:57] "[33mGET /favicon.ico HTTP/1.1[0m" 404 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-18 17:49:04,926 INFO: 127.0.0.1 - - [18/May/2026 17:49:04] "[32mPOST /login HTTP/1.1[0m" 302 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-18 17:49:06,090 INFO: [OK] Tasa BCV: 517.9619 [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app - copia.py:670]
-2026-05-18 17:49:06,215 INFO: 127.0.0.1 - - [18/May/2026 17:49:06] "GET /user/dashboard HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-18 17:49:06,959 INFO: 127.0.0.1 - - [18/May/2026 17:49:06] "[32mPOST /login HTTP/1.1[0m" 302 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-18 17:49:06,981 INFO: 127.0.0.1 - - [18/May/2026 17:49:06] "GET /user/dashboard HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-18 17:49:13,546 INFO: 127.0.0.1 - - [18/May/2026 17:49:13] "GET /user/inventario HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-18 17:49:13,643 INFO: 127.0.0.1 - - [18/May/2026 17:49:13] "[36mGET /uploads/2/user_2_prod_1_20260516_212031_5252b177.jpg HTTP/1.1[0m" 304 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-18 17:49:17,139 INFO: 127.0.0.1 - - [18/May/2026 17:49:17] "GET /user/ventas HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-18 17:49:17,182 INFO: 127.0.0.1 - - [18/May/2026 17:49:17] "[36mGET /uploads/2/user_2_prod_1_20260516_212031_5252b177.jpg HTTP/1.1[0m" 304 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-18 17:49:20,971 INFO: 127.0.0.1 - - [18/May/2026 17:49:20] "GET /user/dashboard HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-18 17:49:23,745 INFO: [OK] Tasa BCV: 517.9619 [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app - copia.py:670]
-2026-05-18 17:49:23,760 INFO: 127.0.0.1 - - [18/May/2026 17:49:23] "GET /api/actualizar_tasa_ahora HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
+ * Running on http://192.168.31.179:5000
+2026-06-04 08:28:05,445 INFO: [33mPress CTRL+C to quit[0m
+2026-06-04 08:28:14,224 INFO: 127.0.0.1 - - [04/Jun/2026 08:28:14] "[32mGET / HTTP/1.1[0m" 302 -
+2026-06-04 08:28:14,334 INFO: 127.0.0.1 - - [04/Jun/2026 08:28:14] "GET /login HTTP/1.1" 200 -
+2026-06-04 08:28:14,582 INFO: 127.0.0.1 - - [04/Jun/2026 08:28:14] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-06-04 08:28:22,630 INFO: 127.0.0.1 - - [04/Jun/2026 08:28:22] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-06-04 08:28:23,757 INFO: 127.0.0.1 - - [04/Jun/2026 08:28:23] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-04 08:28:29,421 INFO: 127.0.0.1 - - [04/Jun/2026 08:28:29] "GET /user/ventas HTTP/1.1" 200 -
+2026-06-04 08:28:29,541 INFO: 127.0.0.1 - - [04/Jun/2026 08:28:29] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-04 08:28:42,258 INFO: 127.0.0.1 - - [04/Jun/2026 08:28:42] "GET /user/facturas HTTP/1.1" 200 -
+2026-06-04 08:28:45,273 INFO: 127.0.0.1 - - [04/Jun/2026 08:28:45] "GET /user/facturas?filtro=credito&buscar= HTTP/1.1" 200 -
+2026-06-04 08:28:47,114 INFO: 127.0.0.1 - - [04/Jun/2026 08:28:47] "GET /user/facturas?filtro=contado&buscar= HTTP/1.1" 200 -
+2026-06-04 08:28:48,207 INFO: 127.0.0.1 - - [04/Jun/2026 08:28:48] "GET /user/facturas?filtro=credito&buscar= HTTP/1.1" 200 -
+2026-06-04 08:28:50,497 INFO: 127.0.0.1 - - [04/Jun/2026 08:28:50] "[36mGET /ver_factura/factura_F-20260603114101-8_2.html HTTP/1.1[0m" 304 -
+2026-06-04 08:28:56,159 INFO: 127.0.0.1 - - [04/Jun/2026 08:28:56] "GET /user/reportes HTTP/1.1" 200 -
+2026-06-04 08:28:59,934 INFO: 127.0.0.1 - - [04/Jun/2026 08:28:59] "GET /user/ventas HTTP/1.1" 200 -
+2026-06-04 08:28:59,981 INFO: 127.0.0.1 - - [04/Jun/2026 08:28:59] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-04 08:29:37,393 INFO: 127.0.0.1 - - [04/Jun/2026 08:29:37] "GET /user/clientes HTTP/1.1" 200 -
+2026-06-04 08:29:39,135 INFO: 127.0.0.1 - - [04/Jun/2026 08:29:39] "GET /user/facturas HTTP/1.1" 200 -
+2026-06-04 08:29:41,442 INFO: 127.0.0.1 - - [04/Jun/2026 08:29:41] "GET /user/inventario HTTP/1.1" 200 -
+2026-06-04 08:29:41,486 INFO: 127.0.0.1 - - [04/Jun/2026 08:29:41] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-04 08:29:42,474 INFO: 127.0.0.1 - - [04/Jun/2026 08:29:42] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-04 08:29:43,202 INFO: 127.0.0.1 - - [04/Jun/2026 08:29:43] "GET /user/ventas HTTP/1.1" 200 -
+2026-06-04 08:29:43,249 INFO: 127.0.0.1 - - [04/Jun/2026 08:29:43] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-04 08:30:08,237 ERROR: Error crear_factura_cobrar: database is locked

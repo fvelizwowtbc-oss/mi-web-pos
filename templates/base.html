@@ -73,6 +73,9 @@
         .toast-container { position: fixed; top: 1rem; right: 1rem; z-index: 9999; }
         .empty-state { text-align: center; padding: 3rem; }
         .empty-state i { font-size: 4rem; color: var(--gray-300); margin-bottom: 1rem; }
+        .search-input { position: relative; }
+        .search-input i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--gray-400); z-index: 10; }
+        .search-input input { padding-left: 2.5rem; }
         @media (max-width: 768px) { .stat-value { font-size: 1.5rem; } }
     </style>
     {% block extra_css %}{% endblock %}
@@ -92,13 +95,13 @@
                     {% elif session.es_vendedor %}
                     <li class="nav-item"><a class="nav-link {% if request.endpoint=='vendedor_ventas' %}active{% endif %}" href="{{ url_for('vendedor_ventas') }}"><i class="bi bi-cart me-1"></i> Ventas</a></li>
                     {% else %}
-<li class="nav-item"><a class="nav-link {% if request.endpoint=='user_dashboard' %}active{% endif %}" href="{{ url_for('user_dashboard') }}"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
-<li class="nav-item"><a class="nav-link {% if request.endpoint=='user_inventario' %}active{% endif %}" href="{{ url_for('user_inventario') }}"><i class="bi bi-box me-1"></i> Inventario</a></li>
-<li class="nav-item"><a class="nav-link {% if request.endpoint=='user_ventas' %}active{% endif %}" href="{{ url_for('user_ventas') }}"><i class="bi bi-cart me-1"></i> Ventas</a></li>
-<li class="nav-item"><a class="nav-link {% if request.endpoint=='gestionar_clientes' %}active{% endif %}" href="{{ url_for('gestionar_clientes') }}"><i class="bi bi-people me-1"></i> Clientes</a></li>
-<li class="nav-item"><a class="nav-link {% if request.endpoint=='listar_facturas' %}active{% endif %}" href="{{ url_for('listar_facturas') }}"><i class="bi bi-receipt me-1"></i> Facturas</a></li>
-<li class="nav-item"><a class="nav-link {% if request.endpoint=='user_reportes' %}active{% endif %}" href="{{ url_for('user_reportes') }}"><i class="bi bi-graph-up me-1"></i> Reportes</a></li>
-{% endif %}
+                    <li class="nav-item"><a class="nav-link {% if request.endpoint=='user_dashboard' %}active{% endif %}" href="{{ url_for('user_dashboard') }}"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.endpoint=='user_inventario' %}active{% endif %}" href="{{ url_for('user_inventario') }}"><i class="bi bi-box me-1"></i> Inventario</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.endpoint=='user_ventas' %}active{% endif %}" href="{{ url_for('user_ventas') }}"><i class="bi bi-cart me-1"></i> Ventas</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.endpoint=='gestionar_clientes' %}active{% endif %}" href="{{ url_for('gestionar_clientes') }}"><i class="bi bi-people me-1"></i> Clientes</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.endpoint=='listar_facturas' %}active{% endif %}" href="{{ url_for('listar_facturas') }}"><i class="bi bi-receipt me-1"></i> Facturas</a></li>
+                    <li class="nav-item"><a class="nav-link {% if request.endpoint=='user_reportes' %}active{% endif %}" href="{{ url_for('user_reportes') }}"><i class="bi bi-graph-up me-1"></i> Reportes</a></li>
+                    {% endif %}
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">

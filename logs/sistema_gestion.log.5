@@ -1,53 +1,98 @@
-2026-05-20 08:42:08,708 INFO: 127.0.0.1 - - [20/May/2026 08:42:08] "GET /login HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:42:08,987 INFO: 127.0.0.1 - - [20/May/2026 08:42:08] "[33mGET /favicon.ico HTTP/1.1[0m" 404 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:42:26,040 INFO: Intentando login para email: demo@demo.com [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app2.py:1079]
-2026-05-20 08:42:26,040 INFO: Usuario encontrado: Usuario Demo (ID: 2) [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app2.py:1091]
-2026-05-20 08:42:26,788 INFO: Usuario 2 inició sesión [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app2.py:1111]
-2026-05-20 08:42:26,792 INFO: 127.0.0.1 - - [20/May/2026 08:42:26] "[32mPOST /login HTTP/1.1[0m" 302 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:42:26,929 INFO: 127.0.0.1 - - [20/May/2026 08:42:26] "GET /user/dashboard HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:42:30,249 INFO: 127.0.0.1 - - [20/May/2026 08:42:30] "[33mGET /api/actualizar_tasa_ahora HTTP/1.1[0m" 404 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:42:32,803 INFO: 127.0.0.1 - - [20/May/2026 08:42:32] "[33mGET /api/actualizar_tasa_ahora HTTP/1.1[0m" 404 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:42:48,599 INFO: 127.0.0.1 - - [20/May/2026 08:42:48] "[33mGET /api/actualizar_tasa_ahora HTTP/1.1[0m" 404 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:43:00,231 INFO: Accediendo a reportes para usuario 2 [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app2.py:2236]
-2026-05-20 08:43:00,236 INFO: Reportes cargados para usuario 2: {'ventas_hoy': 0.0, 'transacciones_hoy': 0, 'stock_bajo': 1, 'crecimiento': 0.0} [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app2.py:2386]
-2026-05-20 08:43:00,309 INFO: 127.0.0.1 - - [20/May/2026 08:43:00] "GET /user/reportes HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:43:02,590 INFO: 127.0.0.1 - - [20/May/2026 08:43:02] "[33mGET /user/facturas HTTP/1.1[0m" 404 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:43:09,645 INFO: Base de datos principal inicializada correctamente [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app - copia.py:320]
-2026-05-20 08:43:09,646 INFO: Aplicacion inicializada [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app - copia.py:1276]
-2026-05-20 08:43:09,652 INFO: Adding job tentatively -- it will be properly scheduled when the scheduler starts [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\schedulers\base.py:507]
-2026-05-20 08:43:09,654 INFO: Added job "<lambda>" to job store "default" [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\schedulers\base.py:1090]
-2026-05-20 08:43:09,654 INFO: Scheduler started [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\apscheduler\schedulers\base.py:214]
-2026-05-20 08:43:09,666 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2026-06-04 18:16:07,739 INFO: [33mPress CTRL+C to quit[0m
+2026-06-04 18:16:13,585 INFO: 127.0.0.1 - - [04/Jun/2026 18:16:13] "[32mGET / HTTP/1.1[0m" 302 -
+2026-06-04 18:16:13,718 INFO: 127.0.0.1 - - [04/Jun/2026 18:16:13] "GET /login HTTP/1.1" 200 -
+2026-06-04 18:16:25,851 INFO: 127.0.0.1 - - [04/Jun/2026 18:16:25] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-06-04 18:16:27,036 INFO: 127.0.0.1 - - [04/Jun/2026 18:16:27] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-04 18:16:32,786 INFO: 127.0.0.1 - - [04/Jun/2026 18:16:32] "GET /user/facturas HTTP/1.1" 200 -
+2026-06-04 18:16:44,410 ERROR: Exception on /user/abonar_factura/1 [POST]
+Traceback (most recent call last):
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\nueva\Desktop\Nueva carpeta (2)\app.py", line 509, in dec
+    return f(*a,**k)
+  File "C:\Users\nueva\Desktop\Nueva carpeta (2)\app.py", line 908, in abonar_factura
+    monto_ves = float(request.form.get('monto_ves', 0))
+ValueError: could not convert string to float: ''
+2026-06-04 18:16:44,455 ERROR: Error 500: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2026-06-04 18:16:44,482 INFO: 127.0.0.1 - - [04/Jun/2026 18:16:44] "[35m[1mPOST /user/abonar_factura/1 HTTP/1.1[0m" 500 -
+2026-06-04 18:16:45,692 INFO: 127.0.0.1 - - [04/Jun/2026 18:16:45] "[32mGET / HTTP/1.1[0m" 302 -
+2026-06-04 18:16:45,745 INFO: 127.0.0.1 - - [04/Jun/2026 18:16:45] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-04 18:16:51,586 INFO: 127.0.0.1 - - [04/Jun/2026 18:16:51] "GET /user/facturas HTTP/1.1" 200 -
+2026-06-04 18:17:18,227 ERROR: Exception on /user/abonar_factura/1 [POST]
+Traceback (most recent call last):
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\nueva\Desktop\Nueva carpeta (2)\app.py", line 509, in dec
+    return f(*a,**k)
+  File "C:\Users\nueva\Desktop\Nueva carpeta (2)\app.py", line 908, in abonar_factura
+    monto_ves = float(request.form.get('monto_ves', 0))
+ValueError: could not convert string to float: ''
+2026-06-04 18:17:18,230 ERROR: Error 500: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2026-06-04 18:17:18,244 INFO: 127.0.0.1 - - [04/Jun/2026 18:17:18] "[35m[1mPOST /user/abonar_factura/1 HTTP/1.1[0m" 500 -
+2026-06-04 21:58:55,268 INFO: Aplicacion inicializada
+2026-06-04 21:58:55,279 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:5000
- * Running on http://192.168.31.179:5000 [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:43:09,667 INFO: [33mPress CTRL+C to quit[0m [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:44:07,440 INFO: 127.0.0.1 - - [20/May/2026 08:44:07] "[32mGET / HTTP/1.1[0m" 302 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:44:07,505 INFO: 127.0.0.1 - - [20/May/2026 08:44:07] "GET /login HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:44:07,739 INFO: 127.0.0.1 - - [20/May/2026 08:44:07] "[33mGET /favicon.ico HTTP/1.1[0m" 404 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:44:17,828 INFO: 127.0.0.1 - - [20/May/2026 08:44:17] "[32mPOST /login HTTP/1.1[0m" 302 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:44:18,822 INFO: [OK] Tasa BCV: 520.9142 [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app - copia.py:670]
-2026-05-20 08:44:18,883 INFO: 127.0.0.1 - - [20/May/2026 08:44:18] "GET /user/dashboard HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:44:23,239 INFO: [OK] Tasa BCV: 520.9142 [in C:\Users\nueva\Desktop\Nueva carpeta (2)\app - copia.py:670]
-2026-05-20 08:44:23,256 INFO: 127.0.0.1 - - [20/May/2026 08:44:23] "GET /api/actualizar_tasa_ahora HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:44:24,631 INFO: 127.0.0.1 - - [20/May/2026 08:44:24] "GET /user/dashboard HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:44:33,932 INFO: 127.0.0.1 - - [20/May/2026 08:44:33] "GET /user/reportes HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:44:37,644 INFO: 127.0.0.1 - - [20/May/2026 08:44:37] "GET /user/facturas HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:44:40,026 INFO: 127.0.0.1 - - [20/May/2026 08:44:40] "[36mGET /ver_factura/factura_F-20260517164520-2_2.html HTTP/1.1[0m" 304 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:44:46,755 INFO: 127.0.0.1 - - [20/May/2026 08:44:46] "GET /user/inventario HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:44:46,804 INFO: 127.0.0.1 - - [20/May/2026 08:44:46] "[36mGET /uploads/2/user_2_prod_1_20260516_212031_5252b177.jpg HTTP/1.1[0m" 304 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:44:52,537 INFO: 127.0.0.1 - - [20/May/2026 08:44:52] "GET /user/ventas HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:44:52,581 INFO: 127.0.0.1 - - [20/May/2026 08:44:52] "[36mGET /uploads/2/user_2_prod_1_20260516_212031_5252b177.jpg HTTP/1.1[0m" 304 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:47:09,341 INFO: 127.0.0.1 - - [20/May/2026 08:47:09] "GET /user/reportes HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:47:12,165 INFO: 127.0.0.1 - - [20/May/2026 08:47:12] "GET /user/facturas HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:47:14,154 INFO: 127.0.0.1 - - [20/May/2026 08:47:14] "GET /user/reportes HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:47:37,191 INFO: 127.0.0.1 - - [20/May/2026 08:47:37] "GET /user/inventario HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:47:37,233 INFO: 127.0.0.1 - - [20/May/2026 08:47:37] "[36mGET /uploads/2/user_2_prod_1_20260516_212031_5252b177.jpg HTTP/1.1[0m" 304 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:47:43,893 INFO: 127.0.0.1 - - [20/May/2026 08:47:43] "GET /user/dashboard HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:47:55,275 INFO: 127.0.0.1 - - [20/May/2026 08:47:55] "GET /user/inventario HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:47:55,325 INFO: 127.0.0.1 - - [20/May/2026 08:47:55] "[36mGET /uploads/2/user_2_prod_1_20260516_212031_5252b177.jpg HTTP/1.1[0m" 304 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:47:57,141 INFO: 127.0.0.1 - - [20/May/2026 08:47:57] "GET /user/ventas HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:47:57,189 INFO: 127.0.0.1 - - [20/May/2026 08:47:57] "[36mGET /uploads/2/user_2_prod_1_20260516_212031_5252b177.jpg HTTP/1.1[0m" 304 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:48:04,334 INFO: 127.0.0.1 - - [20/May/2026 08:48:04] "POST /user/procesar_venta HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:48:42,010 INFO: 127.0.0.1 - - [20/May/2026 08:48:42] "POST /user/procesar_venta HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
-2026-05-20 08:48:45,491 INFO: 127.0.0.1 - - [20/May/2026 08:48:45] "GET /user/reportes HTTP/1.1" 200 - [in C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\werkzeug\_internal.py:187]
+ * Running on http://192.168.31.179:5000
+2026-06-04 21:58:55,280 INFO: [33mPress CTRL+C to quit[0m
+2026-06-04 21:58:59,492 INFO: 127.0.0.1 - - [04/Jun/2026 21:58:59] "[32mPOST /user/abonar_factura/1 HTTP/1.1[0m" 302 -
+2026-06-04 21:58:59,567 INFO: 127.0.0.1 - - [04/Jun/2026 21:58:59] "GET /login HTTP/1.1" 200 -
+2026-06-04 21:59:04,521 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:04] "POST /login HTTP/1.1" 200 -
+2026-06-04 21:59:10,450 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:10] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-06-04 21:59:11,469 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:11] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-04 21:59:14,415 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:14] "GET /user/ventas HTTP/1.1" 200 -
+2026-06-04 21:59:14,516 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:14] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-04 21:59:15,624 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:15] "GET /user/facturas HTTP/1.1" 200 -
+2026-06-04 21:59:29,069 INFO: [OK] Abono: Factura#1, Monto=$1.91, NuevoSaldo=$2.220446049250313e-16, Estado=pendiente
+2026-06-04 21:59:29,073 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:29] "[32mPOST /user/abonar_factura/1 HTTP/1.1[0m" 302 -
+2026-06-04 21:59:29,099 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:29] "GET /user/facturas HTTP/1.1" 200 -
+2026-06-04 21:59:33,892 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:33] "GET /user/facturas?filtro=contado&buscar= HTTP/1.1" 200 -
+2026-06-04 21:59:36,115 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:36] "GET /user/facturas?filtro=pagado&buscar= HTTP/1.1" 200 -
+2026-06-04 21:59:37,421 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:37] "[36mGET /ver_factura/factura_F-20260604144305-11_2.html HTTP/1.1[0m" 304 -
+2026-06-04 21:59:43,047 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:43] "GET /user/facturas?filtro=pendiente&buscar= HTTP/1.1" 200 -
+2026-06-04 21:59:46,110 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:46] "GET /user/facturas?filtro=pendiente&buscar= HTTP/1.1" 200 -
+2026-06-04 21:59:48,328 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:48] "[36mGET /ver_factura/factura_F-20260604144305-11_2.html HTTP/1.1[0m" 304 -
+2026-06-04 21:59:58,301 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:58] "GET /user/facturas?filtro=credito&buscar= HTTP/1.1" 200 -
+2026-06-04 21:59:59,866 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:59] "[36mGET /ver_factura/factura_F-20260604144305-11_2.html HTTP/1.1[0m" 304 -
+2026-06-04 22:00:03,804 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:03] "GET /user/facturas?filtro=contado&buscar= HTTP/1.1" 200 -
+2026-06-04 22:00:10,773 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:10] "GET /user/facturas?filtro=credito&buscar= HTTP/1.1" 200 -
+2026-06-04 22:00:12,525 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:12] "GET /user/facturas?filtro=contado&buscar= HTTP/1.1" 200 -
+2026-06-04 22:00:21,114 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:21] "GET /user/facturas?buscar=kelly+quiroz&filtro=contado HTTP/1.1" 200 -
+2026-06-04 22:00:26,984 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:26] "GET /user/facturas?buscar=felix+veliz&filtro=contado HTTP/1.1" 200 -
+2026-06-04 22:00:28,862 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:28] "GET /user/facturas?filtro=contado&buscar=felix%20veliz HTTP/1.1" 200 -
+2026-06-04 22:00:29,913 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:29] "GET /user/facturas?filtro=todas&buscar=felix%20veliz HTTP/1.1" 200 -
+2026-06-04 22:00:33,951 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:33] "GET /user/facturas?filtro=credito&buscar=felix%20veliz HTTP/1.1" 200 -
+2026-06-04 22:00:36,082 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:36] "GET /user/facturas?filtro=pendiente&buscar=felix%20veliz HTTP/1.1" 200 -
+2026-06-04 22:00:37,363 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:37] "GET /user/facturas?filtro=pagado&buscar=felix%20veliz HTTP/1.1" 200 -
+2026-06-04 22:00:38,575 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:38] "GET /user/facturas?filtro=pendiente&buscar=felix%20veliz HTTP/1.1" 200 -
+2026-06-04 22:02:05,591 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:05] "GET /user/facturas?filtro=pendiente&buscar=felix%20veliz HTTP/1.1" 200 -
+2026-06-04 22:02:08,892 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:08] "GET /user/facturas?filtro=pendiente&buscar=felix%20veliz HTTP/1.1" 200 -
+2026-06-04 22:02:09,306 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:09] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-06-04 22:02:10,466 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:10] "GET /user/facturas?filtro=credito&buscar=felix%20veliz HTTP/1.1" 200 -
+2026-06-04 22:02:11,308 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:11] "GET /user/facturas?filtro=contado&buscar=felix%20veliz HTTP/1.1" 200 -
+2026-06-04 22:02:12,467 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:12] "GET /user/facturas?filtro=todas&buscar=felix%20veliz HTTP/1.1" 200 -
+2026-06-04 22:02:16,825 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:16] "GET /user/facturas?buscar= HTTP/1.1" 200 -
+2026-06-04 22:02:19,020 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:19] "[36mGET /ver_factura/factura_F-20260604143407-10_2.html HTTP/1.1[0m" 304 -
+2026-06-04 22:02:23,222 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:23] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-04 22:02:30,521 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:30] "GET /user/clientes HTTP/1.1" 200 -
+2026-06-04 22:02:40,647 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:40] "[32mGET / HTTP/1.1[0m" 302 -
+2026-06-04 22:02:40,670 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:40] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-04 22:02:47,281 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:47] "[32mGET /logout HTTP/1.1[0m" 302 -
+2026-06-04 22:02:47,295 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:47] "GET /login HTTP/1.1" 200 -
+2026-06-04 22:02:54,055 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:54] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-06-04 22:02:54,092 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:54] "GET /admin/dashboard HTTP/1.1" 200 -
+2026-06-04 22:02:58,813 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:58] "GET /admin/suscripciones HTTP/1.1" 200 -
