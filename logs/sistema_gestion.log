@@ -1,39 +1,46 @@
-2026-06-10 12:58:01,236 INFO: 127.0.0.1 - - [10/Jun/2026 12:58:01] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
-2026-06-10 13:01:28,288 INFO: Aplicacion inicializada
-2026-06-10 13:01:28,299 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2026-07-16 16:08:39,912 INFO: 127.0.0.1 - - [16/Jul/2026 16:08:39] "[36mGET /static/logo.png HTTP/1.1[0m" 304 -
+2026-07-16 16:08:43,617 INFO: 127.0.0.1 - - [16/Jul/2026 16:08:43] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-07-16 16:09:48,193 INFO: Aplicacion inicializada
+2026-07-16 16:09:48,206 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:5000
  * Running on http://192.168.31.179:5000
-2026-06-10 13:01:28,300 INFO: [33mPress CTRL+C to quit[0m
-2026-06-10 13:01:31,162 INFO: 127.0.0.1 - - [10/Jun/2026 13:01:31] "[32mGET /user/inventario HTTP/1.1[0m" 302 -
-2026-06-10 13:01:31,216 INFO: 127.0.0.1 - - [10/Jun/2026 13:01:31] "GET /login HTTP/1.1" 200 -
-2026-06-10 13:01:31,313 INFO: 127.0.0.1 - - [10/Jun/2026 13:01:31] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
-2026-06-10 13:01:37,660 INFO: 127.0.0.1 - - [10/Jun/2026 13:01:37] "[32mPOST /login HTTP/1.1[0m" 302 -
-2026-06-10 13:01:37,747 INFO: 127.0.0.1 - - [10/Jun/2026 13:01:37] "GET /user/dashboard HTTP/1.1" 200 -
-2026-06-10 13:01:37,854 INFO: 127.0.0.1 - - [10/Jun/2026 13:01:37] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
-2026-06-10 13:01:41,964 INFO: 127.0.0.1 - - [10/Jun/2026 13:01:41] "GET /user/inventario HTTP/1.1" 200 -
-2026-06-10 13:01:42,098 INFO: 127.0.0.1 - - [10/Jun/2026 13:01:42] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
-2026-06-10 13:01:42,483 INFO: 127.0.0.1 - - [10/Jun/2026 13:01:42] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
-2026-06-10 13:01:44,553 INFO: 127.0.0.1 - - [10/Jun/2026 13:01:44] "GET /api/obtener_subcategorias?categoria=Repuestos%20Moto HTTP/1.1" 200 -
-2026-06-10 13:01:58,183 INFO: 127.0.0.1 - - [10/Jun/2026 13:01:58] "GET /user/dashboard HTTP/1.1" 200 -
-2026-06-10 13:02:16,261 INFO: 127.0.0.1 - - [10/Jun/2026 13:02:16] "GET /user/inventario HTTP/1.1" 200 -
-2026-06-10 13:02:16,313 INFO: 127.0.0.1 - - [10/Jun/2026 13:02:16] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
-2026-06-10 13:02:17,768 INFO: 127.0.0.1 - - [10/Jun/2026 13:02:17] "GET /api/obtener_subcategorias?categoria=Repuestos%20Moto HTTP/1.1" 200 -
-2026-06-10 13:02:29,805 INFO: 127.0.0.1 - - [10/Jun/2026 13:02:29] "[32mPOST /user/editar_producto/1 HTTP/1.1[0m" 302 -
-2026-06-10 13:02:29,829 INFO: 127.0.0.1 - - [10/Jun/2026 13:02:29] "GET /user/inventario HTTP/1.1" 200 -
-2026-06-10 13:02:29,892 INFO: 127.0.0.1 - - [10/Jun/2026 13:02:29] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
-2026-06-10 13:02:34,211 INFO: 127.0.0.1 - - [10/Jun/2026 13:02:34] "GET /user/facturas HTTP/1.1" 200 -
-2026-06-10 13:02:35,985 INFO: 127.0.0.1 - - [10/Jun/2026 13:02:35] "GET /ver_factura/factura_F-20260608070843-14_2.html HTTP/1.1" 200 -
-2026-06-10 13:02:43,628 INFO: 127.0.0.1 - - [10/Jun/2026 13:02:43] "GET /user/inventario HTTP/1.1" 200 -
-2026-06-10 13:02:43,684 INFO: 127.0.0.1 - - [10/Jun/2026 13:02:43] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
-2026-06-10 13:02:46,193 INFO: 127.0.0.1 - - [10/Jun/2026 13:02:46] "GET /user/dashboard HTTP/1.1" 200 -
-2026-06-10 15:31:27,599 INFO: 127.0.0.1 - - [10/Jun/2026 15:31:27] "[32mGET /api/actualizar_tasa_ahora HTTP/1.1[0m" 302 -
-2026-06-10 15:31:27,649 INFO: 127.0.0.1 - - [10/Jun/2026 15:31:27] "GET /login HTTP/1.1" 200 -
-2026-06-10 15:31:30,952 INFO: 127.0.0.1 - - [10/Jun/2026 15:31:30] "[32mGET /user/dashboard HTTP/1.1[0m" 302 -
-2026-06-10 15:31:30,962 INFO: 127.0.0.1 - - [10/Jun/2026 15:31:30] "GET /login HTTP/1.1" 200 -
-2026-06-10 15:31:38,692 INFO: 127.0.0.1 - - [10/Jun/2026 15:31:38] "[32mPOST /login HTTP/1.1[0m" 302 -
-2026-06-10 15:31:39,744 INFO: 127.0.0.1 - - [10/Jun/2026 15:31:39] "GET /user/dashboard HTTP/1.1" 200 -
-2026-06-10 15:31:42,190 INFO: 127.0.0.1 - - [10/Jun/2026 15:31:42] "GET /api/actualizar_tasa_ahora HTTP/1.1" 200 -
-2026-06-10 15:31:43,616 INFO: 127.0.0.1 - - [10/Jun/2026 15:31:43] "GET /user/dashboard HTTP/1.1" 200 -
-2026-06-10 15:31:46,176 INFO: 127.0.0.1 - - [10/Jun/2026 15:31:46] "[32mGET /logout HTTP/1.1[0m" 302 -
-2026-06-10 15:31:46,187 INFO: 127.0.0.1 - - [10/Jun/2026 15:31:46] "GET /login HTTP/1.1" 200 -
+2026-07-16 16:09:48,206 INFO: [33mPress CTRL+C to quit[0m
+2026-07-16 16:09:51,812 INFO: 127.0.0.1 - - [16/Jul/2026 16:09:51] "[32mGET /admin/usuarios HTTP/1.1[0m" 302 -
+2026-07-16 16:09:51,852 INFO: 127.0.0.1 - - [16/Jul/2026 16:09:51] "GET /login HTTP/1.1" 200 -
+2026-07-16 16:09:51,947 INFO: 127.0.0.1 - - [16/Jul/2026 16:09:51] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-07-16 16:09:52,113 INFO: 127.0.0.1 - - [16/Jul/2026 16:09:52] "[36mGET /static/logo.png HTTP/1.1[0m" 304 -
+2026-07-16 16:09:58,874 INFO: 127.0.0.1 - - [16/Jul/2026 16:09:58] "POST /login HTTP/1.1" 200 -
+2026-07-16 16:09:58,977 INFO: 127.0.0.1 - - [16/Jul/2026 16:09:58] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-07-16 16:09:59,000 INFO: 127.0.0.1 - - [16/Jul/2026 16:09:59] "[36mGET /static/logo.png HTTP/1.1[0m" 304 -
+2026-07-16 16:10:07,036 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:07] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-07-16 16:10:07,053 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:07] "GET /admin/dashboard HTTP/1.1" 200 -
+2026-07-16 16:10:07,186 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:07] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-07-16 16:10:07,220 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:07] "[36mGET /static/logo.png HTTP/1.1[0m" 304 -
+2026-07-16 16:10:15,212 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:15] "GET /admin/usuarios HTTP/1.1" 200 -
+2026-07-16 16:10:15,254 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:15] "[36mGET /static/logo.png HTTP/1.1[0m" 304 -
+2026-07-16 16:10:21,434 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:21] "GET /admin/configurar_empresa/2 HTTP/1.1" 200 -
+2026-07-16 16:10:21,474 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:21] "[36mGET /static/logo.png HTTP/1.1[0m" 304 -
+2026-07-16 16:10:26,681 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:26] "GET /admin/dashboard HTTP/1.1" 200 -
+2026-07-16 16:10:26,723 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:26] "[36mGET /static/logo.png HTTP/1.1[0m" 304 -
+2026-07-16 16:10:32,487 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:32] "GET /admin/suscripciones HTTP/1.1" 200 -
+2026-07-16 16:10:32,530 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:32] "[36mGET /static/logo.png HTTP/1.1[0m" 304 -
+2026-07-16 16:10:32,985 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:32] "GET /admin/usuarios HTTP/1.1" 200 -
+2026-07-16 16:10:33,028 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:33] "[36mGET /static/logo.png HTTP/1.1[0m" 304 -
+2026-07-16 16:10:34,861 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:34] "GET /admin/usuarios HTTP/1.1" 200 -
+2026-07-16 16:10:34,902 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:34] "[36mGET /static/logo.png HTTP/1.1[0m" 304 -
+2026-07-16 16:10:35,676 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:35] "GET /admin/usuarios HTTP/1.1" 200 -
+2026-07-16 16:10:35,719 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:35] "[36mGET /static/logo.png HTTP/1.1[0m" 304 -
+2026-07-16 16:10:35,861 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:35] "GET /admin/usuarios HTTP/1.1" 200 -
+2026-07-16 16:10:35,903 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:35] "[36mGET /static/logo.png HTTP/1.1[0m" 304 -
+2026-07-16 16:10:36,042 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:36] "GET /admin/usuarios HTTP/1.1" 200 -
+2026-07-16 16:10:36,081 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:36] "[36mGET /static/logo.png HTTP/1.1[0m" 304 -
+2026-07-16 16:10:37,029 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:37] "GET /admin/suscripciones HTTP/1.1" 200 -
+2026-07-16 16:10:37,071 INFO: 127.0.0.1 - - [16/Jul/2026 16:10:37] "[36mGET /static/logo.png HTTP/1.1[0m" 304 -
+2026-07-17 15:56:28,605 INFO: Base de datos Neon.tech inicializada correctamente
+2026-07-17 15:56:28,767 INFO: Aplicacion inicializada con Neon.tech
+2026-07-17 15:56:28,783 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.179:5000
+2026-07-17 15:56:28,784 INFO: [33mPress CTRL+C to quit[0m

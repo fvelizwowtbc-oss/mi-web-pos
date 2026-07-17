@@ -1,98 +1,103 @@
-2026-06-04 18:16:07,739 INFO: [33mPress CTRL+C to quit[0m
-2026-06-04 18:16:13,585 INFO: 127.0.0.1 - - [04/Jun/2026 18:16:13] "[32mGET / HTTP/1.1[0m" 302 -
-2026-06-04 18:16:13,718 INFO: 127.0.0.1 - - [04/Jun/2026 18:16:13] "GET /login HTTP/1.1" 200 -
-2026-06-04 18:16:25,851 INFO: 127.0.0.1 - - [04/Jun/2026 18:16:25] "[32mPOST /login HTTP/1.1[0m" 302 -
-2026-06-04 18:16:27,036 INFO: 127.0.0.1 - - [04/Jun/2026 18:16:27] "GET /user/dashboard HTTP/1.1" 200 -
-2026-06-04 18:16:32,786 INFO: 127.0.0.1 - - [04/Jun/2026 18:16:32] "GET /user/facturas HTTP/1.1" 200 -
-2026-06-04 18:16:44,410 ERROR: Exception on /user/abonar_factura/1 [POST]
-Traceback (most recent call last):
-  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
-  File "C:\Users\nueva\Desktop\Nueva carpeta (2)\app.py", line 509, in dec
-    return f(*a,**k)
-  File "C:\Users\nueva\Desktop\Nueva carpeta (2)\app.py", line 908, in abonar_factura
-    monto_ves = float(request.form.get('monto_ves', 0))
-ValueError: could not convert string to float: ''
-2026-06-04 18:16:44,455 ERROR: Error 500: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
-2026-06-04 18:16:44,482 INFO: 127.0.0.1 - - [04/Jun/2026 18:16:44] "[35m[1mPOST /user/abonar_factura/1 HTTP/1.1[0m" 500 -
-2026-06-04 18:16:45,692 INFO: 127.0.0.1 - - [04/Jun/2026 18:16:45] "[32mGET / HTTP/1.1[0m" 302 -
-2026-06-04 18:16:45,745 INFO: 127.0.0.1 - - [04/Jun/2026 18:16:45] "GET /user/dashboard HTTP/1.1" 200 -
-2026-06-04 18:16:51,586 INFO: 127.0.0.1 - - [04/Jun/2026 18:16:51] "GET /user/facturas HTTP/1.1" 200 -
-2026-06-04 18:17:18,227 ERROR: Exception on /user/abonar_factura/1 [POST]
-Traceback (most recent call last):
-  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\nueva\AppData\Local\Programs\Python\Python314\Lib\site-packages\flask\app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
-  File "C:\Users\nueva\Desktop\Nueva carpeta (2)\app.py", line 509, in dec
-    return f(*a,**k)
-  File "C:\Users\nueva\Desktop\Nueva carpeta (2)\app.py", line 908, in abonar_factura
-    monto_ves = float(request.form.get('monto_ves', 0))
-ValueError: could not convert string to float: ''
-2026-06-04 18:17:18,230 ERROR: Error 500: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
-2026-06-04 18:17:18,244 INFO: 127.0.0.1 - - [04/Jun/2026 18:17:18] "[35m[1mPOST /user/abonar_factura/1 HTTP/1.1[0m" 500 -
-2026-06-04 21:58:55,268 INFO: Aplicacion inicializada
-2026-06-04 21:58:55,279 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2026-06-09 09:34:03,899 INFO: [33mPress CTRL+C to quit[0m
+2026-06-09 09:34:08,760 INFO: 127.0.0.1 - - [09/Jun/2026 09:34:08] "[32mGET / HTTP/1.1[0m" 302 -
+2026-06-09 09:34:08,922 INFO: 127.0.0.1 - - [09/Jun/2026 09:34:08] "GET /login HTTP/1.1" 200 -
+2026-06-09 09:34:09,170 INFO: 127.0.0.1 - - [09/Jun/2026 09:34:09] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-06-09 09:34:19,496 INFO: 127.0.0.1 - - [09/Jun/2026 09:34:19] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-06-09 09:34:20,663 INFO: 127.0.0.1 - - [09/Jun/2026 09:34:20] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-09 09:34:56,707 INFO: 127.0.0.1 - - [09/Jun/2026 09:34:56] "POST /user/configurar_tasas HTTP/1.1" 200 -
+2026-06-09 09:34:58,029 INFO: 127.0.0.1 - - [09/Jun/2026 09:34:58] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-09 09:35:01,351 INFO: 127.0.0.1 - - [09/Jun/2026 09:35:01] "GET /user/ventas HTTP/1.1" 200 -
+2026-06-09 09:35:01,447 INFO: 127.0.0.1 - - [09/Jun/2026 09:35:01] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-09 09:38:13,432 INFO: 127.0.0.1 - - [09/Jun/2026 09:38:13] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-09 09:38:50,532 INFO: 127.0.0.1 - - [09/Jun/2026 09:38:50] "GET /user/reportes HTTP/1.1" 200 -
+2026-06-09 09:39:08,038 INFO: 127.0.0.1 - - [09/Jun/2026 09:39:08] "GET /user/facturas HTTP/1.1" 200 -
+2026-06-09 09:40:10,041 INFO: 127.0.0.1 - - [09/Jun/2026 09:40:10] "GET /user/clientes HTTP/1.1" 200 -
+2026-06-09 09:40:37,309 INFO: 127.0.0.1 - - [09/Jun/2026 09:40:37] "GET /user/ventas HTTP/1.1" 200 -
+2026-06-09 09:40:37,347 INFO: 127.0.0.1 - - [09/Jun/2026 09:40:37] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-09 09:40:38,394 INFO: 127.0.0.1 - - [09/Jun/2026 09:40:38] "GET /user/inventario HTTP/1.1" 200 -
+2026-06-09 09:40:38,432 INFO: 127.0.0.1 - - [09/Jun/2026 09:40:38] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-09 09:41:24,086 INFO: 127.0.0.1 - - [09/Jun/2026 09:41:24] "GET /user/clientes HTTP/1.1" 200 -
+2026-06-09 09:41:24,768 INFO: 127.0.0.1 - - [09/Jun/2026 09:41:24] "GET /user/reportes HTTP/1.1" 200 -
+2026-06-09 09:41:26,189 INFO: 127.0.0.1 - - [09/Jun/2026 09:41:26] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-09 09:42:53,933 INFO: 127.0.0.1 - - [09/Jun/2026 09:42:53] "GET /user/inventario HTTP/1.1" 200 -
+2026-06-09 09:42:53,981 INFO: 127.0.0.1 - - [09/Jun/2026 09:42:53] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-10 08:11:04,523 INFO: Aplicacion inicializada
+2026-06-10 08:11:04,541 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:5000
  * Running on http://192.168.31.179:5000
-2026-06-04 21:58:55,280 INFO: [33mPress CTRL+C to quit[0m
-2026-06-04 21:58:59,492 INFO: 127.0.0.1 - - [04/Jun/2026 21:58:59] "[32mPOST /user/abonar_factura/1 HTTP/1.1[0m" 302 -
-2026-06-04 21:58:59,567 INFO: 127.0.0.1 - - [04/Jun/2026 21:58:59] "GET /login HTTP/1.1" 200 -
-2026-06-04 21:59:04,521 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:04] "POST /login HTTP/1.1" 200 -
-2026-06-04 21:59:10,450 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:10] "[32mPOST /login HTTP/1.1[0m" 302 -
-2026-06-04 21:59:11,469 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:11] "GET /user/dashboard HTTP/1.1" 200 -
-2026-06-04 21:59:14,415 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:14] "GET /user/ventas HTTP/1.1" 200 -
-2026-06-04 21:59:14,516 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:14] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
-2026-06-04 21:59:15,624 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:15] "GET /user/facturas HTTP/1.1" 200 -
-2026-06-04 21:59:29,069 INFO: [OK] Abono: Factura#1, Monto=$1.91, NuevoSaldo=$2.220446049250313e-16, Estado=pendiente
-2026-06-04 21:59:29,073 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:29] "[32mPOST /user/abonar_factura/1 HTTP/1.1[0m" 302 -
-2026-06-04 21:59:29,099 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:29] "GET /user/facturas HTTP/1.1" 200 -
-2026-06-04 21:59:33,892 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:33] "GET /user/facturas?filtro=contado&buscar= HTTP/1.1" 200 -
-2026-06-04 21:59:36,115 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:36] "GET /user/facturas?filtro=pagado&buscar= HTTP/1.1" 200 -
-2026-06-04 21:59:37,421 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:37] "[36mGET /ver_factura/factura_F-20260604144305-11_2.html HTTP/1.1[0m" 304 -
-2026-06-04 21:59:43,047 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:43] "GET /user/facturas?filtro=pendiente&buscar= HTTP/1.1" 200 -
-2026-06-04 21:59:46,110 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:46] "GET /user/facturas?filtro=pendiente&buscar= HTTP/1.1" 200 -
-2026-06-04 21:59:48,328 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:48] "[36mGET /ver_factura/factura_F-20260604144305-11_2.html HTTP/1.1[0m" 304 -
-2026-06-04 21:59:58,301 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:58] "GET /user/facturas?filtro=credito&buscar= HTTP/1.1" 200 -
-2026-06-04 21:59:59,866 INFO: 127.0.0.1 - - [04/Jun/2026 21:59:59] "[36mGET /ver_factura/factura_F-20260604144305-11_2.html HTTP/1.1[0m" 304 -
-2026-06-04 22:00:03,804 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:03] "GET /user/facturas?filtro=contado&buscar= HTTP/1.1" 200 -
-2026-06-04 22:00:10,773 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:10] "GET /user/facturas?filtro=credito&buscar= HTTP/1.1" 200 -
-2026-06-04 22:00:12,525 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:12] "GET /user/facturas?filtro=contado&buscar= HTTP/1.1" 200 -
-2026-06-04 22:00:21,114 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:21] "GET /user/facturas?buscar=kelly+quiroz&filtro=contado HTTP/1.1" 200 -
-2026-06-04 22:00:26,984 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:26] "GET /user/facturas?buscar=felix+veliz&filtro=contado HTTP/1.1" 200 -
-2026-06-04 22:00:28,862 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:28] "GET /user/facturas?filtro=contado&buscar=felix%20veliz HTTP/1.1" 200 -
-2026-06-04 22:00:29,913 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:29] "GET /user/facturas?filtro=todas&buscar=felix%20veliz HTTP/1.1" 200 -
-2026-06-04 22:00:33,951 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:33] "GET /user/facturas?filtro=credito&buscar=felix%20veliz HTTP/1.1" 200 -
-2026-06-04 22:00:36,082 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:36] "GET /user/facturas?filtro=pendiente&buscar=felix%20veliz HTTP/1.1" 200 -
-2026-06-04 22:00:37,363 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:37] "GET /user/facturas?filtro=pagado&buscar=felix%20veliz HTTP/1.1" 200 -
-2026-06-04 22:00:38,575 INFO: 127.0.0.1 - - [04/Jun/2026 22:00:38] "GET /user/facturas?filtro=pendiente&buscar=felix%20veliz HTTP/1.1" 200 -
-2026-06-04 22:02:05,591 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:05] "GET /user/facturas?filtro=pendiente&buscar=felix%20veliz HTTP/1.1" 200 -
-2026-06-04 22:02:08,892 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:08] "GET /user/facturas?filtro=pendiente&buscar=felix%20veliz HTTP/1.1" 200 -
-2026-06-04 22:02:09,306 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:09] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
-2026-06-04 22:02:10,466 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:10] "GET /user/facturas?filtro=credito&buscar=felix%20veliz HTTP/1.1" 200 -
-2026-06-04 22:02:11,308 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:11] "GET /user/facturas?filtro=contado&buscar=felix%20veliz HTTP/1.1" 200 -
-2026-06-04 22:02:12,467 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:12] "GET /user/facturas?filtro=todas&buscar=felix%20veliz HTTP/1.1" 200 -
-2026-06-04 22:02:16,825 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:16] "GET /user/facturas?buscar= HTTP/1.1" 200 -
-2026-06-04 22:02:19,020 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:19] "[36mGET /ver_factura/factura_F-20260604143407-10_2.html HTTP/1.1[0m" 304 -
-2026-06-04 22:02:23,222 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:23] "GET /user/dashboard HTTP/1.1" 200 -
-2026-06-04 22:02:30,521 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:30] "GET /user/clientes HTTP/1.1" 200 -
-2026-06-04 22:02:40,647 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:40] "[32mGET / HTTP/1.1[0m" 302 -
-2026-06-04 22:02:40,670 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:40] "GET /user/dashboard HTTP/1.1" 200 -
-2026-06-04 22:02:47,281 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:47] "[32mGET /logout HTTP/1.1[0m" 302 -
-2026-06-04 22:02:47,295 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:47] "GET /login HTTP/1.1" 200 -
-2026-06-04 22:02:54,055 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:54] "[32mPOST /login HTTP/1.1[0m" 302 -
-2026-06-04 22:02:54,092 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:54] "GET /admin/dashboard HTTP/1.1" 200 -
-2026-06-04 22:02:58,813 INFO: 127.0.0.1 - - [04/Jun/2026 22:02:58] "GET /admin/suscripciones HTTP/1.1" 200 -
+2026-06-10 08:11:04,542 INFO: [33mPress CTRL+C to quit[0m
+2026-06-10 08:11:07,545 INFO: 127.0.0.1 - - [10/Jun/2026 08:11:07] "[32mGET / HTTP/1.1[0m" 302 -
+2026-06-10 08:11:07,694 INFO: 127.0.0.1 - - [10/Jun/2026 08:11:07] "GET /login HTTP/1.1" 200 -
+2026-06-10 08:11:08,514 INFO: 127.0.0.1 - - [10/Jun/2026 08:11:08] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-06-10 08:11:14,343 INFO: 127.0.0.1 - - [10/Jun/2026 08:11:14] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-06-10 08:11:15,560 INFO: 127.0.0.1 - - [10/Jun/2026 08:11:15] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-10 08:11:59,476 INFO: 127.0.0.1 - - [10/Jun/2026 08:11:59] "GET /user/inventario HTTP/1.1" 200 -
+2026-06-10 08:11:59,634 INFO: 127.0.0.1 - - [10/Jun/2026 08:11:59] "GET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1" 200 -
+2026-06-10 08:12:05,062 INFO: 127.0.0.1 - - [10/Jun/2026 08:12:05] "GET /user/inventario?stock_bajo=1 HTTP/1.1" 200 -
+2026-06-10 08:12:05,109 INFO: 127.0.0.1 - - [10/Jun/2026 08:12:05] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-10 08:12:09,567 INFO: 127.0.0.1 - - [10/Jun/2026 08:12:09] "GET /user/ventas HTTP/1.1" 200 -
+2026-06-10 08:12:09,613 INFO: 127.0.0.1 - - [10/Jun/2026 08:12:09] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-10 08:12:11,365 INFO: 127.0.0.1 - - [10/Jun/2026 08:12:11] "GET /user/inventario HTTP/1.1" 200 -
+2026-06-10 08:12:11,414 INFO: 127.0.0.1 - - [10/Jun/2026 08:12:11] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-10 08:45:20,863 INFO: Aplicacion inicializada
+2026-06-10 08:45:20,902 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.179:5000
+2026-06-10 08:45:20,906 INFO: [33mPress CTRL+C to quit[0m
+2026-06-10 08:45:22,348 INFO: 127.0.0.1 - - [10/Jun/2026 08:45:22] "[32mGET /user/inventario HTTP/1.1[0m" 302 -
+2026-06-10 08:45:22,473 INFO: 127.0.0.1 - - [10/Jun/2026 08:45:22] "GET /login HTTP/1.1" 200 -
+2026-06-10 08:46:33,862 INFO: 127.0.0.1 - - [10/Jun/2026 08:46:33] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-06-10 08:46:34,027 INFO: 127.0.0.1 - - [10/Jun/2026 08:46:34] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-10 08:46:41,860 INFO: 127.0.0.1 - - [10/Jun/2026 08:46:41] "GET /user/inventario HTTP/1.1" 200 -
+2026-06-10 08:46:42,070 INFO: 127.0.0.1 - - [10/Jun/2026 08:46:42] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-10 08:46:58,525 INFO: 127.0.0.1 - - [10/Jun/2026 08:46:58] "GET /user/inventario?stock_bajo=1 HTTP/1.1" 200 -
+2026-06-10 08:46:58,580 INFO: 127.0.0.1 - - [10/Jun/2026 08:46:58] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-10 08:47:06,809 INFO: 127.0.0.1 - - [10/Jun/2026 08:47:06] "GET /user/inventario HTTP/1.1" 200 -
+2026-06-10 08:47:06,865 INFO: 127.0.0.1 - - [10/Jun/2026 08:47:06] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-10 08:52:54,640 INFO: Aplicacion inicializada
+2026-06-10 08:52:54,652 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.179:5000
+2026-06-10 08:52:54,653 INFO: [33mPress CTRL+C to quit[0m
+2026-06-10 08:52:57,080 INFO: Aplicacion inicializada
+2026-06-10 08:52:57,097 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.179:5000
+2026-06-10 08:52:57,097 INFO: [33mPress CTRL+C to quit[0m
+2026-06-10 08:52:59,872 INFO: 127.0.0.1 - - [10/Jun/2026 08:52:59] "[32mGET /user/inventario HTTP/1.1[0m" 302 -
+2026-06-10 08:52:59,928 INFO: 127.0.0.1 - - [10/Jun/2026 08:52:59] "GET /login HTTP/1.1" 200 -
+2026-06-10 08:53:08,172 INFO: 127.0.0.1 - - [10/Jun/2026 08:53:08] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-06-10 08:53:08,293 INFO: 127.0.0.1 - - [10/Jun/2026 08:53:08] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-10 08:53:09,940 INFO: 127.0.0.1 - - [10/Jun/2026 08:53:09] "GET /user/inventario HTTP/1.1" 200 -
+2026-06-10 08:53:10,132 INFO: 127.0.0.1 - - [10/Jun/2026 08:53:10] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-10 12:56:29,603 INFO: Aplicacion inicializada
+2026-06-10 12:56:29,615 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.179:5000
+2026-06-10 12:56:29,616 INFO: [33mPress CTRL+C to quit[0m
+2026-06-10 12:56:33,312 INFO: 127.0.0.1 - - [10/Jun/2026 12:56:33] "[32mGET / HTTP/1.1[0m" 302 -
+2026-06-10 12:56:33,429 INFO: 127.0.0.1 - - [10/Jun/2026 12:56:33] "GET /login HTTP/1.1" 200 -
+2026-06-10 12:56:40,088 INFO: 127.0.0.1 - - [10/Jun/2026 12:56:40] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-06-10 12:56:41,272 INFO: 127.0.0.1 - - [10/Jun/2026 12:56:41] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-10 12:56:45,024 INFO: 127.0.0.1 - - [10/Jun/2026 12:56:45] "GET /user/inventario HTTP/1.1" 200 -
+2026-06-10 12:56:45,125 INFO: 127.0.0.1 - - [10/Jun/2026 12:56:45] "[36mGET /uploads/2/user_2_prod_1_20260521_152950_61e0dac1.jpg HTTP/1.1[0m" 304 -
+2026-06-10 12:56:49,995 INFO: 127.0.0.1 - - [10/Jun/2026 12:56:49] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-06-10 12:57:42,687 INFO: Aplicacion inicializada
+2026-06-10 12:57:42,698 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.31.179:5000
+2026-06-10 12:57:42,698 INFO: [33mPress CTRL+C to quit[0m
+2026-06-10 12:57:45,086 INFO: 127.0.0.1 - - [10/Jun/2026 12:57:45] "[32mGET /user/inventario HTTP/1.1[0m" 302 -
+2026-06-10 12:57:45,130 INFO: 127.0.0.1 - - [10/Jun/2026 12:57:45] "GET /login HTTP/1.1" 200 -
+2026-06-10 12:57:45,280 INFO: 127.0.0.1 - - [10/Jun/2026 12:57:45] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-06-10 12:57:52,368 INFO: 127.0.0.1 - - [10/Jun/2026 12:57:52] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-06-10 12:57:52,443 INFO: 127.0.0.1 - - [10/Jun/2026 12:57:52] "GET /user/dashboard HTTP/1.1" 200 -
+2026-06-10 12:57:52,530 INFO: 127.0.0.1 - - [10/Jun/2026 12:57:52] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-06-10 12:58:00,873 INFO: 127.0.0.1 - - [10/Jun/2026 12:58:00] "GET /user/inventario HTTP/1.1" 200 -
+2026-06-10 12:58:00,962 INFO: 127.0.0.1 - - [10/Jun/2026 12:58:00] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -

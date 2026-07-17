@@ -78,7 +78,8 @@
                             </td>
                             <td>
                                 <div class="d-flex gap-1">
-                                    <a href="{{ url_for('admin_configurar_empresa', usuario_id=usuario.id) }}" 
+                                    <!-- CORREGIDO: uid en lugar de usuario_id -->
+                                    <a href="{{ url_for('admin_configurar_empresa', uid=usuario.id) }}" 
                                        class="btn btn-sm btn-outline-primary" 
                                        title="Configurar Empresa">
                                         <i class="bi bi-building"></i> Empresa

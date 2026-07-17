@@ -176,7 +176,7 @@
                                                     title="Extender">
                                                 <i class="bi bi-calendar-plus"></i>
                                             </button>
-                                            <form method="POST" action="{{ url_for('cancelar_suscripcion', suscripcion_id=sub.id) }}" 
+                                            <form method="POST" action="{{ url_for('cancelar_suscripcion', sid=sub.id) }}" 
                                                   onsubmit="return confirm('¿Cancelar esta suscripción?')" class="d-inline">
                                                 <button type="submit" class="btn btn-sm btn-outline-danger" title="Cancelar">
                                                     <i class="bi bi-x-circle"></i>
@@ -256,7 +256,7 @@
 </div>
 
 <!-- Modal Nueva Suscripción -->
-<div class="modal fade" id="nuevaSuscripcionModal" tabindex="-1">
+<div class="modal fade" id="nuevaSuscripcionModal" tabindex="-1" inert>
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -273,9 +273,15 @@
                         <select class="form-select" name="usuario_id" required>
                             <option value="">Seleccionar usuario...</option>
                             {% for usuario in usuarios_sin_suscripcion %}
-                            <option value="{{ usuario.id }}">{{ usuario.nombre }} ({{ usuario.email }})</option>
+                            <option value="{{ usuario.id }}">
+                                {{ usuario.nombre }} ({{ usuario.email }})
+                                {% if usuario.role == 'admin' %} 👑 Admin{% endif %}
+                            </option>
                             {% endfor %}
                         </select>
+                        {% if usuarios_sin_suscripcion|length == 0 %}
+                        <small class="text-danger">⚠️ No hay usuarios disponibles. Crea un usuario primero.</small>
+                        {% endif %}
                     </div>
                     
                     <!-- Planes disponibles -->
@@ -423,15 +429,12 @@
 {% block extra_js %}
 <script>
     function seleccionarPlan(element) {
-        // Remover selección de todos
         document.querySelectorAll('.plan-card').forEach(card => {
             card.classList.remove('selected');
         });
         
-        // Seleccionar este
         element.classList.add('selected');
         
-        // Guardar valores
         document.getElementById('planSeleccionado').value = element.dataset.plan;
         document.getElementById('diasSeleccionados').value = element.dataset.dias;
         document.getElementById('montoSeleccionado').value = element.dataset.precio;
@@ -442,12 +445,21 @@
         new bootstrap.Modal(document.getElementById('extenderModal')).show();
     }
     
-    // Seleccionar plan por defecto
     document.addEventListener('DOMContentLoaded', function() {
         const recomendado = document.querySelector('.plan-card.recommended');
         if (recomendado) {
             seleccionarPlan(recomendado);
         }
+        
+        const modal = document.getElementById('nuevaSuscripcionModal');
+        
+        modal.addEventListener('hidden.bs.modal', function() {
+            modal.setAttribute('inert', '');
+        });
+        
+        modal.addEventListener('shown.bs.modal', function() {
+            modal.removeAttribute('inert');
+        });
     });
 </script>
 {% endblock %}
